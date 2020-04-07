@@ -14,20 +14,22 @@ Put together a full-stack, bottom-up web application. APIs, CRUD, single-page fu
 
 - **Users**
   - People can sign up to the site. Pick a username and password.
-  - Users will have a profile, showing all their images, with links to profile info.
+  - Users will have a profile, showing all their posts, with links to profile info.
   - Users can follow each other. Profiles will show numbers of followers, and who the profile owner is following.
   - _Users can choose an avatar, or otherwise have a default avatar assigned._
-- **Images**
+  - _Users can send private direct messages to one another_
+- **Posts**
   - Users can post images to their profiles.
-  - Users can like images.
-  - _Images can be tagged._
-  - _Images can be geotagged._
+  - Users can like posts.
+  - _Posts can be tagged._
+  - _Posts can be geotagged._
 - **Feed**
-  - Users get a custom feed of images posted by people they follow.
+  - Users get a custom feed of posts posted by people they follow.
   - Feed is infinitely scrolling.
 - **Comments**
-  - Users can comment on images.
+  - Users can comment on posts.
   - _Users can like comments._
+  - _Users can respond to other comments_
   - Comments include links to commenter profiles.
 
 ## Technologies Used
