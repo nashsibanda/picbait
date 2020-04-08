@@ -3,6 +3,7 @@ import SessionGreetingContainer from "./session/session_greeting_container";
 import { Switch, Link } from "react-router-dom";
 import { AuthRoute } from "../util/route_util";
 import Splash from "./splash/splash";
+import SignupFormContainer from "./session/signup_form_container";
 
 const App = () => (
   <div className="app-container">
@@ -15,6 +16,7 @@ const App = () => (
     <main>
       <Switch>
         <AuthRoute exact path="/" component={Splash} />
+        <AuthRoute path="/signup" component={SignupFormContainer} />
       </Switch>
     </main>
   </div>
