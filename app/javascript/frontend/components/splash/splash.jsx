@@ -3,17 +3,16 @@ import { Link } from "react-router-dom";
 
 const Splash = props => (
   <div className="splash-screen">
-    <h1>Welcome to Picbait - SPLASH</h1>
-    <div className="splash-login-menu">
-      <Link to="/signup">
-        <button type="button" className="splash-login-button">
-          Sign Up
-        </button>
+    <div>
+      <h2>welcome to</h2>
+      <h1>picbait</h1>
+    </div>
+    <div className="splash-login-menu vertical-menu">
+      <Link to="/signup" className="splash-login-button">
+        Sign Up
       </Link>
-      <Link to="/login">
-        <button type="button" className="splash-login-button">
-          Log In
-        </button>
+      <Link to="/login" className="splash-login-button">
+        Log In
       </Link>
     </div>
   </div>

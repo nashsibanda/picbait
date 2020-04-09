@@ -59,7 +59,7 @@ class SessionForm extends React.Component {
       <div className="session-form-container">
         <h2>{formHeader()}</h2>
         <form
-          className={"session-form " + formType + "form"}
+          className={"session-form " + formType + "-form"}
           onSubmit={this.handleSubmit}
         >
           <div>
@@ -105,7 +105,7 @@ class SessionForm extends React.Component {
             <button type="submit" className="form-submit-button">
               {formHeader()}
             </button>
-            <Link to={redirectLink()} className="form-link-button">
+            <Link to={redirectLink()} className="form-redirect-link">
               {redirectLinkTitle()}
             </Link>
           </div>

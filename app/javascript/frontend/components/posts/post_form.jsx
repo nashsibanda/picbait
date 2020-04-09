@@ -63,19 +63,26 @@ class PostForm extends React.Component {
             <h2>{capitalize(formType)} Post</h2>
           </div>
           <div>
-            <label htmlFor="post-form-image">Image</label>
             <input
               type="file"
               id="post-form-image"
               onChange={this.handleImage}
               required={true}
             ></input>
+            <label htmlFor="post-form-image" className="file-input-label">
+              {imageUrl ? "Select a Different Image..." : "Upload Image..."}
+            </label>
           </div>
           {imageUrl && (
             <div>
               <img src={imageUrl}></img>
             </div>
           )}
+
+          {/* <div>
+            <img src="https://via.placeholder.com/1280x780.jpg"></img>
+          </div> */}
+
           <div>
             <label htmlFor="post-form-title">Title</label>
             <input
