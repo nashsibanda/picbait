@@ -74,17 +74,19 @@ class SessionForm extends React.Component {
               }
               id="session-form-username"
               value={username}
+              required={true}
             ></input>
           </div>
           {formType === "signup" && (
             <div>
               <label htmlFor="session-form-email">Email Address</label>
               <input
-                type="text"
+                type="email"
                 onChange={this.updateProperty("email")}
                 placeholder="Email Address"
                 id="session-form-email"
                 value={email}
+                required={true}
               ></input>
             </div>
           )}
@@ -96,10 +98,13 @@ class SessionForm extends React.Component {
               placeholder="Password"
               id="session-form-password"
               value={password}
+              required={true}
             ></input>
           </div>
           <div>
-            <button type="submit">{formHeader()}</button>
+            <button type="submit" className="form-submit-button">
+              {formHeader()}
+            </button>
             <Link to={redirectLink()} className="form-link-button">
               {redirectLinkTitle()}
             </Link>
