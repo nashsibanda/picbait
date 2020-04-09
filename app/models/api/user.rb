@@ -10,6 +10,8 @@ class Api::User < ApplicationRecord
   validates_uniqueness_of :username, :email, on: :create, message: 'is already in use. Please use another one!'
   validates_length_of :password, within: 6..20, on: :create, message: 'must be between 6 and 20 characters'
 
+  has_many :posts, class_name: 'Api::Post', foreign_key: 'api_user_id'
+
   def self.find_by_credentials(identifier, password)
     user = Api::User.where(slug: identifier.downcase).or(Api::User.where(email: identifier.downcase)).first
     return nil unless user
