@@ -1,4 +1,4 @@
-import { token } from "./csrf_util";
+import { token } from "./misc_util";
 
 export const signup = user =>
   $.ajax({
