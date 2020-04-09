@@ -1,0 +1,44 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Bitter:400,700|Quicksand:300,400,700|Righteous&display=swap");
+
+// Global Variables
+$sansfont: "Quicksand", sans-serif;
+$seriffont: "Bitter", "Georgia", serif;
+$displayfont: "Righteous", sans-serif;
+
+// Palette
+$teal: #23f0c7;
+$salmon: #ef767a;
+$blue: #6d92bf;
+$purple: #6457a6;
+$yellow: #ffe347;
+
+// Key Color
+$keycolor: #6d92bf;
+$keycolorlightest: scale-color($keycolor, $lightness: 60%);
+$keycolorlighter: scale-color($keycolor, $lightness: 40%);
+$keycolorlight: scale-color($keycolor, $lightness: 20%);
+$keycolordark: scale-color($keycolor, $lightness: -20%);
+$keycolordarker: scale-color($keycolor, $lightness: -40%);
+$keycolordarkest: scale-color($keycolor, $lightness: -60%);
+
+// Accent Color
+$accentcolorlight: #ffd6b3ff;
+$accentcolor: #f4892fff;
+$accentcolordark: #9b5a23ff;
+
+// Grays
+$lightestgray: #eee;
+$lightergray: #ddd;
+$lightgray: #bbb;
+$darkgray: #999;
+$darkergray: #666;
+$darkestgray: #333;
+
+// Interface Colors
+$donecolor: #61a45cff;
+$notdonecolor: #bad7eeff;
+$fetchingcolor: #87ffe7;
+$deselectcolor: #cd5c5cff;
+$deselectcolordark: rgb(140, 6, 6);
+$deselectcolortransp: #cd5c5ca8;

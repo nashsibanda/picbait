@@ -1,0 +1,56 @@
+.post-form-container {
+  background-color: white;
+  width: 80%;
+  margin: 0 auto;
+  padding: 2rem;
+  @include flex-down;
+
+  h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  img {
+    border: 1px solid $lightgray;
+    box-shadow: 2px 2px $keycolorlighter;
+  }
+}
+
+.post-form {
+  @include flex-down;
+
+  div {
+    @include flex-down;
+    margin-bottom: 1rem;
+    align-items: flex-end;
+  }
+
+  .form-submit-button {
+    align-self: center;
+    padding: 1rem 3rem;
+  }
+
+  .form-redirect-link {
+    align-self: center;
+    margin-top: 1rem;
+  }
+}
+
+.file-input-label {
+  @include button($keycolordark);
+  color: white;
+  padding: 1rem 3rem;
+  cursor: pointer;
+}
+
+input:focus + .file-input-label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+@media (hover: none) {
+  .file-input-label {
+    pointer-events: none;
+  }
+}

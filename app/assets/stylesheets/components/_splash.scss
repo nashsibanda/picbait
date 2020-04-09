@@ -1,0 +1,32 @@
+.splash-screen {
+  height: 100%;
+  background: linear-gradient($keycolorlightest, $keycolorlight);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -2;
+  @include flex-across;
+  justify-content: space-around;
+
+  .splash-login-button {
+    @include button($keycolordark);
+    color: white;
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+
+  h1 {
+    font-size: 6rem;
+    font-family: $displayfont;
+    color: white;
+    text-shadow: 2px 2px 4px $keycolordarkest;
+  }
+
+  h2 {
+    font-size: 2rem;
+    color: $keycolorlightest;
+    text-shadow: 2px 2px 1px $keycolor;
+  }
+}

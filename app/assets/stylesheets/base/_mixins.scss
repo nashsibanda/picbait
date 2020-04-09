@@ -1,0 +1,34 @@
+@mixin flex-across {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-down {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+@mixin embossed-effect {
+  border-top: 1px solid $lightestgray;
+  border-bottom: 1px solid $darkergray;
+}
+
+@mixin reverse-embossed-effect {
+  border-bottom: 1px solid $lightestgray;
+  border-top: 1px solid $darkergray;
+}
+
+@mixin button($color, $darkercolor: $color) {
+  @include embossed-effect;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  text-align: center;
+  background-color: $color;
+  &:hover,
+  &:focus {
+    @include reverse-embossed-effect;
+    background-color: scale-color($darkercolor, $lightness: -15%);
+  }
+}

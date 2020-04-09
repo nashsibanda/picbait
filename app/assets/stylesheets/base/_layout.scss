@@ -1,0 +1,53 @@
+body {
+  font-family: $sansfont;
+}
+
+input[type="text"],
+// input[type="file"],
+input[type="password"],
+input[type="email"] {
+  padding: 0.8rem;
+  background-color: white;
+  border: 1px solid $lightgray;
+  width: 100%;
+  box-shadow: 2px 2px $keycolorlighter;
+}
+
+input[type="text"]:focus,
+// input[type="file"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  box-shadow: 2px 2px $purple;
+}
+
+input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.form-submit-button {
+  @include button($keycolordark, $purple);
+  color: white;
+}
+
+label:not(.file-input-label) {
+  position: relative;
+  top: 1px;
+  text-align: right;
+  border: 1px solid $lightgray;
+  border-bottom-color: white;
+  background-color: white;
+  padding: 0.2rem 1.5rem;
+  width: fit-content;
+  z-index: 2;
+}
+
+a:hover,
+a:focus {
+  color: $keycolordarker;
+  text-decoration: underline;
+}

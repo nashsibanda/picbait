@@ -1,0 +1,33 @@
+.session-form-container {
+  background-color: white;
+  width: 30rem;
+  margin: 0 auto;
+  padding: 2rem;
+  @include flex-down;
+
+  h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.session-form {
+  @include flex-down;
+
+  div {
+    @include flex-down;
+    margin-bottom: 1rem;
+    align-items: flex-end;
+  }
+
+  .form-submit-button {
+    align-self: center;
+    padding: 1rem 3rem;
+  }
+
+  .form-redirect-link {
+    align-self: center;
+    margin-top: 1rem;
+  }
+}

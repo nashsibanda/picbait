@@ -1,0 +1,46 @@
+header {
+  @include flex-across;
+  background: linear-gradient(to right, $keycolordark, $keycolordarker);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid $keycolordarker;
+
+  & > * {
+    background: none;
+  }
+
+  h1 {
+    font-family: $displayfont;
+    font-size: 2.5rem;
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+  }
+  a:hover,
+  a:focus {
+    color: white;
+    text-shadow: 2px 2px 4px $keycolordarkest;
+  }
+}
+
+.header-button {
+  @include button(white);
+  color: $keycolordarkest;
+}
+
+.vertical-menu {
+  @include flex-down;
+
+  *:first-child {
+    margin-bottom: 0.7rem;
+  }
+}
+
+.horizontal-menu {
+  @include flex-across;
+
+  *:first-child {
+    margin-right: 0.7rem;
+  }
+}
