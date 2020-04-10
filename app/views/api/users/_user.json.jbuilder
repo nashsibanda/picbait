@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
-show_bio ||= false
+full_details ||= false
 json.extract! user, :username, :email, :id
-json.bio user.bio if show_bio
+if full_details
+  json.bio user.bio
+  json.postCount user.posts.count
+end
