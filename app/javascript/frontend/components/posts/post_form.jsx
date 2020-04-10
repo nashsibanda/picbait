@@ -52,7 +52,6 @@ class PostForm extends React.Component {
   render() {
     const { formType } = this.props;
     const { title, description, imageUrl } = this.state;
-    console.log(formType);
     return (
       <div className="post-form-container">
         <form
