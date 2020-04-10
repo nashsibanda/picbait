@@ -29,10 +29,12 @@ const App = () => (
   <div className="app-container">
     <DebugMenu show={true} />
     <header>
-      <h1>
-        <Link to="/">picbait</Link>
-      </h1>
-      <SessionGreetingContainer />
+      <div className="header-container">
+        <h1>
+          <Link to="/">picbait</Link>
+        </h1>
+        <SessionGreetingContainer />
+      </div>
     </header>
     <main>
       <Switch>

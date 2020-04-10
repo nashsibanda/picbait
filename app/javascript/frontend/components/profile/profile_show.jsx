@@ -16,7 +16,6 @@ class ProfileShow extends React.Component {
     const profileUser = users[userId];
     return (
       <div className="profile-show-container">
-        <h2>ProfileShow Here!</h2>
         <ProfileUserInfo user={profileUser} />
       </div>
     );
