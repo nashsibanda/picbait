@@ -1,5 +1,6 @@
 import React from "react";
 import { ProfileUserInfo } from "./profile_user_info";
+import { PostsIndex } from "../posts/posts_index";
 
 class ProfileShow extends React.Component {
   constructor(props) {
@@ -7,16 +8,18 @@ class ProfileShow extends React.Component {
   }
 
   componentWillMount() {
-    const { fetchUser, userId } = this.props;
+    const { fetchUser, userId, fetchPosts } = this.props;
     fetchUser(userId);
+    fetchPosts(userId);
   }
 
   render() {
-    const { users, userId } = this.props;
+    const { users, userId, posts } = this.props;
     const profileUser = users[userId];
     return (
       <div className="profile-show-container">
         <ProfileUserInfo user={profileUser} />
+        <PostsIndex posts={posts} />
       </div>
     );
   }

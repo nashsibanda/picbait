@@ -8,6 +8,7 @@ const mapStateToProps = (state, { match }) => {
   // const user = state.entities.users[userId];
   return {
     users: state.entities.users,
+    posts: state.entities.posts,
     // user,
     userId,
   };
