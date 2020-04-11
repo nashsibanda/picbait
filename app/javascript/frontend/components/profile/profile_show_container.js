@@ -5,12 +5,11 @@ import ProfileShow from "./profile_show";
 
 const mapStateToProps = (state, { match }) => {
   const userId = match.params.userId;
-  // const user = state.entities.users[userId];
   return {
     users: state.entities.users,
     posts: state.entities.posts,
-    // user,
     userId,
+    ownProfile: userId === state.session.currentUser.slug,
   };
 };
 

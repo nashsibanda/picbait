@@ -15,13 +15,54 @@
       width: 100%;
       border: 10px solid $purple;
       border-radius: 50%;
-      background-size: auto 100%;
+      background-size: cover;
       background-position: center;
+      position: relative;
+      overflow: hidden;
 
       &::after {
         content: "";
         display: block;
         padding-bottom: 100%;
+      }
+
+      .edit-avatar-form {
+        position: absolute;
+        bottom: 20px;
+        left: calc(50% - 3.55rem);
+        z-index: 3;
+      }
+
+      .edit-avatar-icon {
+        position: absolute;
+        padding: calc(50% + 5px - 1rem);
+        font-size: 2rem;
+        top: -5px;
+        left: -5px;
+        color: white;
+        background-color: #00000000;
+        opacity: 0;
+        transition: 0.2s ease;
+
+        &:hover,
+        &:focus {
+          background-color: #00000088;
+          opacity: 1;
+          cursor: pointer;
+        }
+      }
+
+      button {
+        @include button($keycolordark);
+        color: white;
+
+        &.submit-button {
+          width: 5rem;
+        }
+        &.close-button {
+          width: 1.9rem;
+          margin-left: 0.2rem;
+        }
       }
     }
   }
