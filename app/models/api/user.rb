@@ -13,6 +13,7 @@ class Api::User < ApplicationRecord
   friendly_id :username, use: :slugged
 
   has_many :posts, class_name: 'Api::Post', foreign_key: 'api_user_id'
+  has_one_attached :avatar
 
   def self.find_by_credentials(identifier, password)
     user = Api::User.where(lowercase_username: identifier.downcase).or(Api::User.where(email: identifier.downcase)).first

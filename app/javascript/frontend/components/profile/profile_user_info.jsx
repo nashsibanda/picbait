@@ -1,8 +1,8 @@
 import React from "react";
 
 export const ProfileUserInfo = props => {
-  const { username, bio, email, id, postCount } = props.user;
-  const avatarUrl = "https://i.imgur.com/AjybU6j.jpg";
+  const { username, bio, id, postCount, avatarUrl } = props.user;
+  // const avatarUrl = "https://i.imgur.com/AjybU6j.jpg";
   return (
     <div className="profile-user-info">
       <section className="avatar">
