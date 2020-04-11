@@ -1,24 +1,5 @@
 import React from "react";
-
-// export const PostInfo = props => {
-//   const { post } = props;
-//   const { id, title, description, date, author_id, imageUrl } = props.post;
-//   return (
-//     <div className="post-info">
-//       <section className="image">
-//         <img src={imageUrl}></img>
-//       </section>
-//       <section className="details">
-//         <div className="author-details">Author Details</div>
-//         <div className="comments">
-//           <p>Comments</p>
-//         </div>
-//         <div className="interactions">Interactions (likes, etc.)</div>
-//         <div className="comment-form">New Comment</div>
-//       </section>
-//     </div>
-//   );
-// };
+import { PostAuthor } from "./post_author";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -36,7 +17,7 @@ class PostInfo extends React.Component {
   render() {
     const { post } = this.props;
     const { fillImage } = this.state;
-    const { id, title, description, date, author_id, imageUrl } = post;
+    const { id, title, description, date, author_id, imageUrl, author } = post;
     return (
       <div className="post-info">
         <section className="image">
@@ -55,7 +36,9 @@ class PostInfo extends React.Component {
           </div>
         </section>
         <section className="details">
-          <div className="author-details">Author Details</div>
+          <div className="author-details">
+            <PostAuthor author={author} />
+          </div>
           <div className="comments">
             <p>Comments</p>
           </div>

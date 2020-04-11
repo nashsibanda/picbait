@@ -1,10 +1,13 @@
 .post-show-container {
   margin: 0 auto;
   padding: 3rem 0;
+
   .post-info {
     max-width: 80vw;
     margin: 0 auto;
-    border: 1px solid $graydark;
+    border: 1px solid $graylight;
+    border-radius: 1%;
+    overflow: hidden;
   }
 }
 
@@ -13,25 +16,24 @@
   justify-content: center;
   align-items: stretch;
   width: fit-content;
-  min-height: 50vh;
+  height: 60vh;
   box-sizing: content-box;
 
-  .image {
+  & > .image {
     flex-shrink: 1;
     @include flex-down;
     justify-content: center;
     background-color: black;
-    max-height: 50vh;
+    // max-height: 60vh;
     max-width: 100%;
     overflow: hidden;
     position: relative;
 
-    img {
+    & > img {
       // width: 100%;
 
       &.fit-image {
-        max-width: 100%;
-        max-height: 90vh;
+        object-fit: contain;
 
         &:hover {
           cursor: zoom-in;
@@ -40,7 +42,8 @@
 
       &.fill-image {
         object-fit: cover;
-        width: auto;
+        height: 100%;
+        width: 100%;
 
         &:hover {
           cursor: zoom-out;
@@ -48,7 +51,7 @@
       }
     }
 
-    .expand {
+    & > .expand {
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -73,14 +76,14 @@
     }
   }
 
-  .details {
+  & > .details {
     flex-basis: 40%;
     flex-shrink: 0;
     @include flex-down;
+    // border-left: 1px solid $graydarker;
 
     .author-details {
-      background-color: $keycolor;
-      flex: 0 1 4rem;
+      flex: 0 1 5rem;
     }
 
     .comments {
@@ -97,6 +100,48 @@
       background-color: $keycolorlightest;
       flex: 0 1 4rem;
       justify-self: flex-end;
+    }
+  }
+}
+
+.post-author {
+  @include flex-across;
+  justify-content: flex-start;
+  padding: 1rem;
+
+  & > .avatar {
+    flex-basis: 17%;
+    margin-right: 1rem;
+    box-sizing: border-box;
+    align-self: flex-start;
+
+    .container {
+      width: 100%;
+      border-radius: 50%;
+      background-size: auto 100%;
+      background-position: center;
+
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+  }
+
+  & > .details {
+    @include flex-down;
+    justify-content: center;
+    align-items: flex-start;
+    flex-basis: 85%;
+
+    .username {
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    .location {
+      font-size: 0.8rem;
     }
   }
 }
