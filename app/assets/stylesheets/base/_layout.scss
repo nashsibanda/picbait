@@ -21,7 +21,7 @@ input[type="password"],
 input[type="email"] {
   padding: 0.8rem;
   background-color: white;
-  border: 1px solid $lightgray;
+  border: 1px solid $graylight;
   width: 100%;
   box-shadow: 2px 2px $keycolorlighter;
 }
@@ -51,7 +51,7 @@ label:not(.file-input-label) {
   position: relative;
   top: 1px;
   text-align: right;
-  border: 1px solid $lightgray;
+  border: 1px solid $graylight;
   border-bottom-color: white;
   background-color: white;
   padding: 0.2rem 1.5rem;

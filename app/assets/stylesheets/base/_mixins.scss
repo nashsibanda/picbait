@@ -11,13 +11,13 @@
 }
 
 @mixin embossed-effect {
-  border-top: 1px solid $lightestgray;
-  border-bottom: 1px solid $darkergray;
+  border-top: 1px solid $graylightest;
+  border-bottom: 1px solid $graydarker;
 }
 
 @mixin reverse-embossed-effect {
-  border-bottom: 1px solid $lightestgray;
-  border-top: 1px solid $darkergray;
+  border-bottom: 1px solid $graylightest;
+  border-top: 1px solid $graydarker;
 }
 
 @mixin button($color, $darkercolor: $color) {

@@ -6,6 +6,14 @@ $sansfont: "Quicksand", sans-serif;
 $seriffont: "Bitter", "Georgia", serif;
 $displayfont: "Righteous", sans-serif;
 
+// Lightness Scale
+$lightest: 80%;
+$lighter: 50%;
+$light: 30%;
+$dark: -30%;
+$darker: -50%;
+$darkest: -80%;
+
 // Palette
 $teal: #23f0c7;
 $salmon: #ef767a;
@@ -15,12 +23,12 @@ $yellow: #ffe347;
 
 // Key Color
 $keycolor: #6d92bf;
-$keycolorlightest: scale-color($keycolor, $lightness: 60%);
-$keycolorlighter: scale-color($keycolor, $lightness: 40%);
-$keycolorlight: scale-color($keycolor, $lightness: 20%);
-$keycolordark: scale-color($keycolor, $lightness: -20%);
-$keycolordarker: scale-color($keycolor, $lightness: -40%);
-$keycolordarkest: scale-color($keycolor, $lightness: -60%);
+$keycolorlightest: scale-color($keycolor, $lightness: $lightest);
+$keycolorlighter: scale-color($keycolor, $lightness: $lighter);
+$keycolorlight: scale-color($keycolor, $lightness: $light);
+$keycolordark: scale-color($keycolor, $lightness: $dark);
+$keycolordarker: scale-color($keycolor, $lightness: $darker);
+$keycolordarkest: scale-color($keycolor, $lightness: $darkest);
 
 // Accent Color
 $accentcolorlight: #ffd6b3ff;
@@ -28,12 +36,12 @@ $accentcolor: #f4892fff;
 $accentcolordark: #9b5a23ff;
 
 // Grays
-$lightestgray: #eee;
-$lightergray: #ddd;
-$lightgray: #bbb;
-$darkgray: #999;
-$darkergray: #666;
-$darkestgray: #333;
+$graylightest: #eee;
+$graylighter: #ddd;
+$graylight: #bbb;
+$graydark: #999;
+$graydarker: #666;
+$graydarkest: #333;
 
 // Interface Colors
 $donecolor: #61a45cff;

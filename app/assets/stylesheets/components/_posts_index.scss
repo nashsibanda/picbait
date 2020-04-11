@@ -6,10 +6,15 @@
   .posts-index-item {
     width: 32%;
     margin-right: 2%;
-    border: 1px solid $purple;
+    border: 1px solid $graylight;
     background-size: auto 100%;
     background-position: center;
     position: relative;
+    transition: 0.2s ease;
+
+    &:hover {
+      border: 3px solid $keycolorlight;
+    }
 
     &:nth-child(3n) {
       margin-right: 0;
