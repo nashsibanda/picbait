@@ -19,3 +19,9 @@ export const fetchUsers = filters => dispatch => {
 export const fetchUser = userId => dispatch => {
   UsersAPIUtil.getUser(userId).then(user => dispatch(receiveUser(user)));
 };
+
+export const updateUser = (id, formUser) => dispatch => {
+  UsersAPIUtil.patchUser(id, formUser).then(user =>
+    dispatch(receiveUser(user))
+  );
+};

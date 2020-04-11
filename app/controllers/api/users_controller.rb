@@ -2,7 +2,7 @@
 
 class Api::UsersController < ApplicationController
   before_action :ensure_logged_in, only: %i[index update destroy]
-  before_action :set_user, only: %i[update destroy show]
+  before_action :set_user, only: %i[update destroy]
   before_action :ensure_allowed, only: %i[update destroy]
 
   def index
@@ -20,6 +20,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
+    @user = Api::User.includes(:posts).friendly.find(params[:id])
     if @user
       render :show
     else
@@ -28,9 +29,10 @@ class Api::UsersController < ApplicationController
   end
 
   def update
+    @user = Api::User.friendly.find(params[:id])
     if @user
       if @user.update(user_params)
-        redirect_to api_user_url(@user)
+        render :show
       else
         render json: @user.errors.full_messages, status: 422
       end
@@ -51,11 +53,11 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :lowercase_username)
+    params.require(:user).permit(:username, :email, :password, :lowercase_username, :avatar)
   end
 
   def set_user
-    @user = Api::User.includes(:posts).friendly.find(params[:id])
+    @user = Api::User.friendly.find(params[:id])
   end
 
   def ensure_allowed
