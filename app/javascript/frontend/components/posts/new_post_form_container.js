@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PostForm from "./post_form";
 
 const mapStateToProps = state => ({
-  userId: state.session.id,
+  userId: state.session.currentUser,
   formType: "new",
 });
 
