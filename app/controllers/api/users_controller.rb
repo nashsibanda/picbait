@@ -51,11 +51,11 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :slug)
+    params.require(:user).permit(:username, :email, :password, :lowercase_username)
   end
 
   def set_user
-    @user = Api::User.find_by(id: params[:id])
+    @user = Api::User.includes(:posts).friendly.find(params[:id])
   end
 
   def ensure_allowed

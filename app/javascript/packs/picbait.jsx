@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.currentUser) {
     const preloadedState = {
       entities: {
-        users: { [window.currentUser.id]: window.currentUser },
+        users: { [window.currentUser.slug]: window.currentUser },
       },
-      session: { id: window.currentUser.id },
+      session: { currentUser: window.currentUser.slug },
     };
     store = configureStore(preloadedState);
     const script = document.getElementById("current-user-bootstrap");

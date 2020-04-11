@@ -6,17 +6,17 @@ const usersReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
       return Object.assign({}, state, {
-        [action.currentUser.id]: action.currentUser,
+        [action.currentUser.slug]: action.currentUser,
       });
     case RECEIVE_USERS:
       const usersOutput = {};
       action.users.forEach(user => {
-        usersOutput[user.id] = user;
+        usersOutput[user.slug] = user;
       });
       return usersOutput;
     case RECEIVE_USER:
       return Object.assign({}, state, {
-        [action.user.id]: action.user,
+        [action.user.slug]: action.user,
       });
     default:
       return state;

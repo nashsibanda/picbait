@@ -16,7 +16,7 @@ const DebugMenu = props => {
         <Link to="/">Root</Link>
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Log In</Link>
-        <Link to="/users/3">Profile Show</Link>
+        <Link to="/users/nash">Profile Show</Link>
         <Link to="/feed">Feed</Link>
         <Link to="/posts/new">New Post</Link>
         <Link to="/posts/1">Post Show</Link>

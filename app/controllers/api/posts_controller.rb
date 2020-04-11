@@ -49,7 +49,8 @@ class Api::PostsController < ApplicationController
   end
 
   def user_id
-    params[:user_id]
+    post_user = Api::User.friendly.find(params[:user_id])
+    post_user.id
   end
 
   def find_post

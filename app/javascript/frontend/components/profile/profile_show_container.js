@@ -4,7 +4,7 @@ import { fetchUser } from "../../actions/user_actions";
 import ProfileShow from "./profile_show";
 
 const mapStateToProps = (state, { match }) => {
-  const userId = parseInt(match.params.userId);
+  const userId = match.params.userId;
   // const user = state.entities.users[userId];
   return {
     users: state.entities.users,

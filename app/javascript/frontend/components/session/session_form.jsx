@@ -16,7 +16,7 @@ class SessionForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = Object.assign({}, this.state, {
-      slug: this.state.username.toLowerCase(),
+      lowercase_username: this.state.username.toLowerCase(),
     });
     console.log(user);
     this.props.processForm(user);
