@@ -1,11 +1,13 @@
 .profile-user-info {
   @include flex-across;
-  justify-content: flex-start;
+  justify-content: space-between;
   border-bottom: 1px solid $keycolorlightest;
+  padding: 1rem 4rem;
 
   .avatar {
-    flex-basis: 40%;
-    padding: 2rem;
+    flex-basis: 30%;
+    padding: 2rem 0;
+    margin-right: 3rem;
     box-sizing: border-box;
     align-self: flex-start;
 
@@ -26,11 +28,11 @@
 
   .details {
     @include flex-down;
-    padding: 4rem 2rem 2rem 1rem;
+    padding: 4rem 0 2rem 1rem;
     height: 100%;
     align-self: flex-start;
     flex-basis: 60%;
-    max-width: 27rem;
+    max-width: 33rem;
 
     .title {
       @include flex-across;

@@ -41,6 +41,7 @@
         padding: 1rem;
 
         .title {
+          font-family: $seriffont;
           font-weight: 700;
           font-size: 1.2rem;
         }
@@ -49,6 +50,7 @@
       &:hover .overlay,
       &:focus .overlay {
         opacity: 0.8;
+        text-decoration: none;
       }
     }
   }
