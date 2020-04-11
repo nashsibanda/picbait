@@ -40,13 +40,13 @@ class PostForm extends React.Component {
     formPost.append("post[title]", title);
     formPost.append("post[description]", description);
     formPost.append("post[image]", imageFile, makeFilename(imageFile.name));
-    formPost.append("post[api_user_id]", this.props.userId);
+    formPost.append("post[api_user_id]", this.props.currentUser.id);
     this.props.processForm(formPost);
     this.redirectToFeed();
   }
 
   redirectToFeed() {
-    this.props.history.push(`/users/${this.props.userId}`);
+    this.props.history.push(`/users/${this.props.currentUser.slug}`);
   }
 
   render() {

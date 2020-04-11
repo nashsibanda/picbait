@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
   let store;
   if (window.currentUser) {
+    const { slug, id } = window.currentUser;
     const preloadedState = {
       entities: {
-        users: { [window.currentUser.slug]: window.currentUser },
+        users: { [slug]: window.currentUser },
       },
-      session: { currentUser: window.currentUser.slug },
+      session: { currentUser: { id: id, slug: slug } },
     };
     store = configureStore(preloadedState);
     const script = document.getElementById("current-user-bootstrap");
