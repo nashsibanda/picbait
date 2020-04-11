@@ -1,13 +1,13 @@
 import React from "react";
 import { ProfileUserInfo } from "./profile_user_info";
-import { PostsIndex } from "../posts/posts_index";
+import PostsIndex from "../posts/posts_index";
 
 class ProfileShow extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { fetchUser, userId, fetchPosts } = this.props;
     fetchUser(userId);
     fetchPosts(userId);

@@ -14,6 +14,9 @@
   img {
     border: 1px solid $graylight;
     box-shadow: 2px 2px $keycolorlighter;
+    max-height: 50rem;
+    width: auto;
+    align-self: center;
   }
 }
 

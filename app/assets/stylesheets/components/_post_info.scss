@@ -1,0 +1,102 @@
+.post-show-container {
+  margin: 0 auto;
+  padding: 3rem 0;
+  .post-info {
+    max-width: 80vw;
+    margin: 0 auto;
+    border: 1px solid $graydark;
+  }
+}
+
+.post-info {
+  @include flex-across;
+  justify-content: center;
+  align-items: stretch;
+  width: fit-content;
+  min-height: 50vh;
+  box-sizing: content-box;
+
+  .image {
+    flex-shrink: 1;
+    @include flex-down;
+    justify-content: center;
+    background-color: black;
+    max-height: 50vh;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      // width: 100%;
+
+      &.fit-image {
+        max-width: 100%;
+        max-height: 90vh;
+
+        &:hover {
+          cursor: zoom-in;
+        }
+      }
+
+      &.fill-image {
+        object-fit: cover;
+        width: auto;
+
+        &:hover {
+          cursor: zoom-out;
+        }
+      }
+    }
+
+    .expand {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.7rem 1rem;
+      background-color: #000000;
+      border-radius: 10px;
+      border: 1px solid gray;
+      color: white;
+      font-size: 1.4rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s ease;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &:hover .expand {
+      visibility: visible;
+      opacity: 0.4;
+    }
+  }
+
+  .details {
+    flex-basis: 40%;
+    flex-shrink: 0;
+    @include flex-down;
+
+    .author-details {
+      background-color: $keycolor;
+      flex: 0 1 4rem;
+    }
+
+    .comments {
+      background-color: $keycolorlight;
+      flex: 1 1 auto;
+    }
+
+    .interactions {
+      background-color: $keycolorlighter;
+      flex: 0 1 5rem;
+    }
+
+    .comment-form {
+      background-color: $keycolorlightest;
+      flex: 0 1 4rem;
+      justify-self: flex-end;
+    }
+  }
+}

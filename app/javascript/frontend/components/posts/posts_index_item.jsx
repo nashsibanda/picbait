@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { makeShortTitle } from "../../util/misc_util";
 
-export const PostsIndexItem = props => {
+const PostsIndexItem = props => {
   const { id, title, description, imageUrl, date } = props.post;
   return (
     <li
@@ -18,3 +18,5 @@ export const PostsIndexItem = props => {
     </li>
   );
 };
+
+export default withRouter(PostsIndexItem);

@@ -1,7 +1,8 @@
 import React from "react";
-import { PostsIndexItem } from "./posts_index_item";
+import PostsIndexItem from "./posts_index_item";
+import { withRouter } from "react-router-dom";
 
-export const PostsIndex = props => {
+const PostsIndex = props => {
   const { posts } = props;
   if (!posts) {
     return <h1>NO POSTS :(</h1>;
@@ -18,3 +19,5 @@ export const PostsIndex = props => {
     </div>
   );
 };
+
+export default withRouter(PostsIndex);
