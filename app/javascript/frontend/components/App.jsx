@@ -1,6 +1,7 @@
 import React from "react";
 import SessionGreetingContainer from "./session/session_greeting_container";
-import { Switch, Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Switch, Route } from "react-router";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import Splash from "./splash/splash";
 import SignupFormContainer from "./session/signup_form_container";
