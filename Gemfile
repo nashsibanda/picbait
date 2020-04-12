@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt'
 gem 'aws-sdk-s3'
 gem 'friendly_id'
+gem 'active_storage_validations'
+gem 'faker'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
