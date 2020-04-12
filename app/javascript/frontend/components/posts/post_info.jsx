@@ -1,5 +1,6 @@
 import React from "react";
 import { PostAuthor } from "./post_author";
+import CommentsIndexContainer from "./../comments/comments_index_container";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -15,9 +16,10 @@ class PostInfo extends React.Component {
   }
 
   render() {
-    const { post } = this.props;
+    const { post, comments } = this.props;
     const { fillImage } = this.state;
-    const { id, title, description, date, author_id, imageUrl, author } = post;
+    const author = this.props.author;
+    const { id, title, description, date, imageUrl } = post;
     return (
       <div className="post-info">
         <section className="image">
@@ -40,7 +42,11 @@ class PostInfo extends React.Component {
             {author && <PostAuthor author={author} />}
           </div>
           <div className="comments">
-            <p>Comments</p>
+            {comments ? (
+              <CommentsIndexContainer comments={comments} nested={false} />
+            ) : (
+              <p>No Comments :(</p>
+            )}
           </div>
           <div className="interactions">Interactions (likes, etc.)</div>
           <div className="comment-form">New Comment</div>
