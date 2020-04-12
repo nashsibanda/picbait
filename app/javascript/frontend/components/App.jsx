@@ -22,6 +22,7 @@ const DebugMenu = props => {
         <Link to="/feed">Feed</Link>
         <Link to="/posts/new">New Post</Link>
         <Link to="/posts/1">Post Show</Link>
+        <Link to="/posts/13">Commented Post</Link>
       </div>
     )
   );
