@@ -4,11 +4,22 @@ import PostInfo from "./post_info";
 class PostShow extends React.Component {
   constructor(props) {
     super(props);
+    this.loadPageData = this.loadPageData.bind(this);
+  }
+
+  loadPageData() {
+    const { fetchPost, postId } = this.props;
+    fetchPost(postId);
   }
 
   componentDidMount() {
-    const { fetchPost, postId } = this.props;
-    fetchPost(postId);
+    this.loadPageData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.postId != prevProps.postId) {
+      this.loadPageData();
+    }
   }
 
   render() {
@@ -19,15 +30,6 @@ class PostShow extends React.Component {
         {post && <PostInfo post={post} />}
       </div>
     );
-
-    // if (post) {
-    //   const { id, title, description, date, author_id, imageUrl } = post;
-    //   console.log(post);
-    //   return <h1>Post Show here!</h1>;
-    // } else {
-    //   return null;
-    // }
-    return null;
   }
 }
 

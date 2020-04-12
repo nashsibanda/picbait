@@ -37,7 +37,7 @@ class PostInfo extends React.Component {
         </section>
         <section className="details">
           <div className="author-details">
-            <PostAuthor author={author} />
+            {author && <PostAuthor author={author} />}
           </div>
           <div className="comments">
             <p>Comments</p>

@@ -1,17 +1,27 @@
 import React from "react";
-import ProfileUserInfo from "./profile_user_info";
 import ProfileUserInfoContainer from "./profile_user_info_container";
 import PostsIndex from "../posts/posts_index";
 
 class ProfileShow extends React.Component {
   constructor(props) {
     super(props);
+    this.loadPageData = this.loadPageData.bind(this);
   }
 
-  componentDidMount() {
+  loadPageData() {
     const { fetchUser, userId, fetchPosts } = this.props;
     fetchUser(userId);
     fetchPosts(userId);
+  }
+
+  componentDidMount() {
+    this.loadPageData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.userId != prevProps.userId) {
+      this.loadPageData();
+    }
   }
 
   render() {
