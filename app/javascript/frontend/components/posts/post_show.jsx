@@ -1,5 +1,6 @@
 import React from "react";
 import PostInfo from "./post_info";
+import PostInfoContainer from "./post_info_container";
 
 class PostShow extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class PostShow extends React.Component {
     const post = posts[postId];
     return (
       <div className="post-show-container">
-        {post && <PostInfo post={post} />}
+        {post && <PostInfoContainer post={post} authorSlug={post.authorSlug} />}
       </div>
     );
   }
