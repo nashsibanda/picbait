@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Api::UsersController < ApplicationController
-  before_action :ensure_logged_in, only: %i[index update destroy]
+  before_action :ensure_logged_in, only: %i[update destroy]
   before_action :set_user, only: %i[update destroy]
   before_action :ensure_allowed, only: %i[update destroy]
 
   def index
-    @users = Api::User.all
+    users = logged_in? ? post_comment_users_with_current_user : post_comment_users
+    @users = users
   end
 
   def create
@@ -54,6 +55,27 @@ class Api::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :email, :password, :lowercase_username, :avatar)
+  end
+
+  def post_comment_users
+    comment_users = Api::User
+                    .joins(comments: [:post])
+                    .where("api_comments.api_post_id = #{post_id}")
+                    .distinct
+    author = Api::User
+             .joins(:posts)
+             .where("api_posts.id = #{post_id}")
+             .distinct
+    (comment_users + author)
+  end
+
+  def post_comment_users_with_current_user
+    current_user_relation = Api::User.where(id: current_user.id)
+    (post_comment_users + current_user_relation)
+  end
+
+  def post_id
+    params[:post_id]
   end
 
   def set_user

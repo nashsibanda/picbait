@@ -3,8 +3,12 @@ export const RECEIVE_POST = "RECEIVE_POST";
 export const CLEAR_POST = "CLEAR_POST";
 export const CLEAR_POSTS = "CLEAR_POSTS";
 export const RECEIVE_POST_ERRORS = "RECEIVE_POST_ERRORS";
-import * as PostsAPI from "./../util/posts_api_util.js";
+import * as PostsAPIUtil from "./../util/posts_api_util.js";
+import * as CommentsAPIUtil from "../util/comments_api_util";
+import * as UsersAPIUtil from "../util/users_api_util";
 import { push } from "connected-react-router";
+import { receiveComments } from "./comment_actions.js";
+import { fetchUsers } from "./user_actions.js";
 
 const receivePosts = posts => ({
   type: RECEIVE_POSTS,
@@ -20,9 +24,9 @@ export const clearPosts = () => ({
   type: CLEAR_POSTS,
 });
 
-const clearPost = id => ({
+const clearPost = post => ({
   type: CLEAR_POST,
-  id,
+  post,
 });
 
 const receivePostErrors = errors => ({
@@ -31,15 +35,19 @@ const receivePostErrors = errors => ({
 });
 
 export const fetchPosts = userId => dispatch => {
-  PostsAPI.getPosts(userId).then(posts => dispatch(receivePosts(posts)));
+  PostsAPIUtil.getPosts(userId).then(posts => dispatch(receivePosts(posts)));
 };
 
 export const fetchPost = id => dispatch => {
-  PostsAPI.getPost(id).then(post => dispatch(receivePost(post)));
+  PostsAPIUtil.getPost(id).then(post => dispatch(receivePost(post)));
+  CommentsAPIUtil.getComments(id).then(comments =>
+    dispatch(receiveComments(comments))
+  );
+  dispatch(fetchUsers({ post_id: id }));
 };
 
 export const createPost = (formPost, userSlug) => dispatch => {
-  PostsAPI.postPost(formPost).then(
+  PostsAPIUtil.postPost(formPost).then(
     post => {
       dispatch(receivePost(post));
       dispatch(push(`/users/${userSlug}`));
@@ -49,7 +57,7 @@ export const createPost = (formPost, userSlug) => dispatch => {
 };
 
 export const deletePost = (id, userSlug) => dispatch => {
-  PostsAPI.deletePost(id).then(
+  PostsAPIUtil.deletePost(id).then(
     post => {
       dispatch(clearPost(post));
       dispatch(push(`/users/${userSlug}`));

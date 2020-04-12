@@ -4,7 +4,7 @@ class Api::CommentsController < ApplicationController
   before_action :find_comment, except: %i[index new create]
 
   def index
-    comments = post_id ? Api::Comment.where(parent_comment_id: nil).where(api_post_id: post_id) : Api::Comment.where(parent_comment_id: nil).all
+    comments = post_id ? Api::Comment.includes(:commenter).where(api_post_id: post_id) : Api::Comment.where(parent_comment_id: nil).all
     @comments = comments
     render :index
   end

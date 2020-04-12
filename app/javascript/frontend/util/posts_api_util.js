@@ -20,20 +20,14 @@ export const postPost = post =>
     beforeSend: token,
     contentType: false,
     processData: false,
-    error: response => {
-      console.log(response);
-    },
   });
 
 export const patchPost = (id, post) =>
   $.ajax({
-    type: "post",
+    type: "patch",
     url: `api/posts/${id}`,
     data: post,
     beforeSend: token,
-    error: response => {
-      console.log(response);
-    },
   });
 
 export const deletePost = id =>

@@ -7,7 +7,6 @@ const mapStateToProps = (state, { match }) => {
   return {
     postId,
     posts: state.entities.posts,
-    users: state.entities.users,
   };
 };
 
