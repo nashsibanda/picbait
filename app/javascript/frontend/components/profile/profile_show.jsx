@@ -29,8 +29,13 @@ class ProfileShow extends React.Component {
     const profileUser = users[userId];
     return (
       <div className="profile-show-container">
-        <ProfileUserInfoContainer user={profileUser} ownProfile={ownProfile} />
-        <PostsIndex posts={posts} />
+        {profileUser && (
+          <ProfileUserInfoContainer
+            user={profileUser}
+            ownProfile={ownProfile}
+          />
+        )}
+        {posts && <PostsIndex posts={posts} />}
       </div>
     );
   }
