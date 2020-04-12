@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_060727) do
+ActiveRecord::Schema.define(version: 2020_04_12_082049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 2020_04_11_060727) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "api_comments", force: :cascade do |t|
+    t.string "body", null: false
+    t.integer "parent_comment_id"
+    t.bigint "api_user_id"
+    t.bigint "api_post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["api_post_id"], name: "index_api_comments_on_api_post_id"
+    t.index ["api_user_id"], name: "index_api_comments_on_api_user_id"
   end
 
   create_table "api_posts", force: :cascade do |t|
@@ -75,5 +86,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_060727) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "api_comments", "api_posts"
+  add_foreign_key "api_comments", "api_users"
   add_foreign_key "api_posts", "api_users"
 end

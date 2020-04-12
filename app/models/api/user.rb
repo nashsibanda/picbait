@@ -5,6 +5,7 @@ class Api::User < ApplicationRecord
   attr_reader :password
 
   has_many :posts, class_name: 'Api::Post', foreign_key: 'api_user_id'
+  has_many :comments, class_name: 'Api::Comment', foreign_key: 'api_user_id'
   has_one_attached :avatar
 
   after_initialize :ensure_session_token
@@ -13,8 +14,8 @@ class Api::User < ApplicationRecord
   validate :no_at_in_username
   validates_uniqueness_of :username, :email, on: :create, message: 'is already in use. Please use another one!'
   validates_length_of :password, within: 6..20, on: :create, message: 'must be between 6 and 20 characters'
-  validates_length_of :bio, maximum: 200, message: "must be less than 200 characters"
-  validates_length_of :username, maximum: 50, message: "must be less than 50 characters"
+  validates_length_of :bio, maximum: 200, message: 'must be less than 200 characters'
+  validates_length_of :username, maximum: 50, message: 'must be less than 50 characters'
   friendly_id :username, use: :slugged
   validates :avatar, size: { less_than: 1.megabytes, message: 'must be less than 1MB (got to watch that bandwidth!)' }
 
