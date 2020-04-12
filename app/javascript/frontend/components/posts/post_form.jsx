@@ -13,7 +13,6 @@ class PostForm extends React.Component {
     this.handleImage = this.handleImage.bind(this);
     this.updateProperty = this.updateProperty.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.redirectToFeed = this.redirectToFeed.bind(this);
   }
 
   handleImage(e) {
@@ -41,16 +40,12 @@ class PostForm extends React.Component {
     formPost.append("post[description]", description);
     formPost.append("post[image]", imageFile, makeFilename(imageFile.name));
     formPost.append("post[api_user_id]", this.props.currentUser.id);
-    this.props.processForm(formPost);
-    this.redirectToFeed();
-  }
-
-  redirectToFeed() {
-    this.props.history.push(`/users/${this.props.currentUser.slug}`);
+    const userSlug = this.props.currentUser.slug;
+    this.props.processForm(formPost, userSlug);
   }
 
   render() {
-    const { formType } = this.props;
+    const { formType, errors } = this.props;
     const { title, description, imageUrl } = this.state;
     return (
       <div className="post-form-container">
@@ -77,10 +72,6 @@ class PostForm extends React.Component {
               <img src={imageUrl}></img>
             </div>
           )}
-
-          {/* <div>
-            <img src="https://via.placeholder.com/1280x780.jpg"></img>
-          </div> */}
 
           <div>
             <label htmlFor="post-form-title">Title</label>
@@ -110,6 +101,13 @@ class PostForm extends React.Component {
               Add Post
             </button>
           </div>
+          {errors.length > 0 && (
+            <ul className="session-errors">
+              {errors.map(error => {
+                return <li key={error}>{error}</li>;
+              })}
+            </ul>
+          )}
         </form>
       </div>
     );
