@@ -25,9 +25,10 @@ class CommentsIndexItem extends React.Component {
   }
 
   render() {
-    const { body, id, parentCommentId, date } = this.props.comment;
+    const { body, date, timeAgo } = this.props.comment;
     const { slug, avatarUrl, username } = this.props.commenter;
     const { children } = this.props;
+    const { displayChildComments } = this.state;
     return (
       <div className="comment">
         <div className="avatar">
@@ -47,19 +48,30 @@ class CommentsIndexItem extends React.Component {
             <span className="body">{body}</span>
           </div>
           <div className="stats">
-            <span className="date">{date}</span>
+            <span className="date" title={date}>
+              {timeAgo}
+            </span>
             <span className="like-button">1 like</span>
             <span className="reply-button">Reply</span>
           </div>
           {children.length > 0 && (
             <div className="child-comments">
-              <div
-                className="child-comments-toggle"
-                onClick={this.toggleChildComments}
-              >
-                Show Child Comments
+              <div className="child-comments-toggle">
+                {displayChildComments ? (
+                  <button type="button" onClick={this.toggleChildComments}>
+                    <i className="fas fa-minus"></i>
+                    {children.length + " "}
+                    {children.length === 1 ? "Reply" : "Replies"}
+                  </button>
+                ) : (
+                  <button type="button" onClick={this.toggleChildComments}>
+                    <i className="fas fa-plus"></i>
+                    {children.length + " "}
+                    {children.length === 1 ? "Reply" : "Replies"}
+                  </button>
+                )}
               </div>
-              {this.state.displayChildComments && (
+              {displayChildComments && (
                 <CommentsIndexContainer comments={children} nested={true} />
               )}
             </div>
