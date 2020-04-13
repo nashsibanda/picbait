@@ -93,9 +93,31 @@
     }
 
     .interactions {
-      background-color: $keycolorlighter;
       flex: 0 0 5rem;
       border-bottom: 1px solid $graylightest;
+      padding: 1rem;
+
+      .likes-button {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: $graydark;
+        @include flex-across;
+        align-items: flex-start;
+
+        i {
+          font-size: 1.3rem;
+          margin-right: 1rem;
+
+          &.liked {
+            color: $salmon;
+          }
+
+          &:hover,
+          &:focus {
+            color: $blue;
+          }
+        }
+      }
     }
 
     .comment-form {
@@ -109,13 +131,14 @@
 .post-author {
   @include flex-across;
   justify-content: flex-start;
-  padding: 1rem;
+  padding: 0.5rem;
 
   & > .avatar {
     flex-basis: 17%;
-    margin-right: 1rem;
-    box-sizing: border-box;
+    margin-right: 0.3rem;
     align-self: flex-start;
+    padding: 0.5rem;
+    padding-top: 0.8rem;
 
     .container {
       width: 100%;
@@ -127,6 +150,11 @@
         content: "";
         display: block;
         padding-bottom: 100%;
+      }
+
+      &:hover,
+      &:focus {
+        box-shadow: 0px 0px 6px $keycolordarker;
       }
     }
   }

@@ -7,17 +7,39 @@ class PostInfo extends React.Component {
     super(props);
     this.state = {
       fillImage: true,
+      liked: this.props.likes[this.props.currentUser.id] ? true : false,
+      likesCount: Object.keys(this.props.likes).length,
     };
     this.toggleFillImage = this.toggleFillImage.bind(this);
+    this.toggleLiked = this.toggleLiked.bind(this);
   }
 
   toggleFillImage(e) {
     this.setState({ fillImage: !this.state.fillImage });
   }
 
+  toggleLiked(e) {
+    const { liked, likesCount } = this.state;
+    const {
+      createPostLike,
+      deletePostLike,
+      likes,
+      currentUser,
+      postId,
+    } = this.props;
+    if (liked) {
+      const likeId = likes[currentUser.id].id;
+      deletePostLike(likeId);
+      this.setState({ liked: false, likesCount: likesCount - 1 });
+    } else {
+      createPostLike(postId);
+      this.setState({ liked: true, likesCount: likesCount + 1 });
+    }
+  }
+
   render() {
-    const { post, comments } = this.props;
-    const { fillImage } = this.state;
+    const { post, comments, likes } = this.props;
+    const { fillImage, liked, likesCount } = this.state;
     const author = this.props.author;
     const { id, title, description, date, imageUrl } = post;
     return (
@@ -48,7 +70,18 @@ class PostInfo extends React.Component {
               <p>No Comments :(</p>
             )}
           </div>
-          <div className="interactions">Interactions (likes, etc.)</div>
+          <div className="interactions">
+            <button
+              type="button"
+              onClick={this.toggleLiked}
+              className="likes-button"
+            >
+              <i className={`fas fa-heart ${liked ? "liked" : "unliked"}`}></i>
+              {`liked by ${likesCount > 0 ? likesCount : "no"} ${
+                likesCount == 1 ? "user" : "users"
+              }`}
+            </button>
+          </div>
           <div className="comment-form">New Comment</div>
         </section>
       </div>
