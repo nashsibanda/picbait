@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_082049) do
+ActiveRecord::Schema.define(version: 2020_04_13_093838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2020_04_12_082049) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["api_post_id"], name: "index_api_comments_on_api_post_id"
     t.index ["api_user_id"], name: "index_api_comments_on_api_user_id"
+  end
+
+  create_table "api_likes", force: :cascade do |t|
+    t.bigint "api_user_id"
+    t.string "likeable_type"
+    t.bigint "likeable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["api_user_id"], name: "index_api_likes_on_api_user_id"
+    t.index ["likeable_type", "likeable_id"], name: "index_api_likes_on_likeable_type_and_likeable_id"
   end
 
   create_table "api_posts", force: :cascade do |t|
@@ -88,5 +98,6 @@ ActiveRecord::Schema.define(version: 2020_04_12_082049) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_comments", "api_posts"
   add_foreign_key "api_comments", "api_users"
+  add_foreign_key "api_likes", "api_users"
   add_foreign_key "api_posts", "api_users"
 end

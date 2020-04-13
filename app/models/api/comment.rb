@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::Comment < ApplicationRecord
+  include Likeable
   belongs_to :post, class_name: 'Api::Post', foreign_key: 'api_post_id'
   belongs_to :commenter, class_name: 'Api::User', foreign_key: 'api_user_id'
   has_many :child_comments, class_name: 'Api::Comment', foreign_key: 'parent_comment_id'

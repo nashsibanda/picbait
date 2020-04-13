@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::Post < ApplicationRecord
+  include Likeable
   belongs_to :author, class_name: 'Api::User', foreign_key: 'api_user_id'
   has_one_attached :image
   has_many :comments, class_name: 'Api::Comment', foreign_key: 'api_post_id'
