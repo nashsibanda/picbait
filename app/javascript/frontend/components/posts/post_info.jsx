@@ -74,7 +74,7 @@ class PostInfo extends React.Component {
             <button
               type="button"
               onClick={this.toggleLiked}
-              className="likes-button"
+              className="likes-button index"
             >
               <i className={`fas fa-heart ${liked ? "liked" : "unliked"}`}></i>
               {`liked by ${likesCount > 0 ? likesCount : "no"} ${

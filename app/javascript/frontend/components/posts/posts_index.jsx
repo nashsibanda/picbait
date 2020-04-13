@@ -1,9 +1,10 @@
 import React from "react";
 import PostsIndexItem from "./posts_index_item";
+import PostsIndexItemContainer from "./posts_index_item_container";
 import { withRouter } from "react-router-dom";
 
 const PostsIndex = props => {
-  const { posts } = props;
+  const { posts, likes } = props;
   if (!posts) {
     return <h1>NO POSTS :(</h1>;
   }
@@ -13,7 +14,14 @@ const PostsIndex = props => {
       <ul className="posts-index">
         {postKeys.map(postId => {
           const post = posts[postId];
-          return <PostsIndexItem post={post} key={postId} />;
+          return (
+            <PostsIndexItemContainer
+              post={post}
+              postId={postId}
+              key={postId}
+              likes={likes[postId]}
+            />
+          );
         })}
       </ul>
     </div>

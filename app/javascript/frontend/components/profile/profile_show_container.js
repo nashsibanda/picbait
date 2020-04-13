@@ -10,6 +10,7 @@ const mapStateToProps = (state, { match }) => {
     posts: state.entities.posts,
     userId,
     ownProfile: userId === state.session.currentUser.slug,
+    likes: state.entities.likes.posts,
   };
 };
 

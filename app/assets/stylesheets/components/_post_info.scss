@@ -96,34 +96,41 @@
       flex: 0 0 5rem;
       border-bottom: 1px solid $graylightest;
       padding: 1rem;
-
-      .likes-button {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: $graydark;
-        @include flex-across;
-        align-items: flex-start;
-
-        i {
-          font-size: 1.3rem;
-          margin-right: 1rem;
-
-          &.liked {
-            color: $salmon;
-          }
-
-          &:hover,
-          &:focus {
-            color: $blue;
-          }
-        }
-      }
     }
 
     .comment-form {
       background-color: $keycolorlightest;
       flex: 0 0 4rem;
       justify-self: flex-end;
+    }
+  }
+}
+
+.likes-button {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $graydark;
+  @include flex-across;
+  align-items: flex-start;
+
+  &.index i {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  i {
+    font-size: 1.3rem;
+    margin-right: 1rem;
+
+    &.liked {
+      color: $salmon;
+    }
+
+    &:hover,
+    &:focus {
+      color: $blue;
     }
   }
 }
