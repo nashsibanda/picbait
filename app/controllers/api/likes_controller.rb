@@ -3,6 +3,10 @@
 class Api::LikesController < ApplicationController
   before_action :ensure_logged_in
 
+  def show
+    @like = Api::Like.find(params[:id])
+  end
+
   def create
     if comment_id
       parent = Api::Comment.find(comment_id)
@@ -13,7 +17,7 @@ class Api::LikesController < ApplicationController
     @like.api_user_id = current_user.id
     @like.likeable = parent
     if @like.save
-      render json: @like
+      render @like
     else
       render json: @like.errors.full_messages, status: 422
     end
@@ -23,7 +27,7 @@ class Api::LikesController < ApplicationController
     @like = Api::Like.find(params[:id])
     if @like && @like.liker == current_user
       @like.destroy
-      render json: @like
+      render @like
     end
   end
 
