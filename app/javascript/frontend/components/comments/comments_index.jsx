@@ -24,18 +24,21 @@ class CommentsIndex extends React.Component {
   }
 
   render() {
-    const { comments, users, nested } = this.props;
+    const { users, nested } = this.props;
     return (
       <ul className="comments-index">
         {this.commentsArray().map(comment => {
           return (
-            <CommentsIndexItem
-              comment={comment}
-              key={comment.id}
-              commenter={users[comment.commenter]}
-              children={nested ? [] : this.commentsArray(comment.id)}
-              // nested={nested}
-            />
+            users[comment.commenter] &&
+            comment && (
+              <CommentsIndexItem
+                comment={comment}
+                key={comment.id}
+                commenter={users[comment.commenter]}
+                children={nested ? [] : this.commentsArray(comment.id)}
+                // nested={nested}
+              />
+            )
           );
         })}
       </ul>
