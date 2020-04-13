@@ -5,6 +5,7 @@ json.extract! post, :id, :title, :description, :created_at
 json.authorSlug post.author.slug
 json.imageUrl rails_blob_path(post.image, disposition: 'attachment')
 json.date post.created_at.strftime('%H:%M, %a %d %b %Y')
+json.likes post.likes
 # if full_post_info
 #   json.author do
 #     json.id post.author.id
