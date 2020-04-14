@@ -58,7 +58,9 @@ class PostsIndexItem extends React.Component {
                   className={`fas fa-heart ${liked ? "liked" : "unliked"}`}
                 ></i>
               </button>
-              <div className="likes-count">{likesCount}</div>
+              <div className={`likes-count ${liked ? "liked" : "unliked"}`}>
+                {likesCount}
+              </div>
             </div>
           </div>
         </Link>

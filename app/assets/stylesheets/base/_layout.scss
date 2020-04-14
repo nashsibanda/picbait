@@ -18,7 +18,8 @@ main {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+textarea {
   padding: 0.8rem;
   background-color: white;
   border: 1px solid $graylight;
@@ -26,9 +27,14 @@ input[type="email"] {
   box-shadow: 2px 2px $keycolorlighter;
 }
 
+textarea {
+  resize: none;
+}
+
 input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus {
+input[type="email"]:focus,
+textarea {
   box-shadow: 2px 2px $purple;
 }
 

@@ -96,10 +96,11 @@
       flex: 0 0 5rem;
       border-bottom: 1px solid $graylightest;
       padding: 1rem;
+      @include flex-across;
+      justify-content: flex-start;
     }
 
     .comment-form {
-      background-color: $keycolorlightest;
       flex: 0 0 4rem;
       justify-self: flex-end;
     }
@@ -257,6 +258,7 @@
         .stats {
           @include flex-across;
           justify-content: flex-start;
+          align-items: flex-start;
           color: $graydark;
           font-size: 0.8rem;
           margin-bottom: $margin-between-comments;
@@ -272,6 +274,7 @@
           .like-display,
           .reply-button {
             font-weight: 700;
+            flex-shrink: 0;
           }
         }
 
@@ -289,5 +292,47 @@
         }
       }
     }
+  }
+}
+
+.comment-form {
+  @include flex-across;
+  justify-content: flex-start;
+  $submit-button-width: 3rem;
+  overflow: visible;
+  position: relative;
+
+  .replying-banner {
+    position: absolute;
+    top: -1.6rem;
+    width: 100%;
+    background-color: $graydarker;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.3rem 1rem;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  textarea {
+    flex-basis: calc(100% - #{$submit-button-width});
+    height: 100%;
+    border: none;
+    box-shadow: none;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  button {
+    flex-basis: $submit-button-width;
+    margin-left: 0.5rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: $keycolordark;
   }
 }

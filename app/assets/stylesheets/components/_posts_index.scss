@@ -51,6 +51,10 @@
           font-weight: 700;
           color: $graydark;
           flex-shrink: 0;
+
+          .likes-count.liked {
+            color: $salmon;
+          }
         }
 
         .title {
