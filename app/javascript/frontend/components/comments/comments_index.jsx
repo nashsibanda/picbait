@@ -24,7 +24,7 @@ class CommentsIndex extends React.Component {
   }
 
   render() {
-    const { users, nested } = this.props;
+    const { users, nested, updateParent } = this.props;
     return (
       <ul className="comments-index">
         {this.commentsArray().map(comment => {
@@ -36,6 +36,7 @@ class CommentsIndex extends React.Component {
                 key={comment.id}
                 commenter={users[comment.commenter]}
                 children={nested ? [] : this.commentsArray(comment.id)}
+                updateParent={updateParent}
                 // nested={nested}
               />
             )

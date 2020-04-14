@@ -14,6 +14,16 @@ class CommentsIndexItem extends React.Component {
     };
     this.toggleChildComments = this.toggleChildComments.bind(this);
     this.toggleLiked = this.toggleLiked.bind(this);
+    this.sendParentId = this.sendParentId.bind(this);
+  }
+
+  sendParentId(e) {
+    const { updateParent, comment } = this.props;
+    const parentId = comment.parentCommentId
+      ? comment.parentCommentId
+      : comment.id;
+    const { commenter } = comment;
+    updateParent(parentId, commenter);
   }
 
   toggleLiked(e) {
@@ -51,7 +61,7 @@ class CommentsIndexItem extends React.Component {
   render() {
     const { body, date, timeAgo } = this.props.comment;
     const { slug, avatarUrl, username } = this.props.commenter;
-    const { children } = this.props;
+    const { children, updateParent } = this.props;
     const { displayChildComments, liked, likesCount } = this.state;
     return (
       <div className="comment">
@@ -87,7 +97,9 @@ class CommentsIndexItem extends React.Component {
             <span className={`like-display ${likesCount > 0 ? "" : "hidden"}`}>
               {`${likesCount} ${likesCount > 1 ? "likes" : "like"}`}
             </span>
-            <span className="reply-button">Reply</span>
+            <span className="reply-button" onClick={this.sendParentId}>
+              Reply
+            </span>
           </div>
           {children.length > 0 && (
             <div className="child-comments">
@@ -107,7 +119,11 @@ class CommentsIndexItem extends React.Component {
                 )}
               </div>
               {displayChildComments && (
-                <CommentsIndexContainer comments={children} nested={true} />
+                <CommentsIndexContainer
+                  comments={children}
+                  nested={true}
+                  updateParent={updateParent}
+                />
               )}
             </div>
           )}

@@ -12,7 +12,7 @@ class Api::CommentsController < ApplicationController
   def show; end
 
   def create
-    @comment = Api::Comment.new(params[:comment])
+    @comment = Api::Comment.new(comment_params)
     if @comment.save
       render @comment
     else
@@ -22,7 +22,7 @@ class Api::CommentsController < ApplicationController
 
   def update
     if @comment
-      if @comment.update_attributes(params[:comment])
+      if @comment.update_attributes(comment_params)
         redirect_to @comment
       else
         render json: @comment.errors.full_messages, status: 422

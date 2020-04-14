@@ -16,8 +16,10 @@ export const postComment = comment =>
   $.ajax({
     type: "post",
     url: "api/comments",
-    data: { comment },
+    data: comment,
     beforeSend: token,
+    contentType: false,
+    processData: false,
   });
 
 export const patchComment = (id, comment) =>

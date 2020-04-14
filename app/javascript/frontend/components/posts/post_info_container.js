@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import PostInfo from "./post_info";
 import { createPostLike, deletePostLike } from "../../actions/like_actions";
+import { createComment } from "../../actions/comment_actions";
 
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.post;
@@ -16,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   createPostLike: postId => dispatch(createPostLike(postId)),
   deletePostLike: id => dispatch(deletePostLike(id)),
+  createComment: formComment => dispatch(createComment(formComment)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostInfo);
