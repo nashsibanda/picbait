@@ -1,5 +1,5 @@
 import React from "react";
-import CommentsIndexItem from "./comments_index_item";
+import CommentsIndexItemContainer from "./comments_index_item_container";
 
 class CommentsIndex extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class CommentsIndex extends React.Component {
           return (
             users[comment.commenter] &&
             comment && (
-              <CommentsIndexItem
+              <CommentsIndexItemContainer
                 comment={comment}
                 key={comment.id}
                 commenter={users[comment.commenter]}

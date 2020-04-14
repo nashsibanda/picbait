@@ -9,8 +9,32 @@ class CommentsIndexItem extends React.Component {
     this.goToUserPage = this.goToUserPage.bind(this);
     this.state = {
       displayChildComments: false,
+      likesCount: Object.keys(this.props.likes).length,
+      liked: this.props.likes[this.props.currentUser.id] ? true : false,
     };
     this.toggleChildComments = this.toggleChildComments.bind(this);
+    this.toggleLiked = this.toggleLiked.bind(this);
+  }
+
+  toggleLiked(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    const { liked, likesCount } = this.state;
+    const {
+      createCommentLike,
+      deleteCommentLike,
+      likes,
+      currentUser,
+    } = this.props;
+    const { id } = this.props.comment;
+    if (liked) {
+      const likeId = likes[currentUser.id].id;
+      deleteCommentLike(likeId);
+      this.setState({ liked: false, likesCount: likesCount - 1 });
+    } else {
+      createCommentLike(id);
+      this.setState({ liked: true, likesCount: likesCount + 1 });
+    }
   }
 
   goToUserPage(e) {
@@ -28,7 +52,7 @@ class CommentsIndexItem extends React.Component {
     const { body, date, timeAgo } = this.props.comment;
     const { slug, avatarUrl, username } = this.props.commenter;
     const { children } = this.props;
-    const { displayChildComments } = this.state;
+    const { displayChildComments, liked, likesCount } = this.state;
     return (
       <div className="comment">
         <div className="avatar">
@@ -41,17 +65,28 @@ class CommentsIndexItem extends React.Component {
           ></div>
         </div>
         <div className="details">
-          <div className="main-text">
-            <span className="username">
-              <Link to={`/users/${slug}`}>{username}</Link>
-            </span>
-            <span className="body">{body}</span>
+          <div className="main-body">
+            <div className="main-text">
+              <span className="username">
+                <Link to={`/users/${slug}`}>{username}</Link>
+              </span>
+              <span className="body">{body}</span>
+            </div>
+            <div className="like-button-container">
+              <button className="likes-button" onClick={this.toggleLiked}>
+                <i
+                  className={`fas fa-heart ${liked ? "liked" : "unliked"}`}
+                ></i>
+              </button>
+            </div>
           </div>
           <div className="stats">
             <span className="date" title={date}>
               {timeAgo}
             </span>
-            <span className="like-button">1 like</span>
+            <span className={`like-display ${likesCount > 0 ? "" : "hidden"}`}>
+              {`${likesCount} ${likesCount > 1 ? "likes" : "like"}`}
+            </span>
             <span className="reply-button">Reply</span>
           </div>
           {children.length > 0 && (
