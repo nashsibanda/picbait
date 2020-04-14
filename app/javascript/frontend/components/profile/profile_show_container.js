@@ -1,6 +1,6 @@
 import { fetchPosts } from "../../actions/post_actions";
 import { connect } from "react-redux";
-import { fetchUser } from "../../actions/user_actions";
+import { fetchUsers } from "../../actions/user_actions";
 import ProfileShow from "./profile_show";
 import { fetchFollowers, fetchFollowings } from "../../actions/follow_actions";
 
@@ -19,7 +19,7 @@ const mapStateToProps = (state, { match }) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: userId => dispatch(fetchPosts(userId)),
-  fetchUser: userId => dispatch(fetchUser(userId)),
+  fetchUsers: filters => dispatch(fetchUsers(filters)),
   fetchFollowers: userId => dispatch(fetchFollowers(userId)),
   fetchFollowings: userId => dispatch(fetchFollowings(userId)),
 });

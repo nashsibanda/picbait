@@ -10,13 +10,13 @@ class ProfileShow extends React.Component {
 
   loadPageData() {
     const {
-      fetchUser,
+      fetchUsers,
       userId,
       fetchPosts,
       fetchFollowers,
       fetchFollowings,
     } = this.props;
-    fetchUser(userId);
+    fetchUsers({ user_id: userId });
     fetchPosts(userId);
     fetchFollowings(userId);
     fetchFollowers(userId);

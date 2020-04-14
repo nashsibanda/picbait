@@ -1,5 +1,6 @@
 import React from "react";
 import { makeFilename } from "../../util/misc_util";
+import FollowersIndexContainer from "./../followers/followers_index_container";
 
 class ProfileUserInfo extends React.Component {
   constructor(props) {
@@ -16,6 +17,26 @@ class ProfileUserInfo extends React.Component {
     this.submitNewAvatar = this.submitNewAvatar.bind(this);
     this.clearNewAvatar = this.clearNewAvatar.bind(this);
     this.toggleFollow = this.toggleFollow.bind(this);
+    this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this);
+    this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this);
+  }
+
+  // componentDidMount() {
+  //   this.props.fetchUsers({ user_id: this.props.user.slug });
+  // }
+
+  toggleFollowersIndex(e) {
+    this.setState({
+      showFollowers: !this.state.showFollowers,
+      showFollowing: false,
+    });
+  }
+
+  toggleFollowingIndex(e) {
+    this.setState({
+      showFollowing: !this.state.showFollowing,
+      showFollowers: false,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -28,6 +49,9 @@ class ProfileUserInfo extends React.Component {
       this.setState({
         followingCount: Object.keys(this.props.following).length,
       });
+    }
+    if (this.props.user != prevProps.user) {
+      this.setState({ showFollowing: false, showFollowers: false });
     }
   }
 
@@ -76,9 +100,22 @@ class ProfileUserInfo extends React.Component {
   }
 
   render() {
-    const { ownProfile, followStatus } = this.props;
+    const {
+      ownProfile,
+      followStatus,
+      user,
+      followers,
+      following,
+      users,
+    } = this.props;
     const { username, bio, postCount, avatarUrl } = this.props.user;
-    const { newAvatarUrl, followerCount, followingCount } = this.state;
+    const {
+      newAvatarUrl,
+      followerCount,
+      followingCount,
+      showFollowers,
+      showFollowing,
+    } = this.state;
     return (
       <div className="profile-user-info">
         <section className="avatar">
@@ -144,14 +181,40 @@ class ProfileUserInfo extends React.Component {
             </span>
           </div>
           <div className="bio">{bio}</div>
-          <div className="follows">
-            <button className="follower-users">
+          <div className="follows-buttons">
+            <button
+              className="follower-users"
+              onClick={this.toggleFollowersIndex}
+            >
               {followerCount} Followers
             </button>
-            <button className="following-users">
+            <button
+              className="following-users"
+              onClick={this.toggleFollowingIndex}
+            >
               Following {followingCount}
             </button>
           </div>
+          {showFollowers && users && followers && (
+            <div className="follows-modal" onClick={this.toggleFollowersIndex}>
+              <FollowersIndexContainer
+                user={user}
+                list={"Followers"}
+                users={users}
+                follows={followers}
+              />
+            </div>
+          )}
+          {showFollowing && users && following && (
+            <div className="follows-modal" onClick={this.toggleFollowingIndex}>
+              <FollowersIndexContainer
+                user={user}
+                list={"Following"}
+                users={users}
+                follows={following}
+              />
+            </div>
+          )}
         </section>
       </div>
     );
