@@ -59,10 +59,13 @@ class Api::UsersController < ApplicationController
 
   def post_comment_users
     comment_users = Api::User
+                    .includes(:avatar_attachment)
                     .joins(comments: [:post])
                     .where("api_comments.api_post_id = #{post_id}")
                     .distinct
+
     author = Api::User
+             .includes(:avatar_attachment)
              .joins(:posts)
              .where("api_posts.id = #{post_id}")
              .distinct
