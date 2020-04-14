@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import DOMPurify from "dompurify";
 
 export const token = function (xhr) {
   xhr.setRequestHeader(
@@ -30,4 +31,19 @@ export const makeShortTitle = title => {
   } else {
     return title;
   }
+};
+
+export const makeCommentLinks = commentBody => {
+  const cleanBody = DOMPurify.sanitize(commentBody);
+  const tagRegExp = /\B([@])[\w.-]+(?!\s)[\w-]/g;
+  const replacer = match => {
+    const newStr =
+      "<a class=comment-profile-link href=#/users/" +
+      match.slice(1) +
+      ">" +
+      match +
+      "</a>";
+    return newStr;
+  };
+  return cleanBody.replace(tagRegExp, replacer);
 };

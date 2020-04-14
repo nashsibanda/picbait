@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { push } from "connected-react-router";
 import CommentsIndexContainer from "./comments_index_container";
+import { makeCommentLinks } from "../../util/misc_util";
+import parse from "html-react-parser";
 
 class CommentsIndexItem extends React.Component {
   constructor(props) {
@@ -80,7 +82,7 @@ class CommentsIndexItem extends React.Component {
               <span className="username">
                 <Link to={`/users/${slug}`}>{username}</Link>
               </span>
-              <span className="body">{body}</span>
+              <span className="body">{parse(makeCommentLinks(body))}</span>
             </div>
             <div className="like-button-container">
               <button className="likes-button" onClick={this.toggleLiked}>

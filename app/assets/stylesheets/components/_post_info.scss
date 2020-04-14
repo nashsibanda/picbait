@@ -231,6 +231,10 @@
 
           .main-text {
             flex-basis: calc(100% - #{$comment-likes-button-width} - 0.4rem);
+
+            .comment-profile-link {
+              font-weight: 700;
+            }
           }
 
           .like-button-container {
