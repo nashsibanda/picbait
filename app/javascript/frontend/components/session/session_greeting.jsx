@@ -7,7 +7,7 @@ const SessionGreeting = ({ currentUser, logout }) => (
       <div className="vertical-menu">
         <p>
           Welcome,{" "}
-          <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link>
+          <Link to={`/users/${currentUser.slug}`}>{currentUser.username}</Link>
         </p>
         <button type="button" onClick={logout} className="header-button">
           Log Out
