@@ -2,6 +2,7 @@ import { fetchPosts } from "../../actions/post_actions";
 import { connect } from "react-redux";
 import { fetchUser } from "../../actions/user_actions";
 import ProfileShow from "./profile_show";
+import { fetchFollowers, fetchFollowings } from "../../actions/follow_actions";
 
 const mapStateToProps = (state, { match }) => {
   const userId = match.params.userId;
@@ -11,12 +12,16 @@ const mapStateToProps = (state, { match }) => {
     userId,
     ownProfile: userId === state.session.currentUser.slug,
     likes: state.entities.likes.posts,
+    followers: state.entities.follows.followers,
+    following: state.entities.follows.following,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: userId => dispatch(fetchPosts(userId)),
   fetchUser: userId => dispatch(fetchUser(userId)),
+  fetchFollowers: userId => dispatch(fetchFollowers(userId)),
+  fetchFollowings: userId => dispatch(fetchFollowings(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileShow);

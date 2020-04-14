@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::CommentsController < ApplicationController
+  before_action :ensure_logged_in, only: %i[create update destroy]
   before_action :find_comment, except: %i[index new create]
 
   def index

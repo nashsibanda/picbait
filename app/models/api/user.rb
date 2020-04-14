@@ -6,6 +6,13 @@ class Api::User < ApplicationRecord
 
   has_many :posts, class_name: 'Api::Post', foreign_key: 'api_user_id', dependent: :destroy
   has_many :comments, class_name: 'Api::Comment', foreign_key: 'api_user_id', dependent: :destroy
+
+  has_many :in_follows, class_name: 'Api::Follow', foreign_key: 'followee_id'
+  has_many :out_follows, class_name: 'Api::Follow', foreign_key: 'follower_id'
+
+  has_many :followers, through: :in_follows, source: :follower, dependent: :destroy
+  has_many :followees, through: :out_follows, source: :followee
+
   has_one_attached :avatar
 
   after_initialize :ensure_session_token

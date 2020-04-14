@@ -29,6 +29,14 @@ PARENT_COMMENT_IDS = (1..2003).to_a.reject { |x| x === 2 }
 COMMENT_IDS = (1..2003).to_a + (26_104..33_987).to_a
 CHILD_COMMENT_IDS = (26_104..33_987).to_a
 
+# USER_IDS.each do |user_id|
+#   rand_num = rand(30..60)
+#   users_to_follow = USER_IDS.sample(rand_num).reject { |x| x == user_id }
+#   users_to_follow.each do |followee_id|
+#     Api::Follow.create(follower_id: user_id, followee_id: followee_id)
+#   end
+# end
+
 # Seed comment likes
 # USER_IDS.each do |user_id|
 #   parent_comments_to_like = PARENT_COMMENT_IDS.sample(100)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::LikesController < ApplicationController
-  before_action :ensure_logged_in
+  before_action :ensure_logged_in, only: %i[create destroy]
 
   def show
     @like = Api::Like.find(params[:id])

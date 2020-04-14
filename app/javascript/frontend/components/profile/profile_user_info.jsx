@@ -7,10 +7,28 @@ class ProfileUserInfo extends React.Component {
     this.state = {
       newAvatarUrl: "",
       newAvatarFile: null,
+      followerCount: Object.keys(this.props.followers).length,
+      followingCount: Object.keys(this.props.following).length,
+      showFollowers: false,
+      showFollowing: false,
     };
     this.handleNewAvatar = this.handleNewAvatar.bind(this);
     this.submitNewAvatar = this.submitNewAvatar.bind(this);
     this.clearNewAvatar = this.clearNewAvatar.bind(this);
+    this.toggleFollow = this.toggleFollow.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.followers != prevProps.followers) {
+      this.setState({
+        followerCount: Object.keys(this.props.followers).length,
+      });
+    }
+    if (this.props.following != prevProps.following) {
+      this.setState({
+        followingCount: Object.keys(this.props.following).length,
+      });
+    }
   }
 
   clearNewAvatar(e) {
@@ -47,10 +65,20 @@ class ProfileUserInfo extends React.Component {
     this.setState({ newAvatarUrl: "", newAvatarFile: null });
   }
 
+  toggleFollow(e) {
+    const { followStatus, createFollow, deleteFollow, user } = this.props;
+    const { id } = user;
+    if (followStatus) {
+      deleteFollow(id);
+    } else {
+      createFollow(id);
+    }
+  }
+
   render() {
-    const { ownProfile } = this.props;
-    const { username, bio, id, postCount, avatarUrl } = this.props.user;
-    const { newAvatarUrl } = this.state;
+    const { ownProfile, followStatus } = this.props;
+    const { username, bio, postCount, avatarUrl } = this.props.user;
+    const { newAvatarUrl, followerCount, followingCount } = this.state;
     return (
       <div className="profile-user-info">
         <section className="avatar">
@@ -99,7 +127,15 @@ class ProfileUserInfo extends React.Component {
           <div className="title">
             <span className="username">{username}</span>
             <span className="follow">
-              <button>Follow</button>
+              <button
+                type="button"
+                className={`follow-button ${
+                  followStatus ? "following" : "not-following"
+                }`}
+                onClick={this.toggleFollow}
+              >
+                {followStatus ? "Following" : "Follow"}
+              </button>
             </span>
           </div>
           <div className="stats">
@@ -108,6 +144,14 @@ class ProfileUserInfo extends React.Component {
             </span>
           </div>
           <div className="bio">{bio}</div>
+          <div className="follows">
+            <button className="follower-users">
+              {followerCount} Followers
+            </button>
+            <button className="following-users">
+              Following {followingCount}
+            </button>
+          </div>
         </section>
       </div>
     );

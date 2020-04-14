@@ -5,7 +5,7 @@ class Api::PostsController < ApplicationController
   before_action :ensure_allowed, only: %i[update destroy]
 
   def index
-    posts = user_id ? Api::Post.includes(:likes, :image_attachment).where(api_user_id: user_id) : Api::Post.all
+    posts = user_id ? Api::Post.includes(:likes, image_attachment: [:blob]).where(api_user_id: user_id) : Api::Post.all
     @posts = posts
     render :index
   end
@@ -54,7 +54,7 @@ class Api::PostsController < ApplicationController
   end
 
   def find_post
-    @post = Api::Post.includes(:author, :likes, :image_attachment).find_by(id: params[:id])
+    @post = Api::Post.includes(:author, :likes, image_attachment: [:blob]).find_by(id: params[:id])
   end
 
   def ensure_allowed

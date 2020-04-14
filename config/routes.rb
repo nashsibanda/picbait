@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
     resources :users, only: %i[index create show update destroy] do
       resources :posts, only: :index
+      resource :follow, only: %i[create destroy]
+      resources :follows, only: :index
     end
     resource :session, only: %i[create destroy]
     resources :likes, only: :destroy

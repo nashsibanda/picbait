@@ -9,9 +9,17 @@ class ProfileShow extends React.Component {
   }
 
   loadPageData() {
-    const { fetchUser, userId, fetchPosts } = this.props;
+    const {
+      fetchUser,
+      userId,
+      fetchPosts,
+      fetchFollowers,
+      fetchFollowings,
+    } = this.props;
     fetchUser(userId);
     fetchPosts(userId);
+    fetchFollowings(userId);
+    fetchFollowers(userId);
   }
 
   componentDidMount() {
@@ -25,7 +33,15 @@ class ProfileShow extends React.Component {
   }
 
   render() {
-    const { users, userId, posts, ownProfile, likes } = this.props;
+    const {
+      users,
+      userId,
+      posts,
+      ownProfile,
+      likes,
+      followers,
+      following,
+    } = this.props;
     const profileUser = users[userId];
     return (
       <div className="profile-show-container">

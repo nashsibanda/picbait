@@ -85,9 +85,19 @@
       }
 
       .follow button {
-        @include button($keycolordark);
-        color: white;
+        // @include button($keycolordark);
+        color: $keycolordark;
         padding: 0.5rem 1rem;
+        font-weight: 700;
+
+        &.following {
+          color: $salmon;
+        }
+
+        &:hover,
+        &:focus {
+          color: $purple;
+        }
       }
     }
 

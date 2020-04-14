@@ -21,7 +21,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = Api::User.includes(:posts).friendly.find(params[:id])
+    @user = Api::User.includes(avatar_attachment: [:blob], posts: [:likes, image_attachment: [:blob]]).friendly.find(params[:id])
     if @user
       render :show
     else
@@ -59,13 +59,13 @@ class Api::UsersController < ApplicationController
 
   def post_comment_users
     comment_users = Api::User
-                    .includes(:avatar_attachment)
+                    .includes(avatar_attachment: [:blob])
                     .joins(comments: [:post])
                     .where("api_comments.api_post_id = #{post_id}")
                     .distinct
 
     author = Api::User
-             .includes(:avatar_attachment)
+             .includes(avatar_attachment: [:blob])
              .joins(:posts)
              .where("api_posts.id = #{post_id}")
              .distinct
