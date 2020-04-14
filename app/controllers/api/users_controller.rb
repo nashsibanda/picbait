@@ -6,7 +6,11 @@ class Api::UsersController < ApplicationController
   before_action :ensure_allowed, only: %i[update destroy]
 
   def index
-    users = logged_in? ? post_comment_users_with_current_user : post_comment_users
+    if post_id
+      users = logged_in? ? post_comment_users_with_current_user : post_comment_users
+    elsif user_id
+      users = logged_in? ? profile_follow_users_with_current_user : profile_follow_users
+    end
     @users = users
   end
 
@@ -72,13 +76,41 @@ class Api::UsersController < ApplicationController
     (comment_users + author)
   end
 
+  def profile_follow_users
+    (profile_user_relation + user_followees + user_followers)
+  end
+
+  def profile_follow_users_with_current_user
+    (profile_follow_users + current_user_relation)
+  end
+
+  def current_user_relation
+    Api::User.includes(avatar_attachment: [:blob]).where(id: current_user.id)
+  end
+
+  def profile_user_relation
+    Api::User.includes(avatar_attachment: [:blob]).where(slug: user_id)
+  end
+
+  def user_followers
+    Api::User.includes(avatar_attachment: [:blob]).friendly.find(user_id).followers.includes(avatar_attachment: [:blob])
+  end
+
+  def user_followees
+    Api::User.includes(avatar_attachment: [:blob]).friendly.find(user_id).followees.includes(avatar_attachment: [:blob])
+  end
+
   def post_comment_users_with_current_user
-    current_user_relation = Api::User.where(id: current_user.id)
+    # current_user_relation = Api::User.where(id: current_user.id)
     (post_comment_users + current_user_relation)
   end
 
   def post_id
     params[:post_id]
+  end
+
+  def user_id
+    params[:user_id]
   end
 
   def set_user
