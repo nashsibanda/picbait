@@ -35,7 +35,7 @@ header {
 .vertical-menu {
   @include flex-down;
 
-  *:first-child {
+  & > *:first-child {
     margin-bottom: 0.7rem;
   }
 }
@@ -43,7 +43,7 @@ header {
 .horizontal-menu {
   @include flex-across;
 
-  *:first-child {
+  & > *:first-child {
     margin-right: 0.7rem;
   }
 }

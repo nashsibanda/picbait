@@ -3,17 +3,35 @@ body {
 }
 
 main,
-.header-container {
+.header-container,
+footer {
   width: 90%;
   max-width: 60rem;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
-main {
+$header-height: 6rem;
+
+.header-container {
+  height: $header-height;
+}
+
+main,
+footer {
   border-left: 1px solid $keycolorlightest;
   border-right: 1px solid $keycolorlightest;
-  padding: 0 3vw;
+}
+
+main {
+  min-height: calc(100vh - #{$header-height * 2});
+}
+
+footer {
+  height: $header-height;
+  border-top: 1px solid $keycolorlightest;
+  @include flex-across;
+  justify-content: center;
 }
 
 input[type="text"],

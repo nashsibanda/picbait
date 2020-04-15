@@ -1,0 +1,8 @@
+.footer-menu {
+  @include flex-across;
+  justify-content: space-around;
+  font-weight: 700;
+  color: $keycolordark;
+  align-items: center;
+  flex-basis: 50%;
+}
