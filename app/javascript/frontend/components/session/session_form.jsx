@@ -124,7 +124,11 @@ class SessionForm extends React.Component {
               required={true}
             ></input>
             {passwordIndicator && formType === "signup" && (
-              <CircularProgressbar value={password.length} maxValue={20} />
+              <CircularProgressbar
+                value={password.length}
+                maxValue={20}
+                minValue={6}
+              />
             )}
           </div>
           <div>
