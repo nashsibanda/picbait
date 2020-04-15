@@ -11,11 +11,11 @@ const SessionGreeting = ({ currentUser, logout }) => (
         </p>
         <div className="logged-in-menu horizontal-menu">
           <Link to="/posts/new">
-            <button type="button" onClick={logout} className="header-button">
+            <button type="button" className="header-button">
               New Post
             </button>
           </Link>
-          <button type="button" className="header-button">
+          <button type="button" onClick={logout} className="header-button">
             Log Out
           </button>
         </div>
