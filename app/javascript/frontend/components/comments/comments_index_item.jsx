@@ -102,9 +102,9 @@ class CommentsIndexItem extends React.Component {
             <span className={`like-display ${likesCount > 0 ? "" : "hidden"}`}>
               {`${likesCount} ${likesCount > 1 ? "likes" : "like"}`}
             </span>
-            <span className="reply-button" onClick={this.sendParentId}>
+            <button className="reply-button" onClick={this.sendParentId}>
               Reply
-            </span>
+            </button>
           </div>
           {children.length > 0 && (
             <div className="child-comments">
