@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -8,9 +9,16 @@ class SessionForm extends React.Component {
       username: "",
       password: "",
       email: "",
+      usernameIndicator: false,
+      passwordIndicator: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateProperty = this.updateProperty.bind(this);
+    this.toggleIndicator = this.toggleIndicator.bind(this);
+  }
+
+  toggleIndicator(indicator) {
+    return e => this.setState({ [indicator]: !this.state[indicator] });
   }
 
   handleSubmit(e) {
@@ -28,7 +36,13 @@ class SessionForm extends React.Component {
 
   render() {
     const { formType, errors } = this.props;
-    const { username, password, email } = this.state;
+    const {
+      username,
+      password,
+      email,
+      usernameIndicator,
+      passwordIndicator,
+    } = this.state;
     const formHeader = () => {
       switch (formType) {
         case "signup":
@@ -74,8 +88,14 @@ class SessionForm extends React.Component {
               }
               id="session-form-username"
               value={username}
+              onFocus={this.toggleIndicator("usernameIndicator")}
+              onBlur={this.toggleIndicator("usernameIndicator")}
+              maxLength="50"
               required={true}
             ></input>
+            {usernameIndicator && formType === "signup" && (
+              <CircularProgressbar value={username.length} maxValue={50} />
+            )}
           </div>
           {formType === "signup" && (
             <div>
@@ -98,8 +118,14 @@ class SessionForm extends React.Component {
               placeholder="Password"
               id="session-form-password"
               value={password}
+              onFocus={this.toggleIndicator("passwordIndicator")}
+              onBlur={this.toggleIndicator("passwordIndicator")}
+              maxLength="20"
               required={true}
             ></input>
+            {passwordIndicator && formType === "signup" && (
+              <CircularProgressbar value={password.length} maxValue={20} />
+            )}
           </div>
           <div>
             <button type="submit" className="form-submit-button">

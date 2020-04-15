@@ -1,5 +1,6 @@
 import React from "react";
 import { makeFilename, capitalize } from "../../util/misc_util";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -9,10 +10,17 @@ class PostForm extends React.Component {
       description: "",
       imageFile: null,
       imageUrl: "",
+      titleIndicator: false,
+      descriptionIndicator: false,
     };
     this.handleImage = this.handleImage.bind(this);
     this.updateProperty = this.updateProperty.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleIndicator = this.toggleIndicator.bind(this);
+  }
+
+  toggleIndicator(indicator) {
+    return e => this.setState({ [indicator]: !this.state[indicator] });
   }
 
   handleImage(e) {
@@ -46,7 +54,13 @@ class PostForm extends React.Component {
 
   render() {
     const { formType, errors } = this.props;
-    const { title, description, imageUrl } = this.state;
+    const {
+      title,
+      description,
+      imageUrl,
+      titleIndicator,
+      descriptionIndicator,
+    } = this.state;
     return (
       <div className="post-form-container">
         <form
@@ -80,21 +94,33 @@ class PostForm extends React.Component {
               placeholder="Title"
               value={title}
               id="post-form-title"
+              maxLength="200"
               onChange={this.updateProperty("title")}
+              onFocus={this.toggleIndicator("titleIndicator")}
+              onBlur={this.toggleIndicator("titleIndicator")}
               required={true}
             ></input>
+            {titleIndicator && (
+              <CircularProgressbar value={title.length} maxValue={200} />
+            )}
           </div>
           <div>
             <label htmlFor="post-form-description">
               Description (optional)
             </label>
-            <input
+            <textarea
               type="text"
               placeholder="Description (optional)"
               value={description}
               id="post-form-description"
+              maxLength="200"
               onChange={this.updateProperty("description")}
-            ></input>
+              onFocus={this.toggleIndicator("descriptionIndicator")}
+              onBlur={this.toggleIndicator("descriptionIndicator")}
+            />
+            {descriptionIndicator && (
+              <CircularProgressbar value={description.length} maxValue={200} />
+            )}
           </div>
           <div>
             <button type="submit" className="form-submit-button">
