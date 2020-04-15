@@ -164,15 +164,17 @@ class ProfileUserInfo extends React.Component {
           <div className="title">
             <span className="username">{username}</span>
             <span className="follow">
-              <button
-                type="button"
-                className={`follow-button ${
-                  followStatus ? "following" : "not-following"
-                }`}
-                onClick={this.toggleFollow}
-              >
-                {followStatus ? "Following" : "Follow"}
-              </button>
+              {!ownProfile && (
+                <button
+                  type="button"
+                  className={`follow-button ${
+                    followStatus ? "following" : "not-following"
+                  }`}
+                  onClick={this.toggleFollow}
+                >
+                  {followStatus ? "Following" : "Follow"}
+                </button>
+              )}
             </span>
           </div>
           <div className="stats">
