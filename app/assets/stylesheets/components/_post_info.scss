@@ -93,11 +93,22 @@
     }
 
     .interactions {
+      @include flex-down;
       flex: 0 0 5rem;
-      border-bottom: 1px solid $graylightest;
       padding: 1rem;
-      @include flex-across;
-      justify-content: flex-start;
+      border-bottom: 1px solid $graylightest;
+
+      .interaction-buttons {
+        @include flex-across;
+        justify-content: flex-start;
+      }
+
+      .permalink {
+        color: $keycolordark;
+        font-size: 0.8rem;
+        font-weight: 700;
+        align-self: flex-end;
+      }
     }
 
     .comment-form {

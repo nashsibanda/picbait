@@ -3,6 +3,7 @@ import { PostAuthor } from "./post_author";
 import CommentsIndexContainer from "./../comments/comments_index_container";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { replaceParentCommenter } from "../../util/misc_util";
+import { Link } from "react-router-dom";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -143,28 +144,37 @@ class PostInfo extends React.Component {
             )}
           </div>
           <div className="interactions">
-            <button
-              type="button"
-              onClick={this.setCommentInputFocus}
-              className="likes-button index"
-            >
-              <i className="fas fa-comment-alt"></i>
-              {`${
-                Object.keys(comments).length > 0
-                  ? Object.keys(comments).length
-                  : "no"
-              } ${Object.keys(comments).length == 1 ? "comment" : "comments"}`}
-            </button>
-            <button
-              type="button"
-              onClick={this.toggleLiked}
-              className="likes-button index"
-            >
-              <i className={`fas fa-heart ${liked ? "liked" : "unliked"}`}></i>
-              {`liked by ${likesCount > 0 ? likesCount : "no"} ${
-                likesCount == 1 ? "user" : "users"
-              }`}
-            </button>
+            <div className="interaction-buttons">
+              <button
+                type="button"
+                onClick={this.setCommentInputFocus}
+                className="likes-button index"
+              >
+                <i className="fas fa-comment-alt"></i>
+                {`${
+                  Object.keys(comments).length > 0
+                    ? Object.keys(comments).length
+                    : "no"
+                } ${
+                  Object.keys(comments).length == 1 ? "comment" : "comments"
+                }`}
+              </button>
+              <button
+                type="button"
+                onClick={this.toggleLiked}
+                className="likes-button index"
+              >
+                <i
+                  className={`fas fa-heart ${liked ? "liked" : "unliked"}`}
+                ></i>
+                {`liked by ${likesCount > 0 ? likesCount : "no"} ${
+                  likesCount == 1 ? "user" : "users"
+                }`}
+              </button>
+            </div>
+            <a href={`#/posts/${id}`} className="permalink">
+              permalink
+            </a>
           </div>
           <form className="comment-form" onSubmit={this.submitComment}>
             <div
