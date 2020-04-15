@@ -4,6 +4,6 @@ module Likeable
   extend ActiveSupport::Concern
 
   included do
-    has_many :likes, class_name: 'Api::Like', as: :likeable
+    has_many :likes, class_name: 'Api::Like', as: :likeable, dependent: :destroy
   end
 end
