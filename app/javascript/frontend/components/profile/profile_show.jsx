@@ -55,7 +55,6 @@ class ProfileShow extends React.Component {
           <PostsIndex
             posts={posts}
             likes={likes}
-            postIds={profileUser.postIds}
             modalClosed={this.loadPageData}
           />
         )}
