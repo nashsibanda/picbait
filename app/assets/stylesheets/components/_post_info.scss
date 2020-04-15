@@ -315,6 +315,7 @@
     font-weight: 700;
     font-size: 0.8rem;
     padding: 0.3rem 1rem;
+    @include flex-across;
 
     &.hidden {
       display: none;
@@ -332,7 +333,7 @@
     }
   }
 
-  button {
+  .submit-button {
     flex-basis: $submit-button-width;
     margin-left: 0.5rem;
     font-weight: 700;

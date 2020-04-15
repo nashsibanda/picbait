@@ -28,6 +28,7 @@
     @include flex-down;
     margin-bottom: 1rem;
     align-items: flex-end;
+    position: relative;
   }
 
   .form-submit-button {
@@ -38,6 +39,10 @@
   .form-redirect-link {
     align-self: center;
     margin-top: 1rem;
+  }
+
+  textarea {
+    height: 8rem;
   }
 }
 
