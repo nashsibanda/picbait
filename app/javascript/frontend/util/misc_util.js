@@ -33,6 +33,14 @@ export const makeShortTitle = title => {
   }
 };
 
+export const makeShortString = (string, length) => {
+  if (string.length > length) {
+    return `${string.slice(0, length)}...`;
+  } else {
+    return string;
+  }
+};
+
 export const makeCommentLinks = commentBody => {
   const cleanBody = DOMPurify.sanitize(commentBody);
   const tagRegExp = /\B([@])[\w.-]+(?!\s)[\w-]/g;

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { makeShortString } from "../../util/misc_util";
 
 export const FollowersIndexItem = props => {
-  const { id, slug, avatarUrl, username } = props.user;
+  const { id, slug, avatarUrl, username, bio } = props.user;
   return (
-    <li className="post-author">
+    <li className="followers-index-item">
       <div className="avatar">
         <Link to={`/users/${slug}`}>
           <button
@@ -20,7 +21,7 @@ export const FollowersIndexItem = props => {
         <div className="username">
           <Link to={`/users/${slug}`}>{username}</Link>
         </div>
-        <div className="location">Bournemouth, England</div>
+        <div className="mini-bio">{makeShortString(bio, 40)}</div>
       </div>
     </li>
   );

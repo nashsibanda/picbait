@@ -1,8 +1,8 @@
 .profile-user-info {
   @include flex-across;
   justify-content: space-between;
-  border-bottom: 1px solid $keycolorlightest;
   padding: 1rem 4rem;
+  border-bottom: 1px solid $keycolorlightest;
 
   & > .avatar {
     flex-basis: 30%;
@@ -133,7 +133,7 @@
     position: fixed;
     z-index: 5;
     background-color: white;
-    padding: 1rem;
+    // padding: 1rem;
     overflow: scroll;
     height: 40vh;
     top: 25vh;
@@ -145,6 +145,65 @@
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      position: fixed;
+      width: inherit;
+      background: white;
+      padding: 1rem;
+      border-bottom: 1px solid $graylight;
+    }
+
+    .followers-index-item {
+      @include flex-across;
+      justify-content: flex-start;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid $graylight;
+
+      &:first-of-type {
+        margin-top: 3rem;
+      }
+
+      & > .avatar {
+        flex-basis: 17%;
+        margin-right: 0.5rem;
+        align-self: flex-start;
+        padding: 0.5rem;
+        padding-top: 0.8rem;
+
+        .container {
+          width: 100%;
+          border-radius: 50%;
+          background-size: auto 100%;
+          background-position: center;
+
+          &::after {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+          }
+
+          &:hover,
+          &:focus {
+            box-shadow: 0px 0px 6px $keycolordarker;
+          }
+        }
+      }
+
+      & > .details {
+        @include flex-down;
+        justify-content: center;
+        align-items: flex-start;
+        flex-basis: 85%;
+
+        .username {
+          font-weight: 700;
+          font-size: 1.3rem;
+        }
+
+        .location,
+        .mini-bio {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 }
