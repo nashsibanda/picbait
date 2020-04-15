@@ -14,6 +14,8 @@ class Api::User < ApplicationRecord
   has_many :followers, through: :in_follows, source: :follower, dependent: :destroy
   has_many :followees, through: :out_follows, source: :followee, dependent: :destroy
 
+  has_many :feed_posts, through: :followees, source: :posts
+
   has_one_attached :avatar
 
   after_initialize :ensure_session_token

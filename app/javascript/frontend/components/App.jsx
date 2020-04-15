@@ -9,6 +9,7 @@ import LoginFormContainer from "./session/login_form_container";
 import NewPostFormContainer from "./posts/new_post_form_container";
 import ProfileShowContainer from "./profile/profile_show_container";
 import PostShowContainer from "./posts/posts_show_container";
+import FeedContainer from "./feed/feed_container";
 
 const DebugMenu = props => {
   return (
@@ -30,7 +31,7 @@ const DebugMenu = props => {
 
 const App = () => (
   <div className="app-container">
-    <DebugMenu show={true} />
+    <DebugMenu show={false} />
     <header>
       <div className="header-container">
         <h1>
@@ -55,9 +56,10 @@ const App = () => (
           path="/posts/:postId"
           component={PostShowContainer}
         />
-        <AuthRoute exact path="/" component={Splash} />
+        <ProtectedRoute exact path="/feed" component={FeedContainer} />
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <AuthRoute path="/login" component={LoginFormContainer} />
+        <AuthRoute path="/" component={Splash} />
       </Switch>
     </main>
     <footer>

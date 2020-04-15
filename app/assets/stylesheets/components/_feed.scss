@@ -1,0 +1,16 @@
+.feed-header {
+  @include flex-across;
+  justify-content: center;
+  height: 8rem;
+  border-bottom: 1px solid $graylightest;
+  background-color: $keycolorlightest;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 3rem;
+    // font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px 2px $keycolordark;
+    font-family: $seriffont;
+  }
+}

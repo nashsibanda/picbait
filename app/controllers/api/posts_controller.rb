@@ -5,7 +5,7 @@ class Api::PostsController < ApplicationController
   before_action :ensure_allowed, only: %i[update destroy]
 
   def index
-    posts = user_id ? Api::Post.includes(:likes, image_attachment: [:blob]).where(api_user_id: user_id) : Api::Post.all
+    posts = user_id ? Api::Post.includes(:likes, image_attachment: [:blob]).where(api_user_id: user_id) : current_user.feed_posts.includes(:likes, image_attachment: [:blob])
     @posts = posts
     render :index
   end
@@ -49,8 +49,12 @@ class Api::PostsController < ApplicationController
   end
 
   def user_id
-    post_user = Api::User.friendly.find(params[:user_id])
-    post_user.id
+    if params[:user_id]
+      post_user = Api::User.friendly.find(params[:user_id])
+      post_user.id
+    else
+      false
+    end
   end
 
   def find_post

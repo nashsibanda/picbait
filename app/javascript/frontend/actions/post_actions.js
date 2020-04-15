@@ -5,7 +5,6 @@ export const CLEAR_POSTS = "CLEAR_POSTS";
 export const RECEIVE_POST_ERRORS = "RECEIVE_POST_ERRORS";
 import * as PostsAPIUtil from "./../util/posts_api_util.js";
 import * as CommentsAPIUtil from "../util/comments_api_util";
-import * as UsersAPIUtil from "../util/users_api_util";
 import { push } from "connected-react-router";
 import { receiveComments } from "./comment_actions.js";
 import { fetchUsers } from "./user_actions.js";
@@ -36,6 +35,10 @@ const receivePostErrors = errors => ({
 
 export const fetchPosts = userId => dispatch => {
   PostsAPIUtil.getPosts(userId).then(posts => dispatch(receivePosts(posts)));
+};
+
+export const fetchFeedPosts = () => dispatch => {
+  PostsAPIUtil.getFeedPosts().then(posts => dispatch(receivePosts(posts)));
 };
 
 export const fetchPost = id => dispatch => {
