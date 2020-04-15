@@ -17,6 +17,13 @@ $header-height: 6rem;
   height: $header-height;
 }
 
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 40;
+  top: 0;
+}
+
 main,
 footer {
   border-left: 1px solid $keycolorlightest;
@@ -25,6 +32,7 @@ footer {
 
 main {
   min-height: calc(100vh - #{$header-height * 2});
+  margin-top: $header-height;
 }
 
 footer {
@@ -43,6 +51,7 @@ textarea {
   border: 1px solid $graylight;
   width: 100%;
   box-shadow: 2px 2px $keycolorlighter;
+  box-sizing: border-box;
 }
 
 textarea {
