@@ -46,13 +46,30 @@ const App = () => (
           path="/posts/new"
           component={NewPostFormContainer}
         />
-        <Route exact path="/users/:userId" component={ProfileShowContainer} />
-        <Route exact path="/posts/:postId" component={PostShowContainer} />
+        <ProtectedRoute
+          path="/users/:userId"
+          component={ProfileShowContainer}
+        />
+        <ProtectedRoute
+          exact
+          path="/posts/:postId"
+          component={PostShowContainer}
+        />
         <AuthRoute exact path="/" component={Splash} />
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <AuthRoute path="/login" component={LoginFormContainer} />
       </Switch>
     </main>
+    <footer>
+      <ul className="footer-menu">
+        <li>
+          <a href="http://nashsibanda.com">nashsibanda.com</a>
+        </li>
+        <li>
+          <a href="https://github.com/nashsibanda/picbait">github</a>
+        </li>
+      </ul>
+    </footer>
   </div>
 );
 
