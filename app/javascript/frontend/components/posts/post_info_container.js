@@ -6,7 +6,7 @@ import { createComment } from "../../actions/comment_actions";
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.post;
   return {
-    author: state.entities.users[ownProps.authorSlug],
+    author: state.entities.users[ownProps.post.authorSlug],
     comments: state.entities.comments,
     likes: state.entities.likes.posts[id],
     currentUser: state.session.currentUser,
