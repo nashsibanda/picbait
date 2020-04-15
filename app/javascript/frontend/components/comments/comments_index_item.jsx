@@ -20,6 +20,7 @@ class CommentsIndexItem extends React.Component {
   }
 
   sendParentId(e) {
+    e.stopPropagation();
     const { updateParent, comment } = this.props;
     const parentId = comment.parentCommentId
       ? comment.parentCommentId
@@ -50,12 +51,14 @@ class CommentsIndexItem extends React.Component {
   }
 
   goToUserPage(e) {
+    e.stopPropagation();
     e.preventDefault();
     const { slug } = this.props.commenter;
     push(`/users/${slug}`);
   }
 
   toggleChildComments(e) {
+    e.stopPropagation();
     e.preventDefault();
     this.setState({ displayChildComments: !this.state.displayChildComments });
   }

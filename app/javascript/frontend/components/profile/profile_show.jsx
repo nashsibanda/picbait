@@ -51,7 +51,14 @@ class ProfileShow extends React.Component {
             ownProfile={ownProfile}
           />
         )}
-        {posts && likes && <PostsIndex posts={posts} likes={likes} />}
+        {posts && likes && profileUser && (
+          <PostsIndex
+            posts={posts}
+            likes={likes}
+            postIds={profileUser.postIds}
+            modalClosed={this.loadPageData}
+          />
+        )}
       </div>
     );
   }

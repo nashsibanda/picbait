@@ -1,3 +1,28 @@
+.posts-index-container {
+  position: relative;
+  padding: 0 3vw;
+
+  .post-display-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .post-modal-container {
+      margin: 0 2rem;
+      max-width: 50rem;
+      background-color: white;
+      border-radius: 1%;
+      border: 3px solid $keycolordarker;
+    }
+  }
+}
+
 .posts-index {
   @include flex-across;
   justify-content: flex-start;
@@ -14,6 +39,7 @@
 
     &:hover {
       border: 3px solid $keycolorlight;
+      cursor: pointer;
     }
 
     &:nth-child(3n) {
@@ -24,7 +50,7 @@
       margin-top: 2%;
     }
 
-    .link {
+    .frame {
       display: block;
       padding-bottom: 100%;
 

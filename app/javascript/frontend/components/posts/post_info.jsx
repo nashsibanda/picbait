@@ -22,6 +22,7 @@ class PostInfo extends React.Component {
   }
 
   updateBody(e) {
+    e.stopPropagation();
     this.setState({ body: e.target.value });
   }
 
@@ -46,10 +47,12 @@ class PostInfo extends React.Component {
   }
 
   toggleFillImage(e) {
+    e.stopPropagation();
     this.setState({ fillImage: !this.state.fillImage });
   }
 
   toggleLiked(e) {
+    e.stopPropagation();
     const { liked, likesCount } = this.state;
     const {
       createPostLike,
@@ -68,7 +71,8 @@ class PostInfo extends React.Component {
     }
   }
 
-  setCommentInputFocus() {
+  setCommentInputFocus(e) {
+    e.stopPropagation();
     this.commentInput.focus();
   }
 

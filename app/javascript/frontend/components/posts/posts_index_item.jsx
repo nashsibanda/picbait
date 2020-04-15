@@ -42,7 +42,7 @@ class PostsIndexItem extends React.Component {
         className="posts-index-item"
         style={{ backgroundImage: `url(${imageUrl})` }}
       >
-        <Link to={`/posts/${postId}`} className="link">
+        <div className="frame" onClick={this.props.updateModal(postId)}>
           <div className="overlay">
             <div className="post-details">
               <div className="title">{makeShortTitle(title)}</div>
@@ -63,7 +63,7 @@ class PostsIndexItem extends React.Component {
               </div>
             </div>
           </div>
-        </Link>
+        </div>
       </li>
     );
   }
