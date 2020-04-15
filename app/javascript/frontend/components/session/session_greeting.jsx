@@ -9,12 +9,19 @@ const SessionGreeting = ({ currentUser, logout }) => (
           Welcome,{" "}
           <Link to={`/users/${currentUser.slug}`}>{currentUser.username}</Link>
         </p>
-        <button type="button" onClick={logout} className="header-button">
-          Log Out
-        </button>
+        <div className="logged-in-menu horizontal-menu">
+          <Link to="/posts/new">
+            <button type="button" onClick={logout} className="header-button">
+              New Post
+            </button>
+          </Link>
+          <button type="button" className="header-button">
+            Log Out
+          </button>
+        </div>
       </div>
     ) : (
-      <div className="horizontal-menu">
+      <div className="logged-out-menu horizontal-menu">
         <Link to="/signup" className="header-button">
           Sign Up
         </Link>
