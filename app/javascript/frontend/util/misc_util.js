@@ -55,3 +55,15 @@ export const makeCommentLinks = commentBody => {
   };
   return cleanBody.replace(tagRegExp, replacer);
 };
+
+export const replaceParentCommenter = (commenter, body) => {
+  const tagRegExp = /^([@])[\w.-]+(?!\s)[\w-]/;
+  const parentTag = body.match(tagRegExp);
+  if (!commenter) {
+    return "";
+  } else if (parentTag && parentTag.length > 0) {
+    return body.replace(tagRegExp, "@" + commenter);
+  } else {
+    return "@" + commenter + " " + body;
+  }
+};

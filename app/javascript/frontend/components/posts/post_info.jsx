@@ -1,6 +1,8 @@
 import React from "react";
 import { PostAuthor } from "./post_author";
 import CommentsIndexContainer from "./../comments/comments_index_container";
+import { CircularProgressbar } from "react-circular-progressbar";
+import { replaceParentCommenter } from "../../util/misc_util";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class PostInfo extends React.Component {
       body: "",
       parentCommentId: null,
       parentCommenter: null,
+      commentIndicator: false,
     };
     this.toggleFillImage = this.toggleFillImage.bind(this);
     this.toggleLiked = this.toggleLiked.bind(this);
@@ -19,6 +22,8 @@ class PostInfo extends React.Component {
     this.updateParentComment = this.updateParentComment.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.setCommentInputFocus = this.setCommentInputFocus.bind(this);
+    this.toggleCommentIndicator = this.toggleCommentIndicator.bind(this);
+    this.closeReplyingBanner = this.closeReplyingBanner.bind(this);
   }
 
   updateBody(e) {
@@ -27,7 +32,18 @@ class PostInfo extends React.Component {
   }
 
   updateParentComment(id, commenter) {
-    this.setState({ parentCommentId: id, parentCommenter: commenter });
+    this.setState(
+      {
+        parentCommentId: id,
+        parentCommenter: commenter,
+        body: replaceParentCommenter(commenter, this.state.body),
+      },
+      () => this.commentInput.focus()
+    );
+  }
+
+  toggleCommentIndicator(e) {
+    this.setState({ commentIndicator: !this.state.commentIndicator });
   }
 
   submitComment(e) {
@@ -71,6 +87,11 @@ class PostInfo extends React.Component {
     }
   }
 
+  closeReplyingBanner(e) {
+    e.stopPropagation();
+    this.updateParentComment(null, null);
+  }
+
   setCommentInputFocus(e) {
     e.stopPropagation();
     this.commentInput.focus();
@@ -78,7 +99,14 @@ class PostInfo extends React.Component {
 
   render() {
     const { post, comments } = this.props;
-    const { fillImage, liked, likesCount, body, parentCommenter } = this.state;
+    const {
+      fillImage,
+      liked,
+      likesCount,
+      body,
+      parentCommenter,
+      commentIndicator,
+    } = this.state;
     const author = this.props.author;
     const { id, title, description, date, imageUrl } = post;
     return (
@@ -142,7 +170,14 @@ class PostInfo extends React.Component {
             <div
               className={`replying-banner ${parentCommenter ? "" : "hidden"}`}
             >
-              replying to {parentCommenter}
+              <span>replying to {parentCommenter}</span>
+              <button
+                className="close-reply-banner"
+                onClick={this.closeReplyingBanner}
+                type="button"
+              >
+                <i className="fas fa-times"></i>
+              </button>
             </div>
             <textarea
               placeholder="Add a comment..."
@@ -151,8 +186,20 @@ class PostInfo extends React.Component {
               ref={input => {
                 this.commentInput = input;
               }}
+              maxLength="200"
+              onFocus={this.toggleCommentIndicator}
+              onBlur={this.toggleCommentIndicator}
             ></textarea>
-            <button type="submit">Post</button>
+            <button type="submit" className="submit-button">
+              Post
+            </button>
+            {commentIndicator && (
+              <CircularProgressbar
+                value={title.length}
+                maxValue={200}
+                className="comment-indicator"
+              />
+            )}
           </form>
         </section>
       </div>
