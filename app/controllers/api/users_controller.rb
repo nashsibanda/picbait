@@ -16,6 +16,8 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = Api::User.new(user_params)
+    default_avatar = File.open('app/assets/images/default-profile-picture.png')
+    @user.avatar.attach(io: default_avatar, filename: 'default-profile-picture.png')
     if @user.save
       login!(@user)
       redirect_to api_user_url(@user)
