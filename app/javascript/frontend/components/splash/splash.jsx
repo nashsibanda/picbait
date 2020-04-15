@@ -7,7 +7,7 @@ const Splash = props => (
       <h2>welcome to</h2>
       <h1>picbait</h1>
     </div>
-    <div className="splash-login-menu vertical-menu">
+    <div className="splash-login-menu">
       <Link to="/signup" className="splash-login-button">
         Sign Up
       </Link>

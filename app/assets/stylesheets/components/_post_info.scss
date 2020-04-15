@@ -1,6 +1,11 @@
 .post-show-container {
   margin: 0 auto;
   padding: 3rem 0;
+  overflow-y: auto;
+
+  @media only screen and (max-width: 700px) {
+    padding: 1rem 0;
+  }
 
   .post-info {
     max-width: 80vw;
@@ -8,6 +13,10 @@
     border: 1px solid $graylight;
     border-radius: 2px;
     overflow: hidden;
+
+    @media only screen and (max-width: 700px) {
+      max-width: 90vw;
+    }
   }
 }
 
@@ -19,6 +28,12 @@
   height: 60vh;
   box-sizing: content-box;
 
+  @media only screen and (max-width: 700px) {
+    @include flex-down;
+    justify-content: flex-start;
+    height: 80vh;
+  }
+
   & > .image {
     flex-shrink: 1;
     @include flex-down;
@@ -28,14 +43,21 @@
     overflow: scroll;
     position: relative;
 
+    @media only screen and (max-width: 700px) {
+      flex-basis: 35%;
+      flex-shrink: 0;
+    }
+
     & > img {
       // width: 100%;
 
       &.fit-image {
         object-fit: contain;
 
-        &:hover {
-          cursor: zoom-in;
+        @media (hover: hover) {
+          &:hover {
+            cursor: zoom-in;
+          }
         }
       }
 
@@ -44,8 +66,10 @@
         height: 100%;
         width: 100%;
 
-        &:hover {
-          cursor: zoom-out;
+        @media (hover: hover) {
+          &:hover {
+            cursor: zoom-out;
+          }
         }
       }
     }
@@ -64,14 +88,18 @@
       visibility: hidden;
       transition: 0.2s ease;
 
-      &:hover {
-        cursor: pointer;
+      @media (hover: hover) {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
-    &:hover .expand {
-      visibility: visible;
-      opacity: 0.4;
+    @media (hover: hover) {
+      &:hover .expand {
+        visibility: visible;
+        opacity: 0.4;
+      }
     }
   }
 
@@ -79,11 +107,18 @@
     flex-basis: 40%;
     flex-shrink: 0;
     @include flex-down;
+    @media only screen and (max-width: 700px) {
+      flex-basis: 65%;
+    }
     // border-left: 1px solid $graydarker;
 
     .author-details {
       flex: 0 0 5rem;
       border-bottom: 1px solid $graylightest;
+
+      @media only screen and (max-width: 700px) {
+        flex: 0 0 4rem;
+      }
     }
 
     .comments {
@@ -98,6 +133,13 @@
       padding: 1rem;
       border-bottom: 1px solid $graylightest;
 
+      @media only screen and (max-width: 700px) {
+        padding: 0.4rem 1rem 0;
+        flex: 0 0 3rem;
+        flex-direction: row;
+        align-content: center;
+      }
+
       .interaction-buttons {
         @include flex-across;
         justify-content: flex-start;
@@ -108,6 +150,11 @@
         font-size: 0.8rem;
         font-weight: 700;
         align-self: flex-end;
+
+        @media only screen and (max-width: 700px) {
+          align-self: flex-start;
+          margin-top: 0.4rem;
+        }
       }
     }
 
@@ -139,13 +186,30 @@
     font-size: 1.3rem;
     margin-right: 1rem;
 
+    @media only screen and (max-width: 700px) {
+      font-size: 1rem;
+    }
+
     &.liked {
       color: $salmon;
     }
 
-    &:hover,
-    &:focus {
-      color: $blue;
+    @media (hover: hover) {
+      &:hover,
+      &:focus {
+        color: $blue;
+      }
+    }
+  }
+
+  span {
+    margin-right: 0.2rem;
+    margin-top: 0.2rem;
+  }
+
+  .interaction-desc {
+    @media only screen and (max-width: 700px) {
+      display: none;
     }
   }
 }
@@ -155,12 +219,20 @@
   justify-content: flex-start;
   padding: 0.5rem;
 
+  @media only screen and (max-width: 700px) {
+    padding: 0.3rem;
+  }
+
   & > .avatar {
     flex-basis: 17%;
     margin-right: 0.3rem;
     align-self: flex-start;
     padding: 0.5rem;
     padding-top: 0.8rem;
+
+    @media only screen and (max-width: 700px) {
+      flex-basis: 11%;
+    }
 
     .container {
       width: 100%;
@@ -174,9 +246,11 @@
         padding-bottom: 100%;
       }
 
-      &:hover,
-      &:focus {
-        box-shadow: 0px 0px 6px $keycolordarker;
+      @media (hover: hover) {
+        &:hover,
+        &:focus {
+          box-shadow: 0px 0px 6px $keycolordarker;
+        }
       }
     }
   }
@@ -212,7 +286,7 @@
       align-items: flex-start;
       $comment-avatar-width: 2.5rem;
       $comment-likes-button-width: 1rem;
-      $margin-between-comments: 0.6rem;
+      $margin-between-comments: 1rem;
       margin-bottom: $margin-between-comments;
 
       & > .avatar {

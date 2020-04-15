@@ -2,6 +2,10 @@
   position: relative;
   padding: 0 3vw;
 
+  @media only screen and (max-width: 700px) {
+    padding: 0;
+  }
+
   .post-display-modal {
     position: fixed;
     top: 0;
@@ -19,6 +23,27 @@
       background-color: white;
       border-radius: 1%;
       border: 3px solid $keycolordarker;
+      overflow-y: auto;
+    }
+
+    .post-modal-close {
+      position: fixed;
+      $post-modal-close-button-font-size: 2.7rem;
+      font-size: $post-modal-close-button-font-size;
+      left: calc(50vw - #{$post-modal-close-button-font-size / 2});
+      color: $graylight;
+      top: 83vh;
+
+      @media (hover: hover) {
+        &:hover,
+        &:focus {
+          color: $keycolorlighter;
+        }
+      }
+
+      @media only screen and (max-width: 700px) {
+        top: 91vh;
+      }
     }
   }
 }
@@ -37,17 +62,33 @@
     position: relative;
     transition: 0.2s ease;
 
-    &:hover {
-      border: 3px solid $keycolorlight;
-      cursor: pointer;
+    @media only screen and (max-width: 700px) {
+      width: 33.33%;
+      margin-right: 0;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        border: 3px solid $keycolorlight;
+        cursor: pointer;
+      }
     }
 
     &:nth-child(3n) {
       margin-right: 0;
+      @media only screen and (max-width: 700px) {
+        width: 33.33%;
+        margin-right: 0;
+      }
     }
 
     &:nth-child(n + 4) {
       margin-top: 2%;
+
+      @media only screen and (max-width: 700px) {
+        width: 33.33%;
+        margin-top: 0;
+      }
     }
 
     .frame {
@@ -72,6 +113,10 @@
         opacity: 0;
         padding: 1rem;
 
+        @media (hover: none) {
+          display: none;
+        }
+
         .likes-button-container {
           text-align: center;
           font-weight: 700;
@@ -90,10 +135,12 @@
         }
       }
 
-      &:hover .overlay,
-      &:focus .overlay {
-        opacity: 0.8;
-        text-decoration: none;
+      @media (hover: hover) {
+        &:hover .overlay,
+        &:focus .overlay {
+          opacity: 0.8;
+          text-decoration: none;
+        }
       }
     }
   }

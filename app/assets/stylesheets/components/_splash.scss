@@ -9,12 +9,29 @@
   z-index: 0;
   @include flex-across;
   justify-content: space-around;
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .splash-login-menu {
+    @media only screen and (max-width: 700px) {
+      @include flex-down;
+      width: 40%;
+      margin-top: 2rem;
+    }
+  }
 
   .splash-login-button {
     @include button($keycolordark);
     color: white;
     width: 100%;
     padding: 1rem 2rem;
+    margin-left: 1rem;
+    @media only screen and (max-width: 700px) {
+      margin-left: 0;
+      margin-bottom: 1.4rem;
+    }
   }
 
   h1 {

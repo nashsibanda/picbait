@@ -4,12 +4,37 @@
   padding: 1rem 4rem;
   border-bottom: 1px solid $keycolorlightest;
 
+  @media only screen and (max-width: 700px) {
+    @include flex-down;
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    padding: 0.8rem;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    box-sizing: inherit;
+  }
+
   & > .avatar {
     flex-basis: 30%;
     padding: 2rem 0;
     margin-right: 3rem;
     box-sizing: border-box;
-    align-self: flex-start;
+    // align-self: flex-start;
+
+    @media only screen and (max-width: 700px) {
+      align-self: center;
+      margin-right: 0;
+    }
 
     .container {
       width: 100%;
@@ -19,6 +44,12 @@
       background-position: center;
       position: relative;
       overflow: hidden;
+
+      @media only screen and (max-width: 700px) {
+        width: 40vw;
+        max-width: 10rem;
+        border-width: 3px;
+      }
 
       &::after {
         content: "";
@@ -44,9 +75,17 @@
         opacity: 0;
         transition: 0.2s ease;
 
-        &:hover,
-        &:focus {
-          background-color: #00000088;
+        @media (hover: hover) {
+          &:hover,
+          &:focus {
+            background-color: #00000088;
+            opacity: 1;
+            cursor: pointer;
+          }
+        }
+
+        @media (hover: none) {
+          background-color: #00000044;
           opacity: 1;
           cursor: pointer;
         }
@@ -76,13 +115,27 @@
     max-width: 33rem;
     position: relative;
 
+    @media only screen and (max-width: 700px) {
+      padding: 0;
+      flex-basis: 100%;
+      max-width: 100%;
+      align-self: center;
+    }
+
     .title {
       @include flex-across;
       margin-bottom: 0.7rem;
+      @media only screen and (max-width: 700px) {
+        margin-bottom: 0.4rem;
+        flex-direction: column;
+      }
 
       .username {
         font-size: 2rem;
         font-family: $seriffont;
+        @media only screen and (max-width: 700px) {
+          font-size: 1.4rem;
+        }
       }
 
       .follow button {
@@ -91,13 +144,19 @@
         padding: 0.5rem 1rem;
         font-weight: 700;
 
+        @media only screen and (max-width: 700px) {
+          font-size: 1.2rem;
+        }
+
         &.following {
           color: $salmon;
         }
 
-        &:hover,
-        &:focus {
-          color: $purple;
+        @media (hover: hover) {
+          &:hover,
+          &:focus {
+            color: $purple;
+          }
         }
       }
     }
@@ -105,6 +164,11 @@
     .stats {
       font-size: 1.2rem;
       margin-bottom: 2rem;
+      @media only screen and (max-width: 700px) {
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
 
       strong {
         font-weight: 700;
@@ -117,6 +181,12 @@
       font-weight: 700;
       margin-top: 1rem;
     }
+
+    .bio {
+      @media only screen and (max-width: 700px) {
+        font-size: 0.9rem;
+      }
+    }
   }
 }
 
@@ -127,7 +197,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 
   .follows-list {
     position: fixed;
@@ -141,6 +211,14 @@
     width: $follows-list-width;
     left: calc(50% - #{$follows-list-width / 2});
 
+    @media only screen and (max-width: 700px) {
+      $mobile-follows-list-width: 90vw;
+      height: 60vh;
+      top: 20vh;
+      width: $mobile-follows-list-width;
+      left: calc(50% - #{$mobile-follows-list-width / 2});
+    }
+
     h2 {
       font-size: 1.3rem;
       font-weight: 700;
@@ -152,6 +230,26 @@
       border-bottom: 1px solid $graylight;
     }
 
+    .followers-modal-close {
+      position: fixed;
+      $follows-modal-close-button-font-size: 4rem;
+      font-size: $follows-modal-close-button-font-size;
+      left: calc(50vw - #{$follows-modal-close-button-font-size / 2});
+      color: $graylight;
+      top: 70vh;
+
+      @media (hover: hover) {
+        &:hover,
+        &:focus {
+          color: $keycolorlighter;
+        }
+      }
+
+      @media only screen and (max-width: 700px) {
+        top: 84vh;
+      }
+    }
+
     .followers-index-item {
       @include flex-across;
       justify-content: flex-start;
@@ -159,7 +257,7 @@
       border-bottom: 1px solid $graylight;
 
       &:first-of-type {
-        margin-top: 3rem;
+        margin-top: 4rem;
       }
 
       & > .avatar {
@@ -181,9 +279,11 @@
             padding-bottom: 100%;
           }
 
-          &:hover,
-          &:focus {
-            box-shadow: 0px 0px 6px $keycolordarker;
+          @media (hover: hover) {
+            &:hover,
+            &:focus {
+              box-shadow: 0px 0px 6px $keycolordarker;
+            }
           }
         }
       }
@@ -197,6 +297,10 @@
         .username {
           font-weight: 700;
           font-size: 1.3rem;
+          @media only screen and (max-width: 700px),
+            screen and (max-height: 600px) {
+            font-size: 1rem;
+          }
         }
 
         .location,

@@ -26,9 +26,11 @@
   padding: 0.3rem 0.6rem;
   text-align: center;
   background-color: $color;
-  &:hover,
-  &:focus {
-    @include reverse-embossed-effect;
-    background-color: scale-color($darkercolor, $lightness: -15%);
+  @media (hover: hover) {
+    &:hover,
+    &:focus {
+      @include reverse-embossed-effect;
+      background-color: scale-color($darkercolor, $lightness: -15%);
+    }
   }
 }

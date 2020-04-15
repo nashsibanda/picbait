@@ -151,13 +151,18 @@ class PostInfo extends React.Component {
                 className="likes-button index"
               >
                 <i className="fas fa-comment-alt"></i>
-                {`${
-                  Object.keys(comments).length > 0
-                    ? Object.keys(comments).length
-                    : "no"
-                } ${
-                  Object.keys(comments).length == 1 ? "comment" : "comments"
-                }`}
+                <span className="interaction-number">
+                  {`${
+                    Object.keys(comments).length > 0
+                      ? Object.keys(comments).length
+                      : "0"
+                  }`}
+                </span>
+                <span className="interaction-desc button-text">
+                  {`${
+                    Object.keys(comments).length == 1 ? "comment" : "comments"
+                  }`}
+                </span>
               </button>
               <button
                 type="button"
@@ -167,9 +172,15 @@ class PostInfo extends React.Component {
                 <i
                   className={`fas fa-heart ${liked ? "liked" : "unliked"}`}
                 ></i>
-                {`liked by ${likesCount > 0 ? likesCount : "no"} ${
-                  likesCount == 1 ? "user" : "users"
-                }`}
+                <span className="interaction-desc button-text">
+                  {"liked by "}
+                </span>
+                <span className="interaction-num">
+                  {likesCount > 0 ? likesCount : "0"}
+                </span>
+                <span className="interaction-desc button-text">
+                  {likesCount == 1 ? " user" : " users"}
+                </span>
               </button>
             </div>
             <a href={`#/posts/${id}`} className="permalink">

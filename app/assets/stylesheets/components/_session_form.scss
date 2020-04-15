@@ -1,6 +1,6 @@
 .session-form-container {
   background-color: white;
-  width: 30rem;
+  max-width: 30rem;
   margin: 0 auto;
   padding: 2rem;
   @include flex-down;

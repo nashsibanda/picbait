@@ -9,12 +9,21 @@ footer {
   max-width: 60rem;
   margin: 0 auto;
   box-sizing: border-box;
+
+  @media only screen and (max-width: 700px) {
+    width: 97%;
+  }
 }
 
 $header-height: 6rem;
+$mobile-header-height: 3rem;
 
 .header-container {
   height: $header-height;
+
+  @media only screen and (max-width: 700px), screen and (max-height: 600px) {
+    height: $mobile-header-height;
+  }
 }
 
 header {
@@ -33,6 +42,11 @@ footer {
 main {
   min-height: calc(100vh - #{$header-height * 2});
   margin-top: $header-height;
+
+  @media only screen and (max-width: 700px), screen and (max-height: 600px) {
+    min-height: calc(100vh - #{$mobile-header-height * 2});
+    margin-top: $mobile-header-height;
+  }
 }
 
 footer {
@@ -45,6 +59,7 @@ footer {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="file"],
 textarea {
   padding: 0.8rem;
   background-color: white;
@@ -52,6 +67,9 @@ textarea {
   width: 100%;
   box-shadow: 2px 2px $keycolorlighter;
   box-sizing: border-box;
+  @media only screen and (max-width: 700px) {
+    height: 4rem;
+  }
 }
 
 textarea {
@@ -65,13 +83,20 @@ textarea {
   box-shadow: 2px 2px $purple;
 }
 
-input[type="file"] {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+@media (hover: hover) {
+  input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    padding: 0.8rem;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    box-sizing: inherit;
+  }
 }
 
 .form-submit-button {
@@ -89,14 +114,25 @@ label:not(.file-input-label) {
   padding: 0.2rem 1.5rem;
   width: fit-content;
   z-index: 2;
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 }
 
-a:hover,
-a:focus {
-  color: $keycolordarker;
-  text-decoration: underline;
+@media (hover: hover) {
+  a:hover,
+  a:focus {
+    color: $keycolordarker;
+    text-decoration: underline;
+  }
 }
 
 .fas {
   display: initial;
+}
+
+.button-text {
+  @media only screen and (max-width: 950px) {
+    display: none;
+  }
 }

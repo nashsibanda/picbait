@@ -17,15 +17,18 @@ class FollowersIndex extends React.Component {
   // }
 
   render() {
-    const { follows, users, list } = this.props;
+    const { follows, users, list, close } = this.props;
     return (
       <ul className="follows-list" onClick={this.preventPropagation}>
         <h2>{list}</h2>
         {Object.keys(follows).map(slug => {
           const user = users[slug];
 
-          return <FollowersIndexItem user={user} key={slug} />;
+          return user && <FollowersIndexItem user={user} key={slug} />;
         })}
+        <button type="button" onClick={close} className="followers-modal-close">
+          <i className="fas fa-times-circle"></i>
+        </button>
       </ul>
     );
   }

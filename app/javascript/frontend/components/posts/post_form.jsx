@@ -78,7 +78,12 @@ class PostForm extends React.Component {
               required={true}
             ></input>
             <label htmlFor="post-form-image" className="file-input-label">
-              {imageUrl ? "Select a Different Image..." : "Upload Image..."}
+              <button type="button">
+                <i className="fas fa-upload"></i>
+                <span className="button-text">
+                  {imageUrl ? "Select a Different Image..." : "Upload Image..."}
+                </span>
+              </button>
             </label>
           </div>
           {imageUrl && (

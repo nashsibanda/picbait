@@ -204,6 +204,7 @@ class ProfileUserInfo extends React.Component {
                 list={"Followers"}
                 users={users}
                 follows={followers}
+                close={this.toggleFollowersIndex}
               />
             </div>
           )}
@@ -214,6 +215,7 @@ class ProfileUserInfo extends React.Component {
                 list={"Following"}
                 users={users}
                 follows={following}
+                close={this.toggleFollowingIndex}
               />
             </div>
           )}

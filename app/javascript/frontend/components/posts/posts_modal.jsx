@@ -5,6 +5,7 @@ class PostModal extends React.Component {
   constructor(props) {
     super(props);
     this.loadPageData = this.loadPageData.bind(this);
+    this.preventClickPropagation = this.preventClickPropagation.bind(this);
   }
 
   loadPageData() {
@@ -22,6 +23,10 @@ class PostModal extends React.Component {
     }
   }
 
+  preventClickPropagation(e) {
+    e.stopPropagation();
+  }
+
   render() {
     const { posts, postId, closeModal } = this.props;
     const post = posts[postId];
@@ -30,8 +35,18 @@ class PostModal extends React.Component {
     }
     return (
       <div className="post-display-modal" onClick={closeModal}>
-        <div className="post-modal-container">
+        <div
+          className="post-modal-container"
+          onClick={this.preventClickPropagation}
+        >
           <PostInfoContainer post={post} />
+          <button
+            type="button"
+            onClick={closeModal}
+            className="post-modal-close"
+          >
+            <i className="fas fa-times-circle"></i>
+          </button>
         </div>
       </div>
     );

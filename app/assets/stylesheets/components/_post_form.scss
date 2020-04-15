@@ -46,13 +46,17 @@
   }
 }
 
+// @media (hover: hover) {
 .file-input-label {
   @include button($keycolordark);
   color: white;
   padding: 1rem 3rem;
   cursor: pointer;
-}
 
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+}
 input:focus + .file-input-label {
   outline: 1px dotted #000;
   outline: -webkit-focus-ring-color auto 5px;
@@ -60,6 +64,6 @@ input:focus + .file-input-label {
 
 @media (hover: none) {
   .file-input-label {
-    pointer-events: none;
+    display: none;
   }
 }

@@ -75,7 +75,7 @@ class ProfileShow extends React.Component {
               likes={likes}
               modalClosed={this.loadPageData}
             />
-            <Waypoint onEnter={this.loadPageData} />
+            <Waypoint onEnter={this.loadPosts} />
           </>
         )}
       </div>
