@@ -8,9 +8,30 @@ class PostsIndex extends React.Component {
     super(props);
     this.state = {
       modalPost: null,
+      order: [],
     };
     this.displayModal = this.displayModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.reorder = this.reorder.bind(this);
+  }
+
+  componentDidMount() {
+    this.reorder();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.posts != prevProps.posts) {
+      this.reorder();
+    }
+  }
+
+  reorder() {
+    const postsOrder = Object.values(this.props.posts).sort(
+      (a, b) => b.creationNum - a.creationNum
+    );
+    this.setState({
+      order: postsOrder.map(post => post.id),
+    });
   }
 
   displayModal(postId) {
@@ -24,24 +45,26 @@ class PostsIndex extends React.Component {
 
   render() {
     const { posts, likes } = this.props;
-    const { modalPost } = this.state;
+    const { modalPost, order } = this.state;
     if (!posts) {
       return <h1>NO POSTS :(</h1>;
     }
-    const postKeys = Object.keys(posts).sort((a, b) => b - a);
+    // const postKeys = Object.keys(posts).sort((a, b) => b - a);
     return (
       <div className="posts-index-container">
         <ul className="posts-index">
-          {postKeys.map(postId => {
+          {order.map(postId => {
             const post = posts[postId];
             return (
-              <PostsIndexItemContainer
-                post={post}
-                postId={postId}
-                key={postId}
-                likes={likes[postId]}
-                updateModal={this.displayModal}
-              />
+              post && (
+                <PostsIndexItemContainer
+                  post={post}
+                  postId={postId}
+                  key={postId}
+                  likes={likes[postId]}
+                  updateModal={this.displayModal}
+                />
+              )
             );
           })}
         </ul>

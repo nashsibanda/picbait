@@ -23,6 +23,7 @@ gem 'aws-sdk-s3'
 gem 'friendly_id'
 gem 'active_storage_validations'
 gem 'faker'
+gem "kaminari"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

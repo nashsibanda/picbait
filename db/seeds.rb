@@ -29,6 +29,7 @@ PARENT_COMMENT_IDS = (1..2003).to_a.reject { |x| x === 2 }
 COMMENT_IDS = (1..2003).to_a + (26_104..33_987).to_a
 CHILD_COMMENT_IDS = (26_104..33_987).to_a
 
+# Seed follows
 # USER_IDS.each do |user_id|
 #   rand_num = rand(30..60)
 #   users_to_follow = USER_IDS.sample(rand_num).reject { |x| x == user_id }
@@ -55,15 +56,16 @@ CHILD_COMMENT_IDS = (26_104..33_987).to_a
 #   end
 # end
 
-# 500.times do |i|
-#   title = Faker::Book.title[0..150]
-#   description = Faker::Quote.famous_last_words[0..150]
-#   api_user_id = USER_IDS.sample
-#   post = Api::Post.new(title: title, description: description, api_user_id: api_user_id)
-#   image = File.open("temp_scratch/seed_photos/lores/#{i % 316 + 1}.jpg")
-#   post.image.attach(io: image, filename: "#{i % 37 + 1}.jpg")
-#   post.save!
-# end
+# Seed posts
+100.times do |i|
+  title = Faker::Book.title[0..150]
+  description = Faker::Quote.famous_last_words[0..150]
+  api_user_id = 12
+  post = Api::Post.new(title: title, description: description, api_user_id: api_user_id)
+  image = File.open("temp_scratch/seed_photos/lores/#{i % 316 + 1}.jpg")
+  post.image.attach(io: image, filename: "#{i % 37 + 1}.jpg")
+  post.save!
+end
 
 # 2000.times do |i|
 #   body = Faker::TvShows::Seinfeld.quote[0..180]

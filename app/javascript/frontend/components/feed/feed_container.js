@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import Feed from "./feed";
-import { fetchFeedPosts } from "../../actions/post_actions";
+import {
+  fetchFeedPosts,
+  fetchMoreFeedPosts,
+  clearPosts,
+} from "../../actions/post_actions";
 
 const mapStateToProps = (state, { match }) => {
   const userId = state.session.currentUser.slug;
@@ -13,7 +17,9 @@ const mapStateToProps = (state, { match }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchFeedPosts: () => dispatch(fetchFeedPosts()),
+  fetchFeedPosts: page => dispatch(fetchFeedPosts(page)),
+  fetchMoreFeedPosts: page => dispatch(fetchMoreFeedPosts(page)),
+  clearPosts: () => dispatch(clearPosts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

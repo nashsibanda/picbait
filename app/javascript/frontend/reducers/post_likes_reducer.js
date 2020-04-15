@@ -1,4 +1,9 @@
-import { RECEIVE_POSTS, RECEIVE_POST } from "../actions/post_actions";
+import {
+  RECEIVE_POSTS,
+  RECEIVE_POST,
+  RECEIVE_MORE_POSTS,
+  CLEAR_POSTS,
+} from "../actions/post_actions";
 import { RECEIVE_POST_LIKE, CLEAR_POST_LIKE } from "../actions/like_actions";
 
 const postLikesReducer = (state = {}, action) => {
@@ -14,6 +19,16 @@ const postLikesReducer = (state = {}, action) => {
         likesOutput[post.id] = postLikes;
       });
       return likesOutput;
+    case RECEIVE_MORE_POSTS:
+      const currentLikes = Object.assign({}, state);
+      action.posts.forEach(post => {
+        const newPostLikes = {};
+        post.likes.forEach(like => {
+          newPostLikes[like.api_user_id] = like;
+        });
+        currentLikes[post.id] = newPostLikes;
+      });
+      return currentLikes;
     case RECEIVE_POST:
       const { post } = action;
       const thisPostLikes = {};
@@ -35,6 +50,8 @@ const postLikesReducer = (state = {}, action) => {
       delete postToClear[oldLike.api_user_id];
       oldPostLikes[oldLike] = postToClear;
       return oldPostLikes;
+    case CLEAR_POSTS:
+      return {};
     default:
       return state;
   }

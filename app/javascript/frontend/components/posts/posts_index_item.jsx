@@ -6,10 +6,17 @@ class PostsIndexItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      likesCount: Object.keys(this.props.likes).length,
-      liked: this.props.likes[this.props.currentUser.id] ? true : false,
+      likesCount: 0,
+      liked: false,
     };
     this.toggleLiked = this.toggleLiked.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      likesCount: Object.keys(this.props.likes).length,
+      liked: this.props.likes[this.props.currentUser.id] ? true : false,
+    });
   }
 
   toggleLiked(e) {

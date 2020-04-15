@@ -1,23 +1,35 @@
 import React from "react";
 import ProfileUserInfoContainer from "./profile_user_info_container";
 import PostsIndex from "../posts/posts_index";
+import { Waypoint } from "react-waypoint";
 
 class ProfileShow extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      page: 1,
+    };
     this.loadPageData = this.loadPageData.bind(this);
+    this.loadPosts = this.loadPosts.bind(this);
+  }
+
+  loadPosts() {
+    const { userId } = this.props;
+    const { page } = this.state;
+    this.props.fetchUserPosts(userId, page);
+    this.setState({ page: page + 1 });
   }
 
   loadPageData() {
     const {
       fetchUsers,
       userId,
-      fetchPosts,
+      fetchUserPosts,
       fetchFollowers,
       fetchFollowings,
     } = this.props;
     fetchUsers({ user_id: userId });
-    fetchPosts(userId);
+    this.loadPosts();
     fetchFollowings(userId);
     fetchFollowers(userId);
   }
@@ -28,8 +40,13 @@ class ProfileShow extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.userId != prevProps.userId) {
-      this.loadPageData();
+      this.props.clearPosts();
+      this.setState({ page: 1 }, this.loadPageData);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearPosts();
   }
 
   render() {
@@ -52,11 +69,14 @@ class ProfileShow extends React.Component {
           />
         )}
         {posts && likes && profileUser && (
-          <PostsIndex
-            posts={posts}
-            likes={likes}
-            modalClosed={this.loadPageData}
-          />
+          <>
+            <PostsIndex
+              posts={posts}
+              likes={likes}
+              modalClosed={this.loadPageData}
+            />
+            <Waypoint onEnter={this.loadPageData} />
+          </>
         )}
       </div>
     );

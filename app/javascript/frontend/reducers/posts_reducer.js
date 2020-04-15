@@ -3,6 +3,7 @@ import {
   RECEIVE_POSTS,
   CLEAR_POSTS,
   CLEAR_POST,
+  RECEIVE_MORE_POSTS,
 } from "../actions/post_actions";
 
 const postsReducer = (state = {}, action) => {
@@ -14,6 +15,12 @@ const postsReducer = (state = {}, action) => {
         postsOutput[post.id] = post;
       });
       return postsOutput;
+    case RECEIVE_MORE_POSTS:
+      const currentPosts = Object.assign({}, state);
+      action.posts.forEach(post => {
+        currentPosts[post.id] = post;
+      });
+      return currentPosts;
     case RECEIVE_POST:
       const { post } = action;
       return Object.assign({}, state, { [post.id]: post });

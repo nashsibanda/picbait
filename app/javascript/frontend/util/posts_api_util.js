@@ -1,15 +1,17 @@
 import { token } from "./misc_util";
 
-export const getFeedPosts = () =>
+export const getFeedPosts = page =>
   $.ajax({
     type: "get",
     url: `api/posts`,
+    data: { page },
   });
 
-export const getPosts = userId =>
+export const getUserPosts = (userId, page) =>
   $.ajax({
     type: "get",
     url: `api/users/${userId}/posts`,
+    data: { page },
   });
 
 export const getPost = id =>

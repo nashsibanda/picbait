@@ -1,4 +1,5 @@
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
+export const RECEIVE_MORE_POSTS = "RECEIVE_MORE_POSTS";
 export const RECEIVE_POST = "RECEIVE_POST";
 export const CLEAR_POST = "CLEAR_POST";
 export const CLEAR_POSTS = "CLEAR_POSTS";
@@ -11,6 +12,11 @@ import { fetchUsers } from "./user_actions.js";
 
 const receivePosts = posts => ({
   type: RECEIVE_POSTS,
+  posts,
+});
+
+const receiveMorePosts = posts => ({
+  type: RECEIVE_MORE_POSTS,
   posts,
 });
 
@@ -33,12 +39,20 @@ const receivePostErrors = errors => ({
   errors,
 });
 
-export const fetchPosts = userId => dispatch => {
-  PostsAPIUtil.getPosts(userId).then(posts => dispatch(receivePosts(posts)));
+export const fetchUserPosts = (userId, page) => dispatch => {
+  PostsAPIUtil.getUserPosts(userId, page).then(posts =>
+    dispatch(receiveMorePosts(posts))
+  );
 };
 
-export const fetchFeedPosts = () => dispatch => {
-  PostsAPIUtil.getFeedPosts().then(posts => dispatch(receivePosts(posts)));
+export const fetchFeedPosts = page => dispatch => {
+  PostsAPIUtil.getFeedPosts(page).then(posts => dispatch(receivePosts(posts)));
+};
+
+export const fetchMoreFeedPosts = page => dispatch => {
+  PostsAPIUtil.getFeedPosts(page).then(posts =>
+    dispatch(receiveMorePosts(posts))
+  );
 };
 
 export const fetchPost = id => dispatch => {
