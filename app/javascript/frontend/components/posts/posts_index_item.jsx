@@ -41,9 +41,9 @@ class PostsIndexItem extends React.Component {
   }
 
   render() {
-    const { post, likes, postId } = this.props;
+    const { post, postId, type } = this.props;
     const { liked, likesCount } = this.state;
-    const { title, description, imageUrl, date } = post;
+    const { title, imageUrl, date, authorUsername } = post;
     return (
       <li
         className="posts-index-item"
@@ -52,8 +52,18 @@ class PostsIndexItem extends React.Component {
         <div className="frame" onClick={this.props.updateModal(postId)}>
           <div className="overlay">
             <div className="post-details">
-              <div className="title">{makeShortTitle(title)}</div>
-              <div className="date">{makeShortTitle(date)}</div>
+              <div className="title">
+                <span>{makeShortTitle(title)}</span>
+              </div>
+              {type === "feed" ? (
+                <div className="author">
+                  <span>@{authorUsername}</span>
+                </div>
+              ) : (
+                <div className="date">
+                  <span>{date}</span>
+                </div>
+              )}
             </div>
             <div className="likes-button-container">
               <button

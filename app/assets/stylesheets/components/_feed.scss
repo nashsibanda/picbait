@@ -1,18 +1,45 @@
+.feed-container {
+  .posts-index-container {
+    @media only screen and (max-width: 700px) {
+      margin-top: 8.5rem;
+    }
+  }
+}
+
 .feed-header {
   @include flex-across;
-  justify-content: center;
-  height: 8rem;
+  justify-content: flex-start;
+  padding: 0 3vw;
+  height: 5rem;
   border-bottom: 1px solid $graylightest;
-  background-color: $keycolorlightest;
   margin-bottom: 2rem;
 
   @media only screen and (max-width: 700px) {
     margin-bottom: 0;
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    background-color: white;
   }
 
   h2 {
     font-size: 2rem;
     color: $keycolordark;
-    font-family: $seriffont;
+    font-weight: 300;
+
+    @media only screen and (max-width: 700px) {
+      font-size: 1.5rem;
+    }
+
+    a {
+      font-weight: 700;
+    }
+    // font-family: $seriffont;
+
+    i {
+      margin-right: 1rem;
+    }
   }
 }

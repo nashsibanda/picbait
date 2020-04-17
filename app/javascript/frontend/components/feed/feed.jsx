@@ -40,8 +40,8 @@ class Feed extends React.Component {
       <div className="feed-container">
         <div className="feed-header">
           <h2>
-            <Link to={`users/${profileUser.slug}`}>{profileUser.username}</Link>
-            's feed
+            <i className="fas fa-th"></i>
+            latest posts
           </h2>
         </div>
         {posts && likes && profileUser && (
@@ -50,6 +50,7 @@ class Feed extends React.Component {
               posts={posts}
               likes={likes}
               modalClosed={this.loadPageData}
+              type={"feed"}
             />
             <Waypoint onEnter={this.loadPageData} />
             {/* <button onClick={this.loadPageData}>MORE POSTS</button> */}

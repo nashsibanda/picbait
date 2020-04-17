@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 
     .post-modal-container {
       margin: 0 2rem;
@@ -113,7 +114,30 @@
         padding: 1rem;
 
         @media (hover: none) {
-          display: none;
+          .title {
+            line-height: 0.75rem;
+            height: 1.5rem;
+            position: relative;
+
+            span {
+              display: block;
+              max-width: 7rem;
+              overflow: scroll;
+              height: 100%;
+              -ms-overflow-style: none;
+              &::-webkit-scrollbar {
+                display: none;
+              }
+            }
+          }
+          // display: none;
+          background-color: transparentize($keycolordarker, $amount: 0.4);
+          opacity: 1;
+          height: auto;
+          top: auto;
+          color: $keycolorlightest;
+          padding: 0.5rem 0.5rem 0.2rem;
+          border-top: 1px solid transparentize($keycolordarker, $amount: 0.3);
         }
 
         .likes-button-container {
@@ -122,15 +146,60 @@
           color: $graydark;
           flex-shrink: 0;
 
+          & *.unliked {
+            @media (hover: none) {
+              color: $keycolorlightest;
+            }
+          }
           .likes-count.liked {
             color: $salmon;
           }
+
+          .likes-count {
+            @media (hover: none) {
+              font-size: 0.8rem;
+            }
+            @media only screen and (max-width: 700px) {
+              margin-left: 0.5rem;
+            }
+          }
+
+          .likes-button.index i {
+            @media (hover: none) {
+              font-size: 1rem;
+            }
+            @media only screen and (max-width: 700px) {
+              margin-bottom: 0;
+              margin-right: 0;
+            }
+          }
         }
 
-        .title {
-          font-family: $seriffont;
-          font-weight: 700;
-          font-size: 1.2rem;
+        .post-details {
+          .title {
+            font-family: $seriffont;
+            font-weight: 700;
+            font-size: 1rem;
+
+            @media (hover: none) {
+              font-size: 0.6rem;
+            }
+          }
+
+          .date,
+          .author {
+            @media (hover: none) {
+              font-size: 0.6rem;
+              font-weight: 700;
+              overflow: scroll;
+              white-space: nowrap;
+              -ms-overflow-style: none;
+
+              &::-webkit-scrollbar {
+                display: none;
+              }
+            }
+          }
         }
       }
 

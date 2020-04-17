@@ -26,8 +26,8 @@ export const makeFilename = filename => {
 };
 
 export const makeShortTitle = title => {
-  if (title.length > 80) {
-    return `${title.slice(0, 75)}...`;
+  if (title.length > 60) {
+    return `${title.slice(0, 57)}...`;
   } else {
     return title;
   }

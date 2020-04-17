@@ -44,7 +44,7 @@ class PostsIndex extends React.Component {
   }
 
   render() {
-    const { posts, likes } = this.props;
+    const { posts, likes, type } = this.props;
     const { modalPost, order } = this.state;
     if (!posts) {
       return <h1>NO POSTS :(</h1>;
@@ -62,6 +62,7 @@ class PostsIndex extends React.Component {
                   postId={postId}
                   key={postId}
                   likes={likes[postId]}
+                  type={type}
                   updateModal={this.displayModal}
                 />
               )
