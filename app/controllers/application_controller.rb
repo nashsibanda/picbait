@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
-  before_action :simulate_server_delay
+  # before_action :simulate_server_delay
 
   def login!(user)
     session[:session_token] = user.session_token
