@@ -164,7 +164,8 @@
             }
           }
 
-          .likes-button.index i {
+          .likes-button.index i,
+          .likes-button.index svg {
             @media (hover: none) {
               font-size: 1rem;
             }
