@@ -265,8 +265,11 @@
       font-size: 1.3rem;
     }
 
-    .location {
+    .mini-bio {
       font-size: 0.8rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
     }
   }
 }

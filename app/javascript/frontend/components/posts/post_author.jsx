@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const PostAuthor = props => {
-  const { id, slug, avatarUrl, username } = props.author;
+  const { id, slug, avatarUrl, username, bio } = props.author;
   return (
     <div className="post-author">
       <div className="avatar">
@@ -20,7 +20,7 @@ export const PostAuthor = props => {
         <div className="username">
           <Link to={`/users/${slug}`}>{username}</Link>
         </div>
-        <div className="location">Bournemouth, England</div>
+        <div className="mini-bio">{bio}</div>
       </div>
     </div>
   );
