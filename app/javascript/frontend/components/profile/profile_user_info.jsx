@@ -130,10 +130,9 @@ class ProfileUserInfo extends React.Component {
                   id="edit-avatar-input"
                   ref={el => (this.avatarInput = el)}
                 ></input>
-                <label
-                  className="fas fa-camera edit-avatar-icon"
-                  htmlFor="edit-avatar-input"
-                ></label>
+                <label className="edit-avatar-icon" htmlFor="edit-avatar-input">
+                  <i className="fas fa-camera"></i>
+                </label>
                 {newAvatarUrl && (
                   <form
                     onSubmit={this.submitNewAvatar}
