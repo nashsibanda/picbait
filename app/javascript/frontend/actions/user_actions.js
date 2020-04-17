@@ -2,6 +2,8 @@ export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
 import * as UsersAPIUtil from "./../util/users_api_util.js";
+import { loadedUsers, loadingUsers } from "./fetching_actions.js";
+import { postingUsers, postedUsers } from "./posting_actions.js";
 
 export const receiveUsers = users => ({
   type: RECEIVE_USERS,
@@ -19,21 +21,32 @@ export const receiveUserErrors = errors => ({
 });
 
 export const fetchUsers = filters => dispatch => {
-  UsersAPIUtil.getUsers(filters).then(users => dispatch(receiveUsers(users)));
+  dispatch(loadingUsers());
+  UsersAPIUtil.getUsers(filters).then(users => {
+    dispatch(receiveUsers(users));
+    dispatch(loadedUsers());
+  });
 };
 
 export const fetchUser = userId => dispatch => {
-  UsersAPIUtil.getUser(userId).then(user => dispatch(receiveUser(user)));
+  dispatch(loadingUsers());
+  UsersAPIUtil.getUser(userId).then(user => {
+    dispatch(receiveUser(user));
+    dispatch(loadedUsers());
+  });
 };
 
 export const updateUser = (id, formUser) => dispatch => {
+  dispatch(postingUsers());
   UsersAPIUtil.patchUser(id, formUser).then(
     user => {
       dispatch(receiveUser(user));
+      dispatch(postedUsers());
       dispatch(push(`/users/${id}`));
     },
     errors => {
       dispatch(receiveUserErrors(errors));
+      dispatch(postedUsers());
     }
   );
 };

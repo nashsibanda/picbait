@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class SessionForm extends React.Component {
   }
 
   render() {
-    const { formType, errors } = this.props;
+    const { formType, errors, loading } = this.props;
     const {
       username,
       password,
@@ -130,14 +131,18 @@ class SessionForm extends React.Component {
               />
             )}
           </div>
-          <div>
-            <button type="submit" className="form-submit-button">
-              {formHeader()}
-            </button>
-            <Link to={redirectLink()} className="form-redirect-link">
-              {redirectLinkTitle()}
-            </Link>
-          </div>
+          {loading.session ? (
+            <LoadingSpinner />
+          ) : (
+            <div>
+              <button type="submit" className="form-submit-button">
+                {formHeader()}
+              </button>
+              <Link to={redirectLink()} className="form-redirect-link">
+                {redirectLinkTitle()}
+              </Link>
+            </div>
+          )}
           {errors.length > 0 && (
             <ul className="form-errors">
               {errors.map(error => (

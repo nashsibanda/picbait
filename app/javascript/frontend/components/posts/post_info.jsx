@@ -3,6 +3,7 @@ import { PostAuthor } from "./post_author";
 import CommentsIndexContainer from "./../comments/comments_index_container";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { replaceParentCommenter } from "../../util/misc_util";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -98,7 +99,7 @@ class PostInfo extends React.Component {
   }
 
   render() {
-    const { post, comments } = this.props;
+    const { post, comments, loading, posting } = this.props;
     const {
       fillImage,
       liked,
@@ -128,18 +129,18 @@ class PostInfo extends React.Component {
         </section>
         <section className="details">
           <div className="author-details">
-            {author && <PostAuthor author={author} />}
+            {author ? <PostAuthor author={author} /> : <LoadingSpinner />}
           </div>
           <div className="comments">
-            {comments ? (
+            {loading.comments ? (
+              <LoadingSpinner />
+            ) : (
               <CommentsIndexContainer
                 comments={comments}
                 nested={false}
                 parentId={null}
                 updateParent={this.updateParentComment}
               />
-            ) : (
-              <p>No Comments :(</p>
             )}
           </div>
           <div className="interactions">
@@ -210,9 +211,13 @@ class PostInfo extends React.Component {
               onFocus={this.toggleCommentIndicator}
               onBlur={this.toggleCommentIndicator}
             ></textarea>
-            <button type="submit" className="submit-button">
-              Post
-            </button>
+            {posting.comments ? (
+              <LoadingSpinner />
+            ) : (
+              <button type="submit" className="submit-button">
+                Post
+              </button>
+            )}
             {commentIndicator && (
               <CircularProgressbar
                 value={body.length}

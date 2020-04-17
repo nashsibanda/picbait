@@ -1,0 +1,13 @@
+.loading-spinner-container {
+  @include flex-down;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  font-size: 2rem;
+  color: $keycolorlight;
+  align-self: center;
+
+  .posts-index-container + & {
+    padding: 1rem 0;
+  }
+}

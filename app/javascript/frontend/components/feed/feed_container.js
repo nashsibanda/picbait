@@ -13,6 +13,7 @@ const mapStateToProps = (state, { match }) => {
     posts: state.entities.posts,
     userId,
     likes: state.entities.likes.posts,
+    loading: state.loading,
   };
 };
 

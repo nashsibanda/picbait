@@ -9,6 +9,15 @@ import * as CommentsAPIUtil from "../util/comments_api_util";
 import { push } from "connected-react-router";
 import { receiveComments } from "./comment_actions.js";
 import { fetchUsers } from "./user_actions.js";
+import {
+  loadingPosts,
+  loadedPosts,
+  loadingComments,
+  loadingPostPage,
+  loadedPostPage,
+  loadedComments,
+} from "./fetching_actions.js";
+import { postingPosts, postedPosts } from "./posting_actions.js";
 
 const receivePosts = posts => ({
   type: RECEIVE_POSTS,
@@ -40,36 +49,56 @@ const receivePostErrors = errors => ({
 });
 
 export const fetchUserPosts = (userId, page) => dispatch => {
-  PostsAPIUtil.getUserPosts(userId, page).then(posts =>
-    dispatch(receiveMorePosts(posts))
-  );
+  dispatch(loadingPostPage());
+  PostsAPIUtil.getUserPosts(userId, page).then(posts => {
+    dispatch(receiveMorePosts(posts));
+    dispatch(loadedPostPage());
+  });
 };
 
 export const fetchFeedPosts = page => dispatch => {
-  PostsAPIUtil.getFeedPosts(page).then(posts => dispatch(receivePosts(posts)));
+  dispatch(loadingPostPage());
+
+  PostsAPIUtil.getFeedPosts(page).then(posts => {
+    dispatch(receivePosts(posts));
+    dispatch(loadedPostPage());
+  });
 };
 
 export const fetchMoreFeedPosts = page => dispatch => {
-  PostsAPIUtil.getFeedPosts(page).then(posts =>
-    dispatch(receiveMorePosts(posts))
-  );
+  dispatch(loadingPostPage());
+  PostsAPIUtil.getFeedPosts(page).then(posts => {
+    dispatch(receiveMorePosts(posts));
+    dispatch(loadedPostPage());
+  });
 };
 
 export const fetchPost = id => dispatch => {
-  PostsAPIUtil.getPost(id).then(post => dispatch(receivePost(post)));
-  CommentsAPIUtil.getComments(id).then(comments =>
-    dispatch(receiveComments(comments))
-  );
+  dispatch(loadingPosts());
+  dispatch(loadingComments());
+  PostsAPIUtil.getPost(id).then(post => {
+    dispatch(receivePost(post));
+    dispatch(loadedPosts());
+  });
+  CommentsAPIUtil.getComments(id).then(comments => {
+    dispatch(receiveComments(comments));
+    dispatch(loadedComments());
+  });
   dispatch(fetchUsers({ post_id: id }));
 };
 
 export const createPost = (formPost, userSlug) => dispatch => {
+  dispatch(postingPosts());
   PostsAPIUtil.postPost(formPost).then(
     post => {
       dispatch(receivePost(post));
+      dispatch(postedPosts());
       dispatch(push(`/users/${userSlug}`));
     },
-    errors => dispatch(receivePostErrors(errors.responseJSON))
+    errors => {
+      dispatch(receivePostErrors(errors.responseJSON));
+      dispatch(postedPosts());
+    }
   );
 };
 

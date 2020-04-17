@@ -6,6 +6,7 @@ export const RECEIVE_FOLLOW = "RECEIVE_FOLLOW";
 export const CLEAR_FOLLOWER = "CLEAR_FOLLOW";
 export const CLEAR_FOLLOWING = "CLEAR_FOLLOW";
 import * as FollowsAPIUtil from "./../util/follows_api";
+import { loadingFollows, loadedFollows } from "./fetching_actions";
 
 const receiveFollowers = follows => ({
   type: RECEIVE_FOLLOWERS,
@@ -38,27 +39,31 @@ const clearFollowing = follow => ({
 });
 
 export const fetchFollowers = userId => dispatch => {
+  dispatch(loadingFollows());
   const params = { follow_type: "followers" };
-  FollowsAPIUtil.getFollows(userId, params).then(follows =>
-    dispatch(receiveFollowers(follows))
-  );
+  FollowsAPIUtil.getFollows(userId, params).then(follows => {
+    dispatch(receiveFollowers(follows));
+    dispatch(loadedFollows());
+  });
 };
 
 export const fetchFollowings = userId => dispatch => {
+  dispatch(loadingFollows());
   const params = { follow_type: "followings" };
-  FollowsAPIUtil.getFollows(userId, params).then(follows =>
-    dispatch(receiveFollowings(follows))
-  );
+  FollowsAPIUtil.getFollows(userId, params).then(follows => {
+    dispatch(receiveFollowings(follows));
+    dispatch(loadedFollows());
+  });
 };
 
 export const createFollow = userId => dispatch => {
-  FollowsAPIUtil.postFollow(userId).then(follow =>
-    dispatch(receiveFollower(follow))
-  );
+  FollowsAPIUtil.postFollow(userId).then(follow => {
+    dispatch(receiveFollower(follow));
+  });
 };
 
 export const deleteFollow = userId => dispatch => {
-  FollowsAPIUtil.deleteFollow(userId).then(follow =>
-    dispatch(clearFollower(follow))
-  );
+  FollowsAPIUtil.deleteFollow(userId).then(follow => {
+    dispatch(clearFollower(follow));
+  });
 };

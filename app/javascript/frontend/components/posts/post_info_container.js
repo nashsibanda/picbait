@@ -11,6 +11,8 @@ const mapStateToProps = (state, ownProps) => {
     likes: state.entities.likes.posts[id],
     currentUser: state.session.currentUser,
     postId: id,
+    loading: state.loading,
+    posting: state.posting,
   };
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PostInfoContainer from "./post_info_container";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class PostModal extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class PostModal extends React.Component {
           className="post-modal-container"
           onClick={this.preventClickPropagation}
         >
-          <PostInfoContainer post={post} />
+          {post ? <PostInfoContainer post={post} /> : <LoadingSpinner />}
           <button
             type="button"
             onClick={closeModal}

@@ -2,6 +2,7 @@ import React from "react";
 import ProfileUserInfoContainer from "./profile_user_info_container";
 import PostsIndex from "../posts/posts_index";
 import { Waypoint } from "react-waypoint";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class ProfileShow extends React.Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class ProfileShow extends React.Component {
       likes,
       followers,
       following,
+      loading,
     } = this.props;
     const profileUser = users[userId];
     return (
@@ -75,6 +77,7 @@ class ProfileShow extends React.Component {
               likes={likes}
               modalClosed={this.loadPageData}
             />
+            {loading.postPage && <LoadingSpinner className="inline-padding" />}
             <Waypoint onEnter={this.loadPosts} />
           </>
         )}

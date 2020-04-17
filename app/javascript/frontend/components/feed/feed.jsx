@@ -2,6 +2,7 @@ import React from "react";
 import PostsIndex from "../posts/posts_index";
 import { Link } from "react-router-dom";
 import { Waypoint } from "react-waypoint";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class Feed extends React.Component {
   }
 
   render() {
-    const { users, userId, posts, likes } = this.props;
+    const { users, userId, posts, likes, loading } = this.props;
     const profileUser = users[userId];
     return (
       <div className="feed-container">
@@ -52,8 +53,8 @@ class Feed extends React.Component {
               modalClosed={this.loadPageData}
               type={"feed"}
             />
+            {loading.postPage && <LoadingSpinner />}
             <Waypoint onEnter={this.loadPageData} />
-            {/* <button onClick={this.loadPageData}>MORE POSTS</button> */}
           </>
         )}
       </div>

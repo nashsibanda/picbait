@@ -6,6 +6,7 @@ const mapStateToProps = state => ({
   currentUser: state.session.currentUser,
   formType: "new",
   errors: state.errors.post,
+  posting: state.posting,
 });
 
 const mapDispatchToProps = dispatch => ({

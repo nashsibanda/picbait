@@ -23,7 +23,7 @@ class PostShow extends React.Component {
   }
 
   render() {
-    const { posts, postId } = this.props;
+    const { posts, postId, loading } = this.props;
     const post = posts[postId];
     return (
       <div className="post-show-container">

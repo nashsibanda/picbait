@@ -1,6 +1,7 @@
 import React from "react";
 import { makeFilename, capitalize } from "../../util/misc_util";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { LoadingSpinner } from "../ui/loading_spinner";
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const { formType, errors } = this.props;
+    const { formType, errors, posting } = this.props;
     const {
       title,
       description,
@@ -128,9 +129,13 @@ class PostForm extends React.Component {
             )}
           </div>
           <div>
-            <button type="submit" className="form-submit-button">
-              Add Post
-            </button>
+            {posting.posts ? (
+              <LoadingSpinner />
+            ) : (
+              <button type="submit" className="form-submit-button">
+                Add Post
+              </button>
+            )}
           </div>
           {errors.length > 0 && (
             <ul className="session-errors">

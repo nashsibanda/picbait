@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
+  before_action :simulate_server_delay
 
   def login!(user)
     session[:session_token] = user.session_token
@@ -26,5 +27,9 @@ class ApplicationController < ActionController::Base
     if current_user.nil?
       render json: ['You must be logged in to perform this action.']
     end
+  end
+
+  def simulate_server_delay
+    sleep(1)
   end
 end
