@@ -3,7 +3,6 @@ import { PostAuthor } from "./post_author";
 import CommentsIndexContainer from "./../comments/comments_index_container";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { replaceParentCommenter } from "../../util/misc_util";
-import { Link } from "react-router-dom";
 
 class PostInfo extends React.Component {
   constructor(props) {
@@ -216,7 +215,7 @@ class PostInfo extends React.Component {
             </button>
             {commentIndicator && (
               <CircularProgressbar
-                value={title.length}
+                value={body.length}
                 maxValue={200}
                 className="comment-indicator"
               />
