@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import DOMPurify from "dompurify";
 
 export const token = function (xhr) {
   xhr.setRequestHeader(
@@ -42,7 +41,6 @@ export const makeShortString = (string, length) => {
 };
 
 export const makeCommentLinks = commentBody => {
-  const cleanBody = DOMPurify.sanitize(commentBody);
   const tagRegExp = /\B([@])[\w.-]+(?!\s)[\w-]/g;
   const replacer = match => {
     const newStr =
@@ -53,7 +51,7 @@ export const makeCommentLinks = commentBody => {
       "</a>";
     return newStr;
   };
-  return cleanBody.replace(tagRegExp, replacer);
+  return commentBody.replace(tagRegExp, replacer);
 };
 
 export const replaceParentCommenter = (commenter, body) => {
