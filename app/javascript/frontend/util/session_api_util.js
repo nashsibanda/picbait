@@ -6,9 +6,6 @@ export const signup = user =>
     url: "api/users",
     data: { user },
     beforeSend: token,
-    error: response => {
-      console.log(response);
-    },
   });
 
 export const login = user =>

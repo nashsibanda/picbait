@@ -21,10 +21,6 @@ class ProfileUserInfo extends React.Component {
     this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.fetchUsers({ user_id: this.props.user.slug });
-  // }
-
   toggleFollowersIndex(e) {
     this.setState({
       showFollowers: !this.state.showFollowers,
@@ -84,7 +80,6 @@ class ProfileUserInfo extends React.Component {
       newAvatarFile,
       makeFilename(newAvatarFile.name)
     );
-    console.log(formUser);
     this.props.updateUser(slug, formUser);
     this.setState({ newAvatarUrl: "", newAvatarFile: null });
   }

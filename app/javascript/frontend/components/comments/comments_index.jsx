@@ -37,7 +37,6 @@ class CommentsIndex extends React.Component {
                 commenter={users[comment.commenter]}
                 children={nested ? [] : this.commentsArray(comment.id)}
                 updateParent={updateParent}
-                // nested={nested}
               />
             )
           );

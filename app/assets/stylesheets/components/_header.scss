@@ -62,7 +62,6 @@ header {
     margin-bottom: 0.7rem;
     @media only screen and (max-width: 700px), screen and (max-height: 600px) {
       margin-bottom: 0.4rem;
-      // margin-top: 0.3rem;
       margin-right: 0.6rem;
     }
   }
@@ -77,12 +76,5 @@ header {
 
   & > * {
     margin-left: 0.6rem;
-    // @media only screen and (max-width: 700px) {
-    //   margin-right: 0.6rem;
-    // }
   }
-
-  // & > *:first-child {
-  //   margin-right: 0.6rem;
-  // }
 }

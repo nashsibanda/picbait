@@ -11,11 +11,6 @@ class FollowersIndex extends React.Component {
     e.stopPropagation();
   }
 
-  // componentDidMount() {
-  //   const { fetchUsers, user } = this.props;
-  //   fetchUsers({ user_id: user.slug });
-  // }
-
   render() {
     const { follows, users, list, close } = this.props;
     return (

@@ -49,7 +49,7 @@ class PostsIndex extends React.Component {
     if (!posts) {
       return <h1>NO POSTS :(</h1>;
     }
-    // const postKeys = Object.keys(posts).sort((a, b) => b - a);
+
     return (
       <div className="posts-index-container">
         <ul className="posts-index">
