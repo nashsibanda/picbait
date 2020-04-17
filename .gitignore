@@ -32,5 +32,3 @@ yarn-debug.log*
 /temp_scratch_folder
 /picbait.wiki
 temp_scratch
-Procfile
-.overmind.sock
