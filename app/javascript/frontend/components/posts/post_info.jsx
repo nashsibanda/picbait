@@ -15,7 +15,7 @@ class PostInfo extends React.Component {
       body: "",
       parentCommentId: null,
       parentCommenter: null,
-      commentIndicator: true,
+      commentIndicator: false,
     };
     this.toggleFillImage = this.toggleFillImage.bind(this);
     this.toggleLiked = this.toggleLiked.bind(this);
