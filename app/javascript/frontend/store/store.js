@@ -13,7 +13,11 @@ export default function configureStore(preloadedState = {}) {
     createRootReducer(history),
     preloadedState,
     composeWithDevTools(
-      applyMiddleware(routerMiddleware(history), thunk, logger)
+      applyMiddleware(
+        routerMiddleware(history),
+        thunk
+        // logger
+      )
     )
   );
   return store;

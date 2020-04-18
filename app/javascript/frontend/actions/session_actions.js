@@ -32,6 +32,21 @@ export const login = user => dispatch => {
   );
 };
 
+export const loginRodrick = () => dispatch => {
+  dispatch(loadingSession());
+  const rodrick = { username: "rodrick", password: "rodrick" };
+  SessionAPIUtil.login(rodrick).then(
+    currentUser => {
+      dispatch(receiveCurrentUser(currentUser));
+      dispatch(loadedSession());
+    },
+    errors => {
+      dispatch(receiveSessionErrors(errors.responseJSON));
+      dispatch(loadedSession());
+    }
+  );
+};
+
 export const logout = () => dispatch => {
   SessionAPIUtil.logout().then(() => {
     dispatch(logoutCurrentUser());

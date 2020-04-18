@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { LoadingSpinner } from "../ui/loading_spinner";
+import LoginRodrick from "./login_rodrick";
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class SessionForm extends React.Component {
     return (
       <div className="session-form-container">
         <h2>{formHeader()}</h2>
+        <LoginRodrick className="form-submit-button" />
         <form
           className={"session-form " + formType + "-form"}
           onSubmit={this.handleSubmit}

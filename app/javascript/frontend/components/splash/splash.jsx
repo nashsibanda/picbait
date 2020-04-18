@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LoginRodrick from "./../session/login_rodrick";
 
 const Splash = props => (
   <div className="splash-screen">
@@ -14,6 +15,7 @@ const Splash = props => (
       <Link to="/login" className="splash-login-button">
         Log In
       </Link>
+      <LoginRodrick className="splash-login-button" />
     </div>
   </div>
 );
