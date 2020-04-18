@@ -69,11 +69,9 @@ class PostsIndexItem extends React.Component {
               <button
                 type="button"
                 onClick={this.toggleLiked}
-                className="likes-button index"
+                className={`likes-button index ${liked ? "liked" : "unliked"}`}
               >
-                <i
-                  className={`fas fa-heart ${liked ? "liked" : "unliked"}`}
-                ></i>
+                <i className={`fas fa-heart`}></i>
               </button>
               <div className={`likes-count ${liked ? "liked" : "unliked"}`}>
                 {likesCount}

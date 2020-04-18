@@ -179,6 +179,9 @@
       margin-left: 0.5rem;
     }
   }
+  &.liked {
+    color: $salmon;
+  }
 
   i,
   svg {
@@ -187,10 +190,6 @@
 
     @media only screen and (max-width: 700px) {
       font-size: 1rem;
-    }
-
-    &.liked {
-      color: $salmon;
     }
 
     @media (hover: hover) {
