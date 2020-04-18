@@ -27,7 +27,7 @@ class Api::User < ApplicationRecord
   validates_length_of :bio, maximum: 200, message: 'must be less than 200 characters'
   validates_length_of :username, maximum: 50, message: 'must be less than 50 characters'
   friendly_id :username, use: :slugged
-  validates :avatar, size: { less_than: 1.megabytes, message: 'must be less than 1MB (got to watch that bandwidth!)' }
+  validates :avatar, size: { less_than: 4.megabytes, message: 'must be less than 4MB (got to watch that bandwidth!)' }
 
   def self.find_by_credentials(identifier, password)
     user = Api::User.where(lowercase_username: identifier.downcase).or(Api::User.where(email: identifier.downcase)).first
