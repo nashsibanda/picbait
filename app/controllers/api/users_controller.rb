@@ -127,7 +127,7 @@ class Api::UsersController < ApplicationController
   end
 
   def auto_follow_users(user)
-    to_follow = Api::User.all.pluck(:id).sort[1..-1].sample(5) + [1]
+    to_follow = Api::User.all.pluck(:id).sort[1..-2].sample(5) + [1]
     to_follow.each do |to_fol|
       Api::Follow.create(follower_id: user.id, followee_id: to_fol)
     end
