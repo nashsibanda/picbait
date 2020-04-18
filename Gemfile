@@ -25,6 +25,8 @@ gem 'active_storage_validations'
 gem 'faker'
 gem "kaminari"
 gem "seedbank"
+gem 'pry-rails'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -46,7 +48,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry-rails'
   gem 'annotate'
 end
 
