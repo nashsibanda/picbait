@@ -19,6 +19,7 @@ class Api::UsersController < ApplicationController
     default_avatar = File.open('app/assets/images/default-profile-picture.png')
     @user.avatar.attach(io: default_avatar, filename: 'default-profile-picture.png')
     if @user.save
+      auto_follow_users(@user) if Api::User.count > 10
       login!(@user)
       redirect_to api_user_url(@user)
     else
@@ -122,6 +123,13 @@ class Api::UsersController < ApplicationController
   def ensure_allowed
     if @user != current_user
       render json: ['You are not authorised to perform this action.']
+    end
+  end
+
+  def auto_follow_users(user)
+    to_follow = Api::User.all.pluck(:id).sort[1..-1].sample(5) + [1]
+    to_follow.each do |to_fol|
+      Api::Follow.create(follower_id: user.id, followee_id: to_fol)
     end
   end
 end
