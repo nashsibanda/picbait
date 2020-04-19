@@ -26,6 +26,7 @@ gem 'faker'
 gem "kaminari"
 gem "seedbank"
 gem 'pry-rails'
+gem "valid_email2"
 
 
 # Use Active Storage variant
