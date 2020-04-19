@@ -61,7 +61,7 @@ class PostsIndex extends React.Component {
                   post={post}
                   postId={postId}
                   key={postId}
-                  likes={likes[postId]}
+                  likes={likes}
                   type={type}
                   updateModal={this.displayModal}
                 />

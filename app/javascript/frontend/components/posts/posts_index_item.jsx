@@ -13,10 +13,23 @@ class PostsIndexItem extends React.Component {
   }
 
   componentDidMount() {
+    const { likes, postId, currentUser } = this.props;
     this.setState({
-      likesCount: Object.keys(this.props.likes).length,
-      liked: this.props.likes[this.props.currentUser.id] ? true : false,
+      likesCount: Object.keys(likes[postId]).length,
+      liked: likes[postId][currentUser.id] ? true : false,
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("updating");
+    if (this.props.likes != prevProps.likes) {
+      this.setState({
+        likesCount: Object.keys(this.props.likes[this.props.postId]).length,
+        liked: this.props.likes[this.props.postId][this.props.currentUser.id]
+          ? true
+          : false,
+      });
+    }
   }
 
   toggleLiked(e) {
@@ -41,7 +54,7 @@ class PostsIndexItem extends React.Component {
   }
 
   render() {
-    const { post, postId, type } = this.props;
+    const { post, postId, type, likes, currentUser } = this.props;
     const { liked, likesCount } = this.state;
     const { title, imageUrl, date, authorUsername } = post;
     return (
