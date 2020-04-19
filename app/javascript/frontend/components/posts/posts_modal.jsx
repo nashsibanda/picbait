@@ -32,7 +32,7 @@ class PostModal extends React.Component {
     const { posts, postId, closeModal } = this.props;
     const post = posts[postId];
     if (!post) {
-      return <h2>waiting</h2>;
+      return;
     }
     return (
       <div className="post-display-modal" onClick={closeModal}>
