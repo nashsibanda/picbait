@@ -18,6 +18,8 @@ class Api::PostsController < ApplicationController
 
   def create
     @post = Api::Post.new(post_params)
+    processed_image = ImageProcessing::MiniMagick.source(params[:post][:image]).auto_orient.resize_to_fit(1200, 1200).call
+    @post.image.attach(io: processed_image, filename: "#{current_user.slug}-#{SecureRandom.uuid}.jpg")
     if @post.save
       render @post
     else

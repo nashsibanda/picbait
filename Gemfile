@@ -27,6 +27,7 @@ gem "kaminari"
 gem "seedbank"
 gem 'pry-rails'
 gem "valid_email2"
+gem "image_processing"
 
 
 # Use Active Storage variant

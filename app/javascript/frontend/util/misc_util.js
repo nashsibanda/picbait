@@ -1,6 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-import { getUsersAutocomplete } from "./users_api_util";
-
 export const token = function (xhr) {
   xhr.setRequestHeader(
     "X-CSRF-Token",
@@ -18,12 +15,6 @@ export const capitalize = (string, separator = " ") => {
 };
 
 export const getFileExtension = filename => filename.split(".").pop();
-
-export const makeFilename = filename => {
-  const extension = filename.split(".").pop();
-  const uuid = uuidv4();
-  return uuid.concat(".", extension);
-};
 
 export const makeShortTitle = title => {
   if (title.length > 60) {

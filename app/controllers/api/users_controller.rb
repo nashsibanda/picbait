@@ -22,7 +22,8 @@ class Api::UsersController < ApplicationController
   def create
     @user = Api::User.new(user_params)
     default_avatar = File.open('app/assets/images/default-profile-picture.png')
-    @user.avatar.attach(io: default_avatar, filename: 'default-profile-picture.png')
+    processed_avatar = ImageProcessing::MiniMagick.source(default_avatar).auto_orient.resize_to_fit(600, 600).call
+    @user.avatar.attach(io: processed_avatar, filename: 'default-profile-picture.png')
     if @user.save
       auto_follow_users(@user) if Api::User.count > 10
       login!(@user)
@@ -44,7 +45,12 @@ class Api::UsersController < ApplicationController
   def update
     @user = Api::User.friendly.find(params[:id])
     if @user
-      if @user.update(user_params)
+      @user.assign_attributes(user_params)
+      if params[:user][:avatar]
+        processed_avatar = ImageProcessing::MiniMagick.source(params[:user][:avatar]).auto_orient.resize_to_fit(600, 600).call
+        @user.avatar.attach(io: processed_avatar, filename: "#{current_user.slug}-#{SecureRandom.uuid}.jpg")
+      end
+      if @user.save
         render :show
       else
         render json: @user.errors.full_messages, status: 422
