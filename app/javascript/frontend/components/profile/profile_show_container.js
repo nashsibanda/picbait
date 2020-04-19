@@ -14,7 +14,7 @@ const mapStateToProps = (state, { match }) => {
     likes: state.entities.likes.posts,
     followers: state.entities.follows.followers,
     following: state.entities.follows.following,
-    loading: state.loading,
+    loading: state.ui.loading,
   };
 };
 

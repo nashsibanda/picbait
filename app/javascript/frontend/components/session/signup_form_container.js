@@ -5,7 +5,7 @@ import { signup } from "../../actions/session_actions";
 const mapStateToProps = (state, ownProps) => ({
   errors: state.errors.session,
   formType: "signup",
-  loading: state.loading,
+  loading: state.ui.loading,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
