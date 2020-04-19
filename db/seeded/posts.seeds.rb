@@ -2,7 +2,7 @@
 
 after :users do
   author_user_ids = Api::User.all.pluck(:id)
-  300.times do |i|
+  100.times do |i|
     title = Faker::Book.title[0..150]
     description = Faker::Quote.famous_last_words[0..150]
     api_user_id = author_user_ids.sample
