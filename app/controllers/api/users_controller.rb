@@ -14,6 +14,11 @@ class Api::UsersController < ApplicationController
     @users = users
   end
 
+  def autocomplete
+    users = Api::User.all.pluck(:username)
+    render json: users
+  end
+
   def create
     @user = Api::User.new(user_params)
     default_avatar = File.open('app/assets/images/default-profile-picture.png')

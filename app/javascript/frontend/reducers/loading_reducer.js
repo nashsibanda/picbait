@@ -6,6 +6,7 @@ import commentLoadingReducer from "./loading/comment_loading_reducer";
 import likeLoadingReducer from "./loading/like_loading_reducer";
 import followLoadingReducer from "./loading/follow_loading_reducer";
 import postPageLoadingReducer from "./loading/post_page_loading_reducer";
+import usersAutocompleteLoadingReducer from "./loading/users_autocomplete_loading_reducer";
 
 const loadingReducer = combineReducers({
   posts: postLoadingReducer,
@@ -15,6 +16,7 @@ const loadingReducer = combineReducers({
   likes: likeLoadingReducer,
   follows: followLoadingReducer,
   postPage: postPageLoadingReducer,
+  usersAutocomplete: usersAutocompleteLoadingReducer,
 });
 
 export default loadingReducer;

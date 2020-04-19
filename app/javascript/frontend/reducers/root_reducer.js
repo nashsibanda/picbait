@@ -5,6 +5,7 @@ import errorsReducer from "./errors_reducer";
 import { connectRouter } from "connected-react-router";
 import loadingReducer from "./loading_reducer";
 import postingReducer from "./posting_reducer";
+import uiReducer from "./ui_reducer";
 
 const createRootReducer = history =>
   combineReducers({
@@ -12,7 +13,7 @@ const createRootReducer = history =>
     session: sessionReducer,
     errors: errorsReducer,
     router: connectRouter(history),
-    loading: loadingReducer,
+    ui: uiReducer,
     posting: postingReducer,
   });
 

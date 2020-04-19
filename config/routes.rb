@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create update show destroy] do
       resources :likes, only: :create
     end
+    get '/users/autocomplete', to: 'users#autocomplete'
     resources :users, only: %i[index create show update destroy] do
       resources :posts, only: :index
       resource :follow, only: %i[create destroy]

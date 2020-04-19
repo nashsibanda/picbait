@@ -18,6 +18,7 @@ import {
   loadedComments,
 } from "./fetching_actions.js";
 import { postingPosts, postedPosts } from "./posting_actions.js";
+import { fetchUsersAutocomplete } from "./autocomplete_actions.js";
 
 const receivePosts = posts => ({
   type: RECEIVE_POSTS,
@@ -84,6 +85,7 @@ export const fetchPost = id => dispatch => {
     dispatch(receiveComments(comments));
     dispatch(loadedComments());
   });
+  dispatch(fetchUsersAutocomplete());
   dispatch(fetchUsers({ post_id: id }));
 };
 

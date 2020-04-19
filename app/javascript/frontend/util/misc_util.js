@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { getUsersAutocomplete } from "./users_api_util";
 
 export const token = function (xhr) {
   xhr.setRequestHeader(
@@ -40,16 +41,20 @@ export const makeShortString = (string, length) => {
   }
 };
 
-export const makeCommentLinks = commentBody => {
+export const makeCommentLinks = (commentBody, autocomplete) => {
   const tagRegExp = /\B([@])[\w.-]+(?!\s)[\w-]/g;
   const replacer = match => {
-    const newStr =
-      "<a class=comment-profile-link href=#/users/" +
-      match.slice(1) +
-      ">" +
-      match +
-      "</a>";
-    return newStr;
+    if (autocomplete[match.slice(1)]) {
+      const newStr =
+        "<a class=comment-profile-link href=#/users/" +
+        match.slice(1) +
+        ">" +
+        match +
+        "</a>";
+      return newStr;
+    } else {
+      return match;
+    }
   };
   return commentBody.replace(tagRegExp, replacer);
 };

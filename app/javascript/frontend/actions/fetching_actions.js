@@ -12,6 +12,8 @@ export const LOADING_COMMENTS = "LOADING_COMMENTS";
 export const LOADED_COMMENTS = "LOADED_COMMENTS";
 export const LOADING_SESSION = "LOADING_SESSION";
 export const LOADED_SESSION = "LOADED_SESSION";
+export const LOADING_USERS_AUTOCOMPLETE = "LOADING_USERS_AUTOCOMPLETE";
+export const LOADED_USERS_AUTOCOMPLETE = "LOADED_USERS_AUTOCOMPLETE";
 
 export const loadingUsers = () => ({
   type: LOADING_USERS,
@@ -67,4 +69,12 @@ export const loadingSession = () => ({
 
 export const loadedSession = () => ({
   type: LOADED_SESSION,
+});
+
+export const loadingUsersAutocomplete = () => ({
+  type: LOADING_USERS_AUTOCOMPLETE,
+});
+
+export const loadedUsersAutocomplete = () => ({
+  type: LOADED_USERS_AUTOCOMPLETE,
 });

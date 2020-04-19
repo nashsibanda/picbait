@@ -7,6 +7,12 @@ export const getUsers = data =>
     data,
   });
 
+export const getUsersAutocomplete = () =>
+  $.ajax({
+    type: "get",
+    url: "api/users/autocomplete",
+  });
+
 export const getUser = userId =>
   $.ajax({
     type: "get",

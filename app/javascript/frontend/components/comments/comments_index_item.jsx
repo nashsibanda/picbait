@@ -66,7 +66,12 @@ class CommentsIndexItem extends React.Component {
   render() {
     const { body, date, timeAgo } = this.props.comment;
     const { slug, avatarUrl, username } = this.props.commenter;
-    const { children, updateParent } = this.props;
+    const {
+      children,
+      updateParent,
+      usersAutocomplete,
+      loadingUsersAutocomplete,
+    } = this.props;
     const { displayChildComments, liked, likesCount } = this.state;
     return (
       <div className="comment">
@@ -85,7 +90,10 @@ class CommentsIndexItem extends React.Component {
               <span className="username">
                 <Link to={`/users/${slug}`}>{username}</Link>
               </span>
-              <span className="body">{parse(makeCommentLinks(body))}</span>
+              <span className="body">
+                {!loadingUsersAutocomplete &&
+                  parse(makeCommentLinks(body, usersAutocomplete))}
+              </span>
             </div>
             <div className="like-button-container">
               <button className="likes-button" onClick={this.toggleLiked}>
