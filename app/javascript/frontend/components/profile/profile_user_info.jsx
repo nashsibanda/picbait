@@ -1,5 +1,4 @@
 import React from "react";
-import { makeFilename } from "../../util/misc_util";
 import FollowersIndexContainer from "./../followers/followers_index_container";
 
 class ProfileUserInfo extends React.Component {
@@ -12,6 +11,8 @@ class ProfileUserInfo extends React.Component {
       followingCount: Object.keys(this.props.following).length,
       showFollowers: false,
       showFollowing: false,
+      displayAvatarEl: null,
+      loadingAvatar: false,
     };
     this.handleNewAvatar = this.handleNewAvatar.bind(this);
     this.submitNewAvatar = this.submitNewAvatar.bind(this);
@@ -19,6 +20,7 @@ class ProfileUserInfo extends React.Component {
     this.toggleFollow = this.toggleFollow.bind(this);
     this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this);
     this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this);
+    this.displayAvatar = this.displayAvatar.bind(this);
   }
 
   toggleFollowersIndex(e) {
@@ -53,21 +55,56 @@ class ProfileUserInfo extends React.Component {
 
   clearNewAvatar(e) {
     e.preventDefault();
-    this.setState({ newAvatarUrl: "", newAvatarFile: null });
+    this.setState({
+      newAvatarUrl: "",
+      newAvatarFile: null,
+      displayAvatarEl: null,
+      loadingAvatar: false,
+    });
     this.avatarInput.value = "";
   }
 
   handleNewAvatar(e) {
+    this.setState({ loadingAvatar: true, displayAvatarEl: null });
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () =>
-      this.setState({ newAvatarUrl: reader.result, newAvatarFile: file });
+      this.setState(
+        { newAvatarUrl: reader.result, newAvatarFile: file },
+        this.displayAvatar
+      );
 
     if (file) {
       reader.readAsDataURL(file);
     } else {
-      this.setState({ newAvatarUrl: "", newAvatarFile: null });
+      this.setState({
+        newAvatarUrl: "",
+        newAvatarFile: null,
+        loadingAvatar: false,
+      });
     }
+  }
+
+  displayAvatar() {
+    loadImage(
+      this.state.newAvatarUrl,
+      img => {
+        this.setState({ displayAvatarEl: img }, () => {
+          this.setState({ loadingAvatar: false }, () => {
+            if (this.state.displayAvatarEl instanceof Element) {
+              this.preview.appendChild(this.state.displayAvatarEl);
+            } else {
+              alert("This is not a valid image file format!");
+            }
+          });
+        });
+      },
+      {
+        orientation: true,
+        aspectRatio: 1 / 1,
+        cover: true,
+      }
+    );
   }
 
   submitNewAvatar(e) {
@@ -75,13 +112,13 @@ class ProfileUserInfo extends React.Component {
     const formUser = new FormData();
     const { newAvatarFile } = this.state;
     const { slug } = this.props.user;
-    formUser.append(
-      "user[avatar]",
-      newAvatarFile,
-      makeFilename(newAvatarFile.name)
-    );
+    formUser.append("user[avatar]", newAvatarFile);
     this.props.updateUser(slug, formUser);
-    this.setState({ newAvatarUrl: "", newAvatarFile: null });
+    this.setState({
+      newAvatarUrl: "",
+      newAvatarFile: null,
+      displayAvatarEl: false,
+    });
   }
 
   toggleFollow(e) {
@@ -110,6 +147,7 @@ class ProfileUserInfo extends React.Component {
       followingCount,
       showFollowers,
       showFollowing,
+      displayAvatarEl,
     } = this.state;
     return (
       <div className="profile-user-info">
@@ -117,11 +155,15 @@ class ProfileUserInfo extends React.Component {
           <div
             className="container"
             style={{
-              backgroundImage: `url(${
-                newAvatarUrl ? newAvatarUrl : avatarUrl
-              })`,
+              backgroundImage: `url(${avatarUrl})`,
             }}
           >
+            {displayAvatarEl && (
+              <div
+                className="avatar-preview"
+                ref={ref => (this.avatarContainer = ref)}
+              ></div>
+            )}
             {ownProfile && (
               <>
                 <input

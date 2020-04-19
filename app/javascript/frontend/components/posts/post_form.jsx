@@ -1,5 +1,5 @@
 import React from "react";
-import { makeFilename, capitalize } from "../../util/misc_util";
+import { capitalize } from "../../util/misc_util";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { LoadingSpinner } from "../ui/loading_spinner";
 
@@ -13,27 +13,52 @@ class PostForm extends React.Component {
       imageUrl: "",
       titleIndicator: false,
       descriptionIndicator: false,
+      displayImageEl: null,
+      loadingImage: false,
     };
     this.handleImage = this.handleImage.bind(this);
     this.updateProperty = this.updateProperty.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleIndicator = this.toggleIndicator.bind(this);
+    this.displayImage = this.displayImage.bind(this);
   }
 
   toggleIndicator(indicator) {
     return e => this.setState({ [indicator]: !this.state[indicator] });
   }
 
+  displayImage() {
+    loadImage(
+      this.state.imageUrl,
+      img => {
+        this.setState({ displayImageEl: img }, () => {
+          this.setState({ loadingImage: false }, () => {
+            if (this.state.displayImageEl instanceof Element) {
+              this.preview.appendChild(this.state.displayImageEl);
+            } else {
+              alert("This is not a valid image file format!");
+            }
+          });
+        });
+      },
+      { orientation: true }
+    );
+  }
+
   handleImage(e) {
+    this.setState({ loadingImage: true, displayImageEl: null });
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () =>
-      this.setState({ imageUrl: reader.result, imageFile: file });
+      this.setState(
+        { imageUrl: reader.result, imageFile: file },
+        this.displayImage
+      );
 
     if (file) {
       reader.readAsDataURL(file);
     } else {
-      this.setState({ imageUrl: "", imageFile: null });
+      this.setState({ imageUrl: "", imageFile: null, displayImageEl: null });
     }
   }
 
@@ -47,7 +72,7 @@ class PostForm extends React.Component {
     const { title, description, imageFile } = this.state;
     formPost.append("post[title]", title);
     formPost.append("post[description]", description);
-    formPost.append("post[image]", imageFile, makeFilename(imageFile.name));
+    formPost.append("post[image]", imageFile);
     formPost.append("post[api_user_id]", this.props.currentUser.id);
     const userSlug = this.props.currentUser.slug;
     this.props.processForm(formPost, userSlug);
@@ -61,6 +86,8 @@ class PostForm extends React.Component {
       imageUrl,
       titleIndicator,
       descriptionIndicator,
+      displayImageEl,
+      loadingImage,
     } = this.state;
     return (
       <div className="post-form-container">
@@ -87,9 +114,10 @@ class PostForm extends React.Component {
               </button>
             </label>
           </div>
-          {imageUrl && (
-            <div>
-              <img src={imageUrl}></img>
+          {loadingImage && <LoadingSpinner />}
+          {displayImageEl && (
+            <div ref={ref => (this.preview = ref)}>
+              {/* <img src={imageUrl}></img> */}
             </div>
           )}
 

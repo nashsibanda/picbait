@@ -7,6 +7,7 @@ require("@rails/ujs").start();
 require("@rails/activestorage").start();
 require("channels");
 require("jquery");
+// require("./../frontend/util/JavaScript-Load-Image-master/js/index");
 
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
