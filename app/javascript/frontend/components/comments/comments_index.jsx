@@ -13,7 +13,13 @@ class CommentsIndex extends React.Component {
       return comments;
     }
     const outputArray = [];
-    const commentKeys = Object.keys(comments).sort((a, b) => b - a);
+    const tempNewestFirstBool = true;
+    let commentKeys;
+    if (tempNewestFirstBool) {
+      commentKeys = Object.keys(comments).sort((a, b) => b - a);
+    } else {
+      commentKeys = Object.keys(comments).sort((a, b) => a - b);
+    }
     commentKeys.forEach(commentId => {
       const comment = comments[commentId];
       if (comment.parentCommentId === parentId) {
