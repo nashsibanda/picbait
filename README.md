@@ -41,6 +41,57 @@ Put together a full-stack, bottom-up web application. APIs, CRUD, single-page fu
 - PostgreSQL
 - jQuery
 
+## Changelog
+
+Version numbers reflect heroku versioning.
+
+### Major changes to make
+
+- _Fix image rotation on upload in preview_
+- Add direct messaging
+  - Add message threads
+  - Add group message threads
+- Add geolocation with Google Maps API
+- Add user preferences
+  - Allow users to choose ascending or descending comments
+
+### v15
+
+- _Circle indicator is fucked for comments on mobile_
+- _Deffo need progress indicators, etc._
+- _Followers/Following buttons on profile are too close together - tied to bio width!_
+- _Weird waiting text at bottom of feed? Only sometimes??_
+- _Get rid of the “Bournemouth, England” placeholder; replace with bio maybe?_
+
+### v16
+
+- _Fix pink colour change for svg icons; put class on container button?_
+- _Make a default login_
+- _Automatically make new users follow some seed users, and me_
+
+### v17
+
+- _Larger file uploads_
+- _Fix comment length radial switch_
+
+### v18
+
+- _Followers/following lists are not working properly_
+  - _Lists not fully populated_
+- _Should only be able to tag existing users_
+- _Only allow image files_
+- _Add proper email validation (ValidEmail2 gem)_
+- **Image rotation fixed on upload in preview!**
+- _Likes in post modal are reflected immediately in post index_
+
+### v19 - Current
+
+- _Add imagemagick to heroku buildpacks_
+
+### v20 - Next
+
+- Time for direct messaging!
+
 <!-- This README would normally document whatever steps are necessary to get the
 application up and running.
 
