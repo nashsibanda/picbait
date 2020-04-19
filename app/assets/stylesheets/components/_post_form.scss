@@ -56,6 +56,14 @@
   @media only screen and (max-width: 700px) {
     width: 100%;
   }
+
+  button span {
+    margin-left: 1rem;
+  }
+
+  button {
+    pointer-events: none;
+  }
 }
 input:focus + .file-input-label {
   outline: 1px dotted #000;

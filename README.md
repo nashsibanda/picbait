@@ -91,6 +91,10 @@ Version numbers reflect heroku versioning.
 ### v20 - Next
 
 - Time for direct messaging!
+- New post form upload button:
+  - _Add margin next to icon_
+  - _Allow clicks to work everywhere on the button_
+- _Fix un-liking from post index_
 
 <!-- This README would normally document whatever steps are necessary to get the
 application up and running.

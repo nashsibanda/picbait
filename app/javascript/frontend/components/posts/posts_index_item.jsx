@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { makeShortTitle } from "../../util/misc_util";
 
 class PostsIndexItem extends React.Component {
@@ -21,7 +20,6 @@ class PostsIndexItem extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("updating");
     if (this.props.likes != prevProps.likes) {
       this.setState({
         likesCount: Object.keys(this.props.likes[this.props.postId]).length,
@@ -44,7 +42,7 @@ class PostsIndexItem extends React.Component {
       postId,
     } = this.props;
     if (liked) {
-      const likeId = likes[currentUser.id].id;
+      const likeId = likes[postId][currentUser.id].id;
       deletePostLike(likeId);
       this.setState({ liked: false, likesCount: likesCount - 1 });
     } else {

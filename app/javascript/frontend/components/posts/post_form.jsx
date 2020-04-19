@@ -115,11 +115,7 @@ class PostForm extends React.Component {
             </label>
           </div>
           {loadingImage && <LoadingSpinner />}
-          {displayImageEl && (
-            <div ref={ref => (this.preview = ref)}>
-              {/* <img src={imageUrl}></img> */}
-            </div>
-          )}
+          {displayImageEl && <div ref={ref => (this.preview = ref)}></div>}
 
           <div>
             <label htmlFor="post-form-title">Title</label>
