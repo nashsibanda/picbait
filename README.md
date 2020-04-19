@@ -84,17 +84,20 @@ Version numbers reflect heroku versioning.
 - **Image rotation fixed on upload in preview!**
 - _Likes in post modal are reflected immediately in post index_
 
-### v19 - Current
+### v19
 
 - _Add imagemagick to heroku buildpacks_
 
-### v20 - Next
+### v20 - Current
 
-- Time for direct messaging!
 - New post form upload button:
   - _Add margin next to icon_
   - _Allow clicks to work everywhere on the button_
 - _Fix un-liking from post index_
+
+### v21 - Next
+
+- Time for direct messaging!
 
 <!-- This README would normally document whatever steps are necessary to get the
 application up and running.
