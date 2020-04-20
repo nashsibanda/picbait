@@ -2,7 +2,7 @@ import React from "react";
 import { PostAuthor } from "./post_author";
 import CommentsIndexContainer from "./../comments/comments_index_container";
 import { CircularProgressbar } from "react-circular-progressbar";
-import { replaceParentCommenter } from "../../util/misc_util";
+import { replaceParentCommenter, sanitizeContent } from "../../util/misc_util";
 import { LoadingSpinner } from "../ui/loading_spinner";
 
 class PostInfo extends React.Component {
@@ -53,7 +53,7 @@ class PostInfo extends React.Component {
     const formComment = new FormData();
     const { body, parentCommentId } = this.state;
     const { postId, currentUser, createComment } = this.props;
-    formComment.append("comment[body]", body);
+    formComment.append("comment[body]", sanitizeContent(body));
     if (parentCommentId) {
       formComment.append("comment[parent_comment_id]", parentCommentId);
     }

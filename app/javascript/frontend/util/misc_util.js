@@ -1,9 +1,17 @@
+import sanitizeHtml from "sanitize-html";
+
 export const token = function (xhr) {
   xhr.setRequestHeader(
     "X-CSRF-Token",
     $('meta[name="csrf-token"]').attr("content")
   );
 };
+
+export const sanitizeContent = text =>
+  sanitizeHtml(text, {
+    allowedTags: [],
+    allowedAttributes: {},
+  });
 
 export const capitalize = (string, separator = " ") => {
   const wordsArray = string.split(separator).map(word => {
@@ -13,8 +21,6 @@ export const capitalize = (string, separator = " ") => {
   });
   return wordsArray.join(separator);
 };
-
-export const getFileExtension = filename => filename.split(".").pop();
 
 export const makeShortTitle = title => {
   if (title.length > 60) {
@@ -34,6 +40,7 @@ export const makeShortString = (string, length) => {
 
 export const makeCommentLinks = (commentBody, autocomplete) => {
   const tagRegExp = /\B([@])[\w.-]+(?!\s)[\w-]/g;
+  const cleanBody = sanitizeContent(commentBody);
   const replacer = match => {
     if (autocomplete[match.slice(1)]) {
       const newStr =
@@ -47,7 +54,7 @@ export const makeCommentLinks = (commentBody, autocomplete) => {
       return match;
     }
   };
-  return commentBody.replace(tagRegExp, replacer);
+  return cleanBody.replace(tagRegExp, replacer);
 };
 
 export const replaceParentCommenter = (commenter, body) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { capitalize } from "../../util/misc_util";
+import { capitalize, sanitizeContent } from "../../util/misc_util";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { LoadingSpinner } from "../ui/loading_spinner";
 
@@ -70,8 +70,8 @@ class PostForm extends React.Component {
     e.preventDefault();
     const formPost = new FormData();
     const { title, description, imageFile } = this.state;
-    formPost.append("post[title]", title);
-    formPost.append("post[description]", description);
+    formPost.append("post[title]", sanitizeContent(title));
+    formPost.append("post[description]", sanitizeContent(description));
     formPost.append("post[image]", imageFile);
     formPost.append("post[api_user_id]", this.props.currentUser.id);
     const userSlug = this.props.currentUser.slug;
