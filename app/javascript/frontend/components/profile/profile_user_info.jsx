@@ -92,7 +92,7 @@ class ProfileUserInfo extends React.Component {
         this.setState({ displayAvatarEl: img }, () => {
           this.setState({ loadingAvatar: false }, () => {
             if (this.state.displayAvatarEl instanceof Element) {
-              this.preview.appendChild(this.state.displayAvatarEl);
+              this.avatarPreview.appendChild(this.state.displayAvatarEl);
             } else {
               alert("This is not a valid image file format!");
             }
@@ -161,7 +161,7 @@ class ProfileUserInfo extends React.Component {
             {displayAvatarEl && (
               <div
                 className="avatar-preview"
-                ref={ref => (this.avatarContainer = ref)}
+                ref={ref => (this.avatarPreview = ref)}
               ></div>
             )}
             {ownProfile && (
