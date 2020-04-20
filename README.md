@@ -57,7 +57,7 @@ Version numbers reflect heroku versioning.
 
 ### v15
 
-- _Circle indicator is fucked for comments on mobile_
+- _Circle indicator is broken for comments on mobile_
 - _Deffo need progress indicators, etc._
 - _Followers/Following buttons on profile are too close together - tied to bio width!_
 - _Weird waiting text at bottom of feed? Only sometimes??_
@@ -88,14 +88,18 @@ Version numbers reflect heroku versioning.
 
 - _Add imagemagick to heroku buildpacks_
 
-### v20 - Current
+### v20
 
 - New post form upload button:
   - _Add margin next to icon_
   - _Allow clicks to work everywhere on the button_
 - _Fix un-liking from post index_
 
-### v21 - Next
+### v21 - Current
+
+- Schedule database cleanup every hour
+
+### v22 - Next
 
 - Time for direct messaging!
 
