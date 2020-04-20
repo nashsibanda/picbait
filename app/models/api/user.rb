@@ -37,6 +37,10 @@ class Api::User < ApplicationRecord
     user.is_password?(password) ? user : nil
   end
 
+  def self.after_18
+    Api::User.where('id > 18')
+  end
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)

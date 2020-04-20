@@ -9,4 +9,8 @@ class Api::Post < ApplicationRecord
   validates :title, :api_user_id, presence: true
   validates_length_of :title, :description, maximum: 200, message: 'must be less than 200 characters long'
   validates :image, attached: true, size: { less_than: 4.megabytes, message: 'must be less than 4MB (got to watch that bandwidth!)' }, content_type: %i[png jpg jpeg gif]
+
+  def self.after_300
+    Api::Post.where('id > 300')
+  end
 end
