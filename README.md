@@ -102,6 +102,9 @@ Version numbers reflect heroku versioning.
 ### v22 - Next
 
 - Time for direct messaging!
+- Sanitize user input before saving to database.
+- Fix avatar preview in user profile.
+- Allow bio editing from user profile.
 
 <!-- This README would normally document whatever steps are necessary to get the
 application up and running.
