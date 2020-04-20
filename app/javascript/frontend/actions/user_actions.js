@@ -42,7 +42,6 @@ export const updateUser = (id, formUser) => dispatch => {
     user => {
       dispatch(receiveUser(user));
       dispatch(postedUsers());
-      dispatch(push(`/users/${id}`));
     },
     errors => {
       dispatch(receiveUserErrors(errors));

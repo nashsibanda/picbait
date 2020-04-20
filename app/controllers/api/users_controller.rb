@@ -72,7 +72,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :lowercase_username, :avatar)
+    params.require(:user).permit(:username, :email, :password, :lowercase_username, :avatar, :bio)
   end
 
   def post_comment_users

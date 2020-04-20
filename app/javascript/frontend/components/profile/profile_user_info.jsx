@@ -1,5 +1,7 @@
 import React from "react";
 import FollowersIndexContainer from "./../followers/followers_index_container";
+import { sanitizeContent } from "../../util/misc_util";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 class ProfileUserInfo extends React.Component {
   constructor(props) {
@@ -13,6 +15,8 @@ class ProfileUserInfo extends React.Component {
       showFollowing: false,
       displayAvatarEl: null,
       loadingAvatar: false,
+      showBioForm: false,
+      formBio: this.props.user.bio || "",
     };
     this.handleNewAvatar = this.handleNewAvatar.bind(this);
     this.submitNewAvatar = this.submitNewAvatar.bind(this);
@@ -21,6 +25,10 @@ class ProfileUserInfo extends React.Component {
     this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this);
     this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this);
     this.displayAvatar = this.displayAvatar.bind(this);
+    this.toggleBioForm = this.toggleBioForm.bind(this);
+    this.updateBio = this.updateBio.bind(this);
+    this.submitNewBio = this.submitNewBio.bind(this);
+    this.cancelBioUpdate = this.cancelBioUpdate.bind(this);
   }
 
   toggleFollowersIndex(e) {
@@ -37,6 +45,20 @@ class ProfileUserInfo extends React.Component {
     });
   }
 
+  toggleBioForm(e) {
+    this.setState({ showBioForm: !this.state.showBioForm });
+  }
+
+  updateBio(e) {
+    e.preventDefault();
+    this.setState({ formBio: e.target.value });
+  }
+
+  cancelBioUpdate(e) {
+    e.preventDefault();
+    this.setState({ formBio: this.props.user.bio || "", showBioForm: false });
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.followers != prevProps.followers) {
       this.setState({
@@ -49,7 +71,11 @@ class ProfileUserInfo extends React.Component {
       });
     }
     if (this.props.user != prevProps.user) {
-      this.setState({ showFollowing: false, showFollowers: false });
+      this.setState({
+        showFollowing: false,
+        showFollowers: false,
+        showBioForm: false,
+      });
     }
   }
 
@@ -121,6 +147,16 @@ class ProfileUserInfo extends React.Component {
     });
   }
 
+  submitNewBio(e) {
+    e.preventDefault();
+    const formUser = new FormData();
+    const { formBio } = this.state;
+    const { slug } = this.props.user;
+    formUser.append("user[bio]", sanitizeContent(formBio));
+    this.props.updateUser(slug, formUser);
+    this.setState({ showBioForm: false });
+  }
+
   toggleFollow(e) {
     const { followStatus, createFollow, deleteFollow, user } = this.props;
     const { id } = user;
@@ -148,6 +184,8 @@ class ProfileUserInfo extends React.Component {
       showFollowers,
       showFollowing,
       displayAvatarEl,
+      showBioForm,
+      formBio,
     } = this.state;
     return (
       <div className="profile-user-info">
@@ -218,7 +256,47 @@ class ProfileUserInfo extends React.Component {
               <strong>{postCount}</strong> posts
             </span>
           </div>
-          <div className="bio">{bio}</div>
+          {showBioForm ? (
+            <form onSubmit={this.submitNewBio} className="bio">
+              <div>
+                <textarea
+                  placeholder="Add a short bio..."
+                  value={formBio}
+                  onChange={this.updateBio}
+                  maxLength="200"
+                ></textarea>
+                <CircularProgressbar value={formBio.length} maxValue={200} />
+              </div>
+              <div className="submit-buttons">
+                <button type="submit" className="bio-button">
+                  <i className="fas fa-save"></i>{" "}
+                  <span className="button-text">Save</span>
+                </button>
+                <button
+                  type="button"
+                  className="bio-button"
+                  onClick={this.cancelBioUpdate}
+                >
+                  <i className="fas fa-times"></i>{" "}
+                  <span className="button-text">Cancel</span>
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="bio">
+              <p>{bio}</p>
+              {ownProfile && (
+                <button
+                  type="button"
+                  className="bio-button"
+                  onClick={this.toggleBioForm}
+                >
+                  <i className="fas fa-edit"></i>{" "}
+                  <span className="button-text">Edit bio...</span>
+                </button>
+              )}
+            </div>
+          )}
           <div className="follows-buttons">
             <button
               className="follower-users"
