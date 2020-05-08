@@ -18,7 +18,7 @@
     "history": "^4.10.1",
     "html-react-parser": "^0.10.3",
     "immutable": "^4.0.0-rc.12",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-circular-progressbar": "^2.0.3",
