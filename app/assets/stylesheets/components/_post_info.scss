@@ -40,13 +40,17 @@
     justify-content: center;
     background-color: black;
     max-width: 100%;
-    overflow: scroll;
+    overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
     -ms-overflow-style: none;
     scrollbar-width: none;
     position: relative;
+
+    & > * {
+      overflow: initial;
+    }
 
     @media only screen and (max-width: 700px) {
       flex-basis: 35%;
@@ -125,7 +129,6 @@
 
     .comments {
       flex: 1 1 auto;
-      overflow: scroll;
       border-bottom: 1px solid $graylightest;
     }
 
@@ -284,7 +287,6 @@
   font-size: 0.88rem;
 
   .comments-index {
-    overflow: initial;
     @include flex-down;
     justify-content: flex-start;
 
