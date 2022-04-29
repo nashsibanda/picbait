@@ -130,6 +130,7 @@
     .comments {
       flex: 1 1 auto;
       border-bottom: 1px solid $graylightest;
+      padding-top: 0;
     }
 
     .interactions {
@@ -137,6 +138,7 @@
       flex: 0 0 5rem;
       padding: 1rem;
       border-bottom: 1px solid $graylightest;
+      overflow: hidden;
 
       @media only screen and (max-width: 700px) {
         padding: 0.4rem 1rem 0;
@@ -179,8 +181,7 @@
     @include flex-across;
     align-items: flex-start;
 
-    i,
-    svg {
+    i {
       font-size: 1.5rem;
       margin-bottom: 0.4rem;
       margin-right: 0.5rem;
@@ -191,8 +192,7 @@
     color: $salmon;
   }
 
-  i,
-  svg {
+  i {
     font-size: 1.3rem;
     margin-right: 1rem;
 
@@ -289,6 +289,7 @@
   .comments-index {
     @include flex-down;
     justify-content: flex-start;
+    margin-top: 1rem;
 
     .comment {
       @include flex-across;
@@ -364,7 +365,7 @@
           margin-bottom: $margin-between-comments;
 
           * {
-            margin-right: 2rem;
+            margin-right: 0.8rem;
           }
 
           .hidden {
@@ -388,7 +389,6 @@
           i,
           svg {
             margin-right: 0.2rem;
-            height: 100%;
           }
         }
       }

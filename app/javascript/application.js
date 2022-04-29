@@ -30,3 +30,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   ReactDOM.render(<Root store={store} />, root);
 });
+import "@hotwired/turbo-rails"
