@@ -52,6 +52,11 @@
       overflow: initial;
     }
 
+    & > .image-placeholder {
+      width: 30vw;
+      height: 100%;
+    }
+
     @media only screen and (max-width: 700px) {
       flex-basis: 35%;
       flex-shrink: 0;
@@ -118,14 +123,11 @@
     @media only screen and (max-width: 700px) {
       flex-basis: 65%;
     }
+    border-left: 1px solid $graylightest;
 
     .author-details {
-      flex: 0 0 6rem;
+      flex: 0 0 auto;
       border-bottom: 1px solid $graylightest;
-
-      @media only screen and (max-width: 700px) {
-        flex: 0 0 4rem;
-      }
     }
 
     .comments {
@@ -231,15 +233,13 @@
   }
 
   & > .avatar {
-    flex-basis: 17%;
+    flex-basis: 3.4rem;
     margin-right: 0.3rem;
     align-self: flex-start;
     padding: 0.5rem;
     padding-top: 0.8rem;
-
-    @media only screen and (max-width: 700px) {
-      flex-basis: 11%;
-    }
+    max-width: 4.4rem;
+    flex-shrink: 0;
 
     .container {
       width: 100%;

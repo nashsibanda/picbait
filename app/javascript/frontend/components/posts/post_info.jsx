@@ -16,6 +16,7 @@ class PostInfo extends React.Component {
       parentCommentId: null,
       parentCommenter: null,
       commentIndicator: false,
+      imageLoaded: false,
     };
     this.toggleFillImage = this.toggleFillImage.bind(this);
     this.toggleLiked = this.toggleLiked.bind(this);
@@ -25,6 +26,7 @@ class PostInfo extends React.Component {
     this.setCommentInputFocus = this.setCommentInputFocus.bind(this);
     this.toggleCommentIndicator = this.toggleCommentIndicator.bind(this);
     this.closeReplyingBanner = this.closeReplyingBanner.bind(this);
+    this.handleImageLoaded = this.handleImageLoaded.bind(this);
   }
 
   updateBody(e) {
@@ -98,6 +100,10 @@ class PostInfo extends React.Component {
     this.commentInput.focus();
   }
 
+  handleImageLoaded() {
+    this.setState({imageLoaded: true})
+  }
+
   render() {
     const { post, comments, loading, posting } = this.props;
     const {
@@ -107,16 +113,19 @@ class PostInfo extends React.Component {
       body,
       parentCommenter,
       commentIndicator,
+      imageLoaded
     } = this.state;
     const author = this.props.author;
     const { id, title, description, date, imageUrl } = post;
     return (
       <div className="post-info">
         <section className="image">
+          {!imageLoaded && <div className="image-placeholder"></div>}
           <img
             src={imageUrl}
             className={fillImage ? "fill-image" : "fit-image"}
             onClick={this.toggleFillImage}
+            onLoad={this.handleImageLoaded}
           ></img>
           <div className="expand">
             <i

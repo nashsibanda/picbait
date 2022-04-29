@@ -20,7 +20,7 @@ export const PostAuthor = props => {
         <div className="username">
           <Link to={`/users/${slug}`}>{username}</Link>
         </div>
-        <div className="mini-bio">{bio}</div>
+        <div className="mini-bio" title={bio}>{bio}</div>
       </div>
     </div>
   );
