@@ -52,7 +52,7 @@ const receivePostErrors = errors => ({
 export const fetchUserPosts = (userId, page) => dispatch => {
   dispatch(loadingPostPage());
   PostsAPIUtil.getUserPosts(userId, page).then(posts => {
-    dispatch(receiveMorePosts(posts));
+    dispatch(receiveMorePosts(posts.data));
     dispatch(loadedPostPage());
   });
 };
@@ -61,7 +61,7 @@ export const fetchFeedPosts = page => dispatch => {
   dispatch(loadingPostPage());
 
   PostsAPIUtil.getFeedPosts(page).then(posts => {
-    dispatch(receivePosts(posts));
+    dispatch(receivePosts(posts.data));
     dispatch(loadedPostPage());
   });
 };
@@ -69,20 +69,22 @@ export const fetchFeedPosts = page => dispatch => {
 export const fetchMoreFeedPosts = page => dispatch => {
   dispatch(loadingPostPage());
   PostsAPIUtil.getFeedPosts(page).then(posts => {
-    dispatch(receiveMorePosts(posts));
+    dispatch(receiveMorePosts(posts.data));
     dispatch(loadedPostPage());
   });
 };
 
-export const fetchPost = id => dispatch => {
-  dispatch(loadingPosts());
+export const fetchPost = (id, shouldFetchPost) => dispatch => {
   dispatch(loadingComments());
-  PostsAPIUtil.getPost(id).then(post => {
-    dispatch(receivePost(post));
-    dispatch(loadedPosts());
-  });
+  if (shouldFetchPost) {
+    dispatch(loadingPosts());
+    PostsAPIUtil.getPost(id).then(post => {
+      dispatch(receivePost(post.data));
+      dispatch(loadedPosts());
+    });
+  }
   CommentsAPIUtil.getComments(id).then(comments => {
-    dispatch(receiveComments(comments));
+    dispatch(receiveComments(comments.data));
     dispatch(loadedComments());
   });
   dispatch(fetchUsersAutocomplete());
@@ -93,7 +95,7 @@ export const createPost = (formPost, userSlug) => dispatch => {
   dispatch(postingPosts());
   PostsAPIUtil.postPost(formPost).then(
     post => {
-      dispatch(receivePost(post));
+      dispatch(receivePost(post.data));
       dispatch(postedPosts());
       dispatch(push(`/users/${userSlug}`));
     },
@@ -107,7 +109,7 @@ export const createPost = (formPost, userSlug) => dispatch => {
 export const deletePost = (id, userSlug) => dispatch => {
   PostsAPIUtil.deletePost(id).then(
     post => {
-      dispatch(clearPost(post));
+      dispatch(clearPost(post.data));
       dispatch(push(`/users/${userSlug}`));
     },
     errors => dispatch(receivePostErrors(errors.responseJSON))

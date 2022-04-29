@@ -1,38 +1,40 @@
-import { token } from "./misc_util";
+import axios from "axios";
+import { setToken } from "./misc_util";
+
+setToken(axios);
 
 export const getComments = postId =>
-  $.ajax({
-    type: "get",
+  axios({
+    method: "get",
     url: `api/posts/${postId}/comments`,
   });
 
 export const getComment = id =>
-  $.ajax({
-    type: "get",
+  axios({
+    method: "get",
     url: `api/comments/${id}`,
   });
 
 export const postComment = comment =>
-  $.ajax({
-    type: "post",
+  axios({
+    method: "post",
     url: "api/comments",
     data: comment,
-    beforeSend: token,
-    contentType: false,
-    processData: false,
+    headers: {
+      "Content-Type": false,
+      processData: false,
+    },
   });
 
 export const patchComment = (id, comment) =>
-  $.ajax({
-    type: "patch",
+  axios({
+    method: "patch",
     url: `api/comments/${id}`,
     data: comment,
-    beforeSend: token,
   });
 
 export const deleteComment = id =>
-  $.ajax({
-    type: "delete",
+  axios({
+    method: "delete",
     url: `api/comments/${id}`,
-    beforeSend: token,
   });

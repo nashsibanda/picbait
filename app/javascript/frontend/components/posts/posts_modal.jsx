@@ -10,8 +10,8 @@ class PostModal extends React.Component {
   }
 
   loadPageData() {
-    const { fetchPost, postId } = this.props;
-    fetchPost(postId);
+    const { fetchPost, postId, posts } = this.props;
+    fetchPost(postId, !posts[postId]);
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class PostModal extends React.Component {
     const { posts, postId, closeModal } = this.props;
     const post = posts[postId];
     if (!post) {
-      return;
+      return null;
     }
     return (
       <div className="post-display-modal" onClick={closeModal}>

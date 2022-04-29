@@ -240,7 +240,7 @@
     top: 25vh;
     $follows-list-width: 30rem;
     width: $follows-list-width;
-    left: calc(50% - #{$follows-list-width / 2});
+    left: calc(50% - $follows-list-width / 2);
 
     & > * {
       overflow: initial;
@@ -251,7 +251,7 @@
       height: 60vh;
       top: 20vh;
       width: $mobile-follows-list-width;
-      left: calc(50% - #{$mobile-follows-list-width / 2});
+      left: calc(50% - $mobile-follows-list-width / 2);
     }
 
     h2 {
@@ -269,7 +269,7 @@
       position: fixed;
       $follows-modal-close-button-font-size: 4rem;
       font-size: $follows-modal-close-button-font-size;
-      left: calc(50vw - #{$follows-modal-close-button-font-size / 2});
+      left: calc(50vw - $follows-modal-close-button-font-size / 2);
       color: $graylight;
       top: 70vh;
 

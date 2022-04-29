@@ -105,7 +105,7 @@ class CommentsIndexItem extends React.Component {
           </div>
           <div className="stats">
             <span className="date" title={date}>
-              {timeAgo}
+              {timeAgo} ago
             </span>
             <span className={`like-display ${likesCount > 0 ? "" : "hidden"}`}>
               {`${likesCount} ${likesCount > 1 ? "likes" : "like"}`}

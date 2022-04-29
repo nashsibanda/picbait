@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchPost: id => dispatch(fetchPost(id)),
+  fetchPost: (id, shouldFetchPost) => dispatch(fetchPost(id, shouldFetchPost)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostModal);

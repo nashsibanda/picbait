@@ -26,20 +26,22 @@ const clearCommentLike = like => ({
 
 export const createPostLike = postId => dispatch => {
   LikesAPIUtil.postPostLike(postId).then(like =>
-    dispatch(receivePostLike(like))
+    dispatch(receivePostLike(like.data))
   );
 };
 
 export const deletePostLike = id => dispatch => {
-  LikesAPIUtil.deleteLike(id).then(like => dispatch(clearPostLike(like)));
+  LikesAPIUtil.deleteLike(id).then(like => dispatch(clearPostLike(like.data)));
 };
 
 export const createCommentLike = commentId => dispatch => {
   LikesAPIUtil.postCommentLike(commentId).then(like =>
-    dispatch(receiveCommentLike(like))
+    dispatch(receiveCommentLike(like.data))
   );
 };
 
 export const deleteCommentLike = id => dispatch => {
-  LikesAPIUtil.deleteLike(id).then(like => dispatch(clearCommentLike(like)));
+  LikesAPIUtil.deleteLike(id).then(like =>
+    dispatch(clearCommentLike(like.data))
+  );
 };

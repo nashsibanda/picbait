@@ -1,31 +1,34 @@
-import { token } from "./misc_util";
+import axios from "axios";
+import { setToken } from "./misc_util";
 
-export const getUsers = data =>
-  $.ajax({
-    type: "get",
+setToken(axios);
+
+export const getUsers = params =>
+  axios({
+    method: "get",
     url: "api/users",
-    data,
+    params,
   });
 
 export const getUsersAutocomplete = () =>
-  $.ajax({
-    type: "get",
+  axios({
+    method: "get",
     url: "api/users/autocomplete",
   });
 
 export const getUser = userId =>
-  $.ajax({
-    type: "get",
+  axios({
+    method: "get",
     url: `api/users/${userId}`,
   });
 
-export const patchUser = (id, user) => {
-  return $.ajax({
-    type: "patch",
+export const patchUser = (id, user) =>
+  axios({
+    method: "patch",
     url: `api/users/${id}`,
     data: user,
-    beforeSend: token,
-    contentType: false,
-    processData: false,
+    headers: {
+      "Content-Type": false,
+      "processData": false,
+    },
   });
-};

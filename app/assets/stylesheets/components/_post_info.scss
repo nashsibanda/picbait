@@ -52,6 +52,11 @@
       overflow: initial;
     }
 
+    & > .image-placeholder {
+      width: 30vw;
+      height: 100%;
+    }
+
     @media only screen and (max-width: 700px) {
       flex-basis: 35%;
       flex-shrink: 0;
@@ -113,23 +118,22 @@
   & > .details {
     flex-basis: 40%;
     flex-shrink: 0;
+    flex-grow: 1;
     @include flex-down;
     @media only screen and (max-width: 700px) {
       flex-basis: 65%;
     }
+    border-left: 1px solid $graylightest;
 
     .author-details {
-      flex: 0 0 5rem;
+      flex: 0 0 auto;
       border-bottom: 1px solid $graylightest;
-
-      @media only screen and (max-width: 700px) {
-        flex: 0 0 4rem;
-      }
     }
 
     .comments {
       flex: 1 1 auto;
       border-bottom: 1px solid $graylightest;
+      padding-top: 0;
     }
 
     .interactions {
@@ -137,6 +141,7 @@
       flex: 0 0 5rem;
       padding: 1rem;
       border-bottom: 1px solid $graylightest;
+      overflow: hidden;
 
       @media only screen and (max-width: 700px) {
         padding: 0.4rem 1rem 0;
@@ -179,8 +184,7 @@
     @include flex-across;
     align-items: flex-start;
 
-    i,
-    svg {
+    i {
       font-size: 1.5rem;
       margin-bottom: 0.4rem;
       margin-right: 0.5rem;
@@ -191,8 +195,7 @@
     color: $salmon;
   }
 
-  i,
-  svg {
+  i {
     font-size: 1.3rem;
     margin-right: 1rem;
 
@@ -230,15 +233,13 @@
   }
 
   & > .avatar {
-    flex-basis: 17%;
+    flex-basis: 3.4rem;
     margin-right: 0.3rem;
     align-self: flex-start;
     padding: 0.5rem;
     padding-top: 0.8rem;
-
-    @media only screen and (max-width: 700px) {
-      flex-basis: 11%;
-    }
+    max-width: 4.4rem;
+    flex-shrink: 0;
 
     .container {
       width: 100%;
@@ -289,6 +290,7 @@
   .comments-index {
     @include flex-down;
     justify-content: flex-start;
+    margin-top: 1rem;
 
     .comment {
       @include flex-across;
@@ -296,7 +298,7 @@
       align-items: flex-start;
       $comment-avatar-width: 2.5rem;
       $comment-likes-button-width: 1rem;
-      $margin-between-comments: 1rem;
+      $margin-between-comments: 0.5rem;
       margin-bottom: $margin-between-comments;
 
       & > .avatar {
@@ -364,7 +366,8 @@
           margin-bottom: $margin-between-comments;
 
           * {
-            margin-right: 2rem;
+            margin-right: 0.8rem;
+            max-width: 4.7rem;
           }
 
           .hidden {
@@ -388,7 +391,6 @@
           i,
           svg {
             margin-right: 0.2rem;
-            height: 100%;
           }
         }
       }

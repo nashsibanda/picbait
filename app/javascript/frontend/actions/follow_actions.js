@@ -42,7 +42,7 @@ export const fetchFollowers = userId => dispatch => {
   dispatch(loadingFollows());
   const params = { follow_type: "followers" };
   FollowsAPIUtil.getFollows(userId, params).then(follows => {
-    dispatch(receiveFollowers(follows));
+    dispatch(receiveFollowers(follows.data));
     dispatch(loadedFollows());
   });
 };
@@ -51,19 +51,19 @@ export const fetchFollowings = userId => dispatch => {
   dispatch(loadingFollows());
   const params = { follow_type: "followings" };
   FollowsAPIUtil.getFollows(userId, params).then(follows => {
-    dispatch(receiveFollowings(follows));
+    dispatch(receiveFollowings(follows.data));
     dispatch(loadedFollows());
   });
 };
 
 export const createFollow = userId => dispatch => {
   FollowsAPIUtil.postFollow(userId).then(follow => {
-    dispatch(receiveFollower(follow));
+    dispatch(receiveFollower(follow.data));
   });
 };
 
 export const deleteFollow = userId => dispatch => {
   FollowsAPIUtil.deleteFollow(userId).then(follow => {
-    dispatch(clearFollower(follow));
+    dispatch(clearFollower(follow.data));
   });
 };

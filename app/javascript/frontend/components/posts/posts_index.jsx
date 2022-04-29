@@ -40,7 +40,7 @@ class PostsIndex extends React.Component {
 
   closeModal(e) {
     e.stopPropagation();
-    this.setState({ modalPost: null }, this.props.modalClosed);
+    this.setState({ modalPost: null });
   }
 
   render() {

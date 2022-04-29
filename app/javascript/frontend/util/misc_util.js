@@ -7,6 +7,15 @@ export const token = function (xhr) {
   );
 };
 
+export const setToken = axios => {
+  const token = document.head.querySelector('meta[name="csrf-token"]');
+  if (token) {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+  } else {
+    console.error('CSRF Token not found!')
+  }
+}
+
 export const sanitizeContent = text =>
   sanitizeHtml(text, {
     allowedTags: [],

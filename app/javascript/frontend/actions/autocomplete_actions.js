@@ -14,7 +14,7 @@ const receiveUsersAutocomplete = users => ({
 export const fetchUsersAutocomplete = () => dispatch => {
   dispatch(loadingUsersAutocomplete());
   getUsersAutocomplete().then(users => {
-    dispatch(receiveUsersAutocomplete(users));
+    dispatch(receiveUsersAutocomplete(users.data));
     dispatch(loadedUsersAutocomplete());
   });
 };

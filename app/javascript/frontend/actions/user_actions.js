@@ -23,7 +23,7 @@ export const receiveUserErrors = errors => ({
 export const fetchUsers = filters => dispatch => {
   dispatch(loadingUsers());
   UsersAPIUtil.getUsers(filters).then(users => {
-    dispatch(receiveUsers(users));
+    dispatch(receiveUsers(users.data));
     dispatch(loadedUsers());
   });
 };
@@ -31,7 +31,7 @@ export const fetchUsers = filters => dispatch => {
 export const fetchUser = userId => dispatch => {
   dispatch(loadingUsers());
   UsersAPIUtil.getUser(userId).then(user => {
-    dispatch(receiveUser(user));
+    dispatch(receiveUser(user.data));
     dispatch(loadedUsers());
   });
 };
@@ -40,11 +40,11 @@ export const updateUser = (id, formUser) => dispatch => {
   dispatch(postingUsers());
   UsersAPIUtil.patchUser(id, formUser).then(
     user => {
-      dispatch(receiveUser(user));
+      dispatch(receiveUser(user.data));
       dispatch(postedUsers());
     },
     errors => {
-      dispatch(receiveUserErrors(errors));
+      dispatch(receiveUserErrors(errors.data));
       dispatch(postedUsers());
     }
   );
