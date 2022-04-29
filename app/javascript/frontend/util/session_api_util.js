@@ -1,24 +1,24 @@
-import { token } from "./misc_util";
+import axios from 'axios'
+import { setToken } from "./misc_util";
+
+setToken(axios)
 
 export const signup = user =>
-  $.ajax({
-    type: "post",
+  axios({
+    method: "post",
     url: "api/users",
     data: { user },
-    beforeSend: token,
   });
 
 export const login = user =>
-  $.ajax({
-    type: "post",
+  axios({
+    method: "post",
     url: "api/session",
     data: { user },
-    beforeSend: token,
   });
 
 export const logout = () =>
-  $.ajax({
-    type: "delete",
+  axios({
+    method: "delete",
     url: "api/session",
-    beforeSend: token,
   });

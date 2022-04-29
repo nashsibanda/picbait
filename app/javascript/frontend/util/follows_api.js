@@ -1,22 +1,23 @@
-import { token } from "./misc_util";
+import axios from "axios";
+import { setToken } from "./misc_util";
+
+setToken(axios);
 
 export const getFollows = (userId, data) =>
-  $.ajax({
-    type: "get",
+  axios({
+    method: "get",
     url: `api/users/${userId}/follows`,
     data,
   });
 
 export const postFollow = userId =>
-  $.ajax({
-    type: "post",
+  axios({
+    method: "post",
     url: `api/users/${userId}/follow`,
-    beforeSend: token,
   });
 
 export const deleteFollow = userId =>
-  $.ajax({
-    type: "delete",
+  axios({
+    method: "delete",
     url: `api/users/${userId}/follow`,
-    beforeSend: token,
   });

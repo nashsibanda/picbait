@@ -29,11 +29,11 @@ export const createComment = formComment => dispatch => {
   dispatch(postingComments());
   CommentsAPIUtil.postComment(formComment).then(
     comment => {
-      dispatch(receiveComment(comment));
+      dispatch(receiveComment(comment.data));
       dispatch(postedComments());
     },
     errors => {
-      dispatch(receiveCommentErrors(errors));
+      dispatch(receiveCommentErrors(errors.data));
       dispatch(postedComments());
     }
   );
@@ -43,11 +43,11 @@ export const removeComment = id => dispatch => {
   dispatch(postingComments());
   CommentsAPIUtil.deleteComment(id).then(
     comment => {
-      dispatch(clearComment(comment));
+      dispatch(clearComment(comment.data));
       dispatch(postedComments());
     },
     errors => {
-      dispatch(receiveCommentErrors(errors));
+      dispatch(receiveCommentErrors(errors.data));
       dispatch(postedComments());
     }
   );

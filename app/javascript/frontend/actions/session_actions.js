@@ -22,11 +22,11 @@ export const login = user => dispatch => {
   dispatch(loadingSession());
   SessionAPIUtil.login(user).then(
     currentUser => {
-      dispatch(receiveCurrentUser(currentUser));
+      dispatch(receiveCurrentUser(currentUser.data));
       dispatch(loadedSession());
     },
     errors => {
-      dispatch(receiveSessionErrors(errors.responseJSON));
+      dispatch(receiveSessionErrors(errors.data));
       dispatch(loadedSession());
     }
   );
@@ -37,7 +37,7 @@ export const loginRodrick = () => dispatch => {
   const rodrick = { username: "rodrick", password: "rodrick" };
   SessionAPIUtil.login(rodrick).then(
     currentUser => {
-      dispatch(receiveCurrentUser(currentUser));
+      dispatch(receiveCurrentUser(currentUser.data));
       dispatch(loadedSession());
     },
     errors => {
@@ -57,7 +57,7 @@ export const signup = formUser => dispatch => {
   dispatch(loadingSession());
   SessionAPIUtil.signup(formUser).then(
     newUser => {
-      dispatch(receiveCurrentUser(newUser));
+      dispatch(receiveCurrentUser(newUser.data));
       dispatch(loadedSession());
     },
     errors => {
