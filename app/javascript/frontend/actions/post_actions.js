@@ -74,13 +74,15 @@ export const fetchMoreFeedPosts = page => dispatch => {
   });
 };
 
-export const fetchPost = id => dispatch => {
-  dispatch(loadingPosts());
+export const fetchPost = (id, shouldFetchPost) => dispatch => {
   dispatch(loadingComments());
-  PostsAPIUtil.getPost(id).then(post => {
-    dispatch(receivePost(post.data));
-    dispatch(loadedPosts());
-  });
+  if (shouldFetchPost) {
+    dispatch(loadingPosts());
+    PostsAPIUtil.getPost(id).then(post => {
+      dispatch(receivePost(post.data));
+      dispatch(loadedPosts());
+    });
+  }
   CommentsAPIUtil.getComments(id).then(comments => {
     dispatch(receiveComments(comments.data));
     dispatch(loadedComments());
