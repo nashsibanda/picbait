@@ -113,13 +113,14 @@
   & > .details {
     flex-basis: 40%;
     flex-shrink: 0;
+    flex-grow: 1;
     @include flex-down;
     @media only screen and (max-width: 700px) {
       flex-basis: 65%;
     }
 
     .author-details {
-      flex: 0 0 5rem;
+      flex: 0 0 6rem;
       border-bottom: 1px solid $graylightest;
 
       @media only screen and (max-width: 700px) {
@@ -297,7 +298,7 @@
       align-items: flex-start;
       $comment-avatar-width: 2.5rem;
       $comment-likes-button-width: 1rem;
-      $margin-between-comments: 1rem;
+      $margin-between-comments: 0.5rem;
       margin-bottom: $margin-between-comments;
 
       & > .avatar {
@@ -366,6 +367,7 @@
 
           * {
             margin-right: 0.8rem;
+            max-width: 4.7rem;
           }
 
           .hidden {
