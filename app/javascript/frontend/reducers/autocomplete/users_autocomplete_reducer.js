@@ -6,7 +6,7 @@ const usersAutocompleteReducer = (state = {}, action) => {
     case RECEIVE_USERS_AUTOCOMPLETE:
       const outputAutocomplete = {};
       action.users.forEach(user => {
-        outputAutocomplete[user] = user;
+        outputAutocomplete[user[0]] = user;
       });
       return outputAutocomplete;
     default:

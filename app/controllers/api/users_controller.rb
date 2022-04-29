@@ -15,7 +15,7 @@ class Api::UsersController < ApplicationController
   end
 
   def autocomplete
-    users = Api::User.all.pluck(:username)
+    users = Api::User.all.pluck(:username, :slug)
     render json: users
   end
 

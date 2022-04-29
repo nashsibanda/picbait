@@ -10,11 +10,11 @@ export const token = function (xhr) {
 export const setToken = axios => {
   const token = document.head.querySelector('meta[name="csrf-token"]');
   if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
   } else {
-    console.error('CSRF Token not found!')
+    console.error("CSRF Token not found!");
   }
-}
+};
 
 export const sanitizeContent = text =>
   sanitizeHtml(text, {
@@ -52,13 +52,14 @@ export const makeCommentLinks = (commentBody, autocomplete) => {
   const cleanBody = sanitizeContent(commentBody);
   const replacer = match => {
     if (autocomplete[match.slice(1)]) {
-      const newStr =
+      const [username, slug] = autocomplete[match.slice(1)];
+      return (
         "<a class=comment-profile-link href=#/users/" +
-        match.slice(1) +
-        ">" +
-        match +
-        "</a>";
-      return newStr;
+        slug +
+        ">@" +
+        username +
+        "</a>"
+      );
     } else {
       return match;
     }
