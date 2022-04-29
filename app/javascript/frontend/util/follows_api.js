@@ -3,11 +3,11 @@ import { setToken } from "./misc_util";
 
 setToken(axios);
 
-export const getFollows = (userId, data) =>
+export const getFollows = (userId, params) =>
   axios({
     method: "get",
     url: `api/users/${userId}/follows`,
-    data,
+    params,
   });
 
 export const postFollow = userId =>

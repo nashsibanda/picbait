@@ -3,11 +3,11 @@ import { setToken } from "./misc_util";
 
 setToken(axios);
 
-export const getUsers = data =>
+export const getUsers = params =>
   axios({
     method: "get",
     url: "api/users",
-    data,
+    params,
   });
 
 export const getUsersAutocomplete = () =>

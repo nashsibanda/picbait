@@ -7,14 +7,14 @@ export const getFeedPosts = page =>
   axios({
     method: "get",
     url: `api/posts`,
-    data: { page },
+    params: { page },
   });
 
 export const getUserPosts = (userId, page) =>
   axios({
     method: "get",
     url: `api/users/${userId}/posts`,
-    data: { page },
+    params: { page },
   });
 
 export const getPost = id =>
