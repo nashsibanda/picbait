@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { Like } from '../types/entities'
 import { setToken } from './misc_util'
-import { Like } from './types'
 
 setToken(axios)
 

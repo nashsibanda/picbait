@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { ApiError, ApiErrors, User, UserEntity } from '../util/types.js'
+import { ApiError, ApiErrors, User, UserEntity } from '../types/entities.js'
 import * as UsersAPIUtil from '../util/users_api_util.js'
 import { loadedUsers, loadingUsers } from './fetching_actions.js'
 import { postedUsers, postingUsers } from './posting_actions.js'

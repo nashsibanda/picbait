@@ -1,6 +1,6 @@
 import { UsersAutocompleteAction, UsersAutocompleteActionTypes } from '../../actions/autocomplete_actions'
+import { AutocompleteUser } from '../../types/entities'
 import { UsersAutocompleteState } from '../../types/state'
-import { AutocompleteUser } from '../../util/types'
 
 const usersAutocompleteReducer = (state: UsersAutocompleteState = {}, action: UsersAutocompleteAction) => {
   Object.freeze(state)

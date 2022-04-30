@@ -1,5 +1,5 @@
 import { PostAction, PostActionTypes } from '../actions/post_actions'
-import { ApiErrors } from '../util/types'
+import { ApiErrors } from '../types/entities'
 
 const postErrorsReducer = (state: ApiErrors = [], action: PostAction) => {
   Object.freeze(state)

@@ -1,4 +1,4 @@
-import { AutocompleteUser, CommentEntity, Follow, Like, PostEntity, UserEntity } from '../util/types'
+import { AutocompleteUser, CommentEntity, Follow, Like, PostEntity, UserEntity } from './entities'
 
 export type CommentsState = Record<number, CommentEntity>
 export type FollowersState = Record<string, Follow>

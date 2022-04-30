@@ -1,7 +1,7 @@
 import { CommentAction, CommentActionTypes } from '../actions/comment_actions'
 import { LikeAction, LikeActionTypes } from '../actions/like_actions'
+import { Like } from '../types/entities'
 import { LikesState } from '../types/state'
-import { Like } from '../util/types'
 
 const commentLikesReducer = (state: LikesState = {}, action: LikeAction | CommentAction) => {
   Object.freeze(state)

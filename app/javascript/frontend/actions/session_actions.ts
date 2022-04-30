@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import { ApiError, ApiErrors, SessionUser, UserEntity } from '../types/entities'
 import * as SessionAPIUtil from '../util/session_api_util'
-import { ApiError, ApiErrors, SessionUser, UserEntity } from '../util/types'
 import { loadedSession, loadingSession } from './fetching_actions'
 
 export enum SessionActionTypes {

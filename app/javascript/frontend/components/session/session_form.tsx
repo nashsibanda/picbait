@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { LoadingSpinner } from "../ui/loading_spinner";
 import LoginRodrick from "./login_rodrick";
-import { User } from "../../util/types";
+import { User } from "../../types/entities";
 
 class SessionForm extends React.Component {
   constructor(props) {

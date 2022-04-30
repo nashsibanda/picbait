@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { AutocompleteUser } from '../util/types'
+import { AutocompleteUser } from '../types/entities'
 import { getUsersAutocomplete } from '../util/users_api_util'
 import { loadedUsersAutocomplete, loadingUsersAutocomplete } from './fetching_actions'
 

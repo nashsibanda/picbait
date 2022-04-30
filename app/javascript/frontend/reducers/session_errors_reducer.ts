@@ -1,5 +1,5 @@
 import { SessionAction, SessionActionTypes } from '../actions/session_actions'
-import { ApiErrors } from '../util/types'
+import { ApiErrors } from '../types/entities'
 
 const sessionErrorsReducer = (state: ApiErrors = [], action: SessionAction) => {
   Object.freeze(state)

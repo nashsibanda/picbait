@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import { Follow, FollowType } from '../types/entities'
 import * as FollowsAPIUtil from '../util/follows_api'
-import { Follow, FollowType } from '../util/types'
 import { loadedFollows, loadingFollows } from './fetching_actions'
 
 export enum FollowActionTypes {

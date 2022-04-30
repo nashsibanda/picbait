@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { Follow, FollowType } from '../types/entities'
 import { setToken } from './misc_util'
-import { Follow, FollowType } from './types'
 
 setToken(axios)
 

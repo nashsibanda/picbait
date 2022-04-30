@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { AutocompleteUser, User, UserEntity } from '../types/entities'
 import { setToken } from './misc_util'
-import { AutocompleteUser, User, UserEntity } from './types'
 
 setToken(axios)
 

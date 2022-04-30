@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { SessionUser, UserEntity } from '../types/entities'
 import { setToken } from './misc_util'
-import { SessionUser, UserEntity } from './types'
 
 setToken(axios)
 

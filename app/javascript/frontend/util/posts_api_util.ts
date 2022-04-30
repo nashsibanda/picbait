@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { PostEntity } from '../types/entities'
 import { setToken } from './misc_util'
-import { PostEntity } from './types'
 
 setToken(axios)
 

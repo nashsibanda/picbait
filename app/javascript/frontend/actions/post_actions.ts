@@ -1,8 +1,8 @@
 import { push } from 'connected-react-router'
 import { Dispatch } from 'redux'
+import { ApiError, ApiErrors, PostEntity } from '../types/entities'
 import * as CommentsAPIUtil from '../util/comments_api_util'
 import * as PostsAPIUtil from '../util/posts_api_util'
-import { ApiError, ApiErrors, PostEntity } from '../util/types'
 import { fetchUsersAutocomplete } from './autocomplete_actions'
 import { receiveComments } from './comment_actions'
 import {

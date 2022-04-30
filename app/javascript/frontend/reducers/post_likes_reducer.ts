@@ -1,7 +1,7 @@
 import { LikeAction, LikeActionTypes } from '../actions/like_actions'
 import { PostAction, PostActionTypes } from '../actions/post_actions'
+import { Like } from '../types/entities'
 import { LikesState } from '../types/state'
-import { Like } from '../util/types'
 
 const postLikesReducer = (state: LikesState = {}, action: LikeAction | PostAction) => {
   Object.freeze(state)

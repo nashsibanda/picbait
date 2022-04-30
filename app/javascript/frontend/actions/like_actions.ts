@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import { Like } from '../types/entities'
 import * as LikesAPIUtil from '../util/likes_api_util'
-import { Like } from '../util/types'
 
 export enum LikeActionTypes {
   RECEIVE_POST_LIKE = 'RECEIVE_POST_LIKE',

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import { ApiErrors, CommentEntity } from '../types/entities'
 import * as CommentsAPIUtil from '../util/comments_api_util'
-import { ApiErrors, CommentEntity } from '../util/types'
 import { postedComments, postingComments } from './posting_actions'
 
 export enum CommentActionTypes {

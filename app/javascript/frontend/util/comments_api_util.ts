@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios'
+import { CommentEntity } from '../types/entities'
 import { setToken } from './misc_util'
-import { CommentEntity } from './types'
 
 setToken(axios)
 

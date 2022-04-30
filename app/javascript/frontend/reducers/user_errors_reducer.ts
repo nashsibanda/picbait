@@ -1,5 +1,5 @@
 import { UserAction, UserActionTypes } from '../actions/user_actions'
-import { ApiErrors } from '../util/types'
+import { ApiErrors } from '../types/entities'
 
 const userErrorsReducer = (state: ApiErrors = [], action: UserAction): ApiErrors => {
   Object.freeze(state)
