@@ -1,18 +1,16 @@
 import axios from 'axios'
 import { setToken } from './misc_util'
+import { FollowType } from './types'
 
 setToken(axios)
 
-type FollowsParams = {
-  follow_type: 'followers' | 'followings'
-  user_id: number
-}
-
-export const getFollows = (userId: number, params: FollowsParams) =>
+export const getFollows = (userId: number, follow_type: FollowType) =>
   axios({
     method: 'get',
     url: `api/users/${userId}/follows`,
-    params,
+    params: {
+      follow_type: follow_type,
+    },
   })
 
 export const postFollow = (userId: number) =>

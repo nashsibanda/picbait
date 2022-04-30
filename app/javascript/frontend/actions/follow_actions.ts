@@ -1,69 +1,89 @@
-export const RECEIVE_FOLLOWINGS = "RECEIVE_FOLLOWINGS";
-export const RECEIVE_FOLLOWERS = "RECEIVE_FOLLOWERS";
-export const RECEIVE_FOLLOWING = "RECEIVE_FOLLOWING";
-export const RECEIVE_FOLLOWER = "RECEIVE_FOLLOWER";
-export const RECEIVE_FOLLOW = "RECEIVE_FOLLOW";
-export const CLEAR_FOLLOWER = "CLEAR_FOLLOW";
-export const CLEAR_FOLLOWING = "CLEAR_FOLLOW";
-import * as FollowsAPIUtil from "./../util/follows_api";
-import { loadingFollows, loadedFollows } from "./fetching_actions";
+import { Dispatch } from 'redux'
+import { Follow, FollowType } from '../util/types'
+import * as FollowsAPIUtil from './../util/follows_api'
+import { loadedFollows, loadingFollows } from './fetching_actions'
 
-const receiveFollowers = follows => ({
-  type: RECEIVE_FOLLOWERS,
+export enum FollowActionTypes {
+  RECEIVE_FOLLOWINGS = 'RECEIVE_FOLLOWINGS',
+  RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS',
+  RECEIVE_FOLLOWING = 'RECEIVE_FOLLOWING',
+  RECEIVE_FOLLOWER = 'RECEIVE_FOLLOWER',
+  RECEIVE_FOLLOW = 'RECEIVE_FOLLOW',
+  CLEAR_FOLLOWER = 'CLEAR_FOLLOW',
+  CLEAR_FOLLOWING = 'CLEAR_FOLLOW',
+}
+
+type SingleFollowAction = {
+  type:
+    | FollowActionTypes.RECEIVE_FOLLOW
+    | FollowActionTypes.RECEIVE_FOLLOWER
+    | FollowActionTypes.RECEIVE_FOLLOWING
+    | FollowActionTypes.CLEAR_FOLLOWER
+    | FollowActionTypes.CLEAR_FOLLOWING
+  follow: Follow
+}
+
+type MultiFollowAction = {
+  type: FollowActionTypes.RECEIVE_FOLLOWERS | FollowActionTypes.RECEIVE_FOLLOWINGS
+  follows: Follow[]
+}
+
+export type FollowAction = SingleFollowAction | MultiFollowAction
+
+const receiveFollowers = (follows: Follow[]): MultiFollowAction => ({
+  type: FollowActionTypes.RECEIVE_FOLLOWERS,
   follows,
-});
+})
 
-const receiveFollowings = follows => ({
-  type: RECEIVE_FOLLOWINGS,
+const receiveFollowings = (follows: Follow[]): MultiFollowAction => ({
+  type: FollowActionTypes.RECEIVE_FOLLOWINGS,
   follows,
-});
+})
 
-const receiveFollower = follow => ({
-  type: RECEIVE_FOLLOWER,
+const receiveFollower = (follow: Follow): SingleFollowAction => ({
+  type: FollowActionTypes.RECEIVE_FOLLOWER,
   follow,
-});
+})
 
-const receiveFollowing = follow => ({
-  type: RECEIVE_FOLLOWING,
+const receiveFollowing = (follow: Follow): SingleFollowAction => ({
+  type: FollowActionTypes.RECEIVE_FOLLOWING,
   follow,
-});
+})
 
-const clearFollower = follow => ({
-  type: CLEAR_FOLLOWER,
+const clearFollower = (follow: Follow): SingleFollowAction => ({
+  type: FollowActionTypes.CLEAR_FOLLOWER,
   follow,
-});
+})
 
-const clearFollowing = follow => ({
-  type: CLEAR_FOLLOWING,
+const clearFollowing = (follow: Follow): SingleFollowAction => ({
+  type: FollowActionTypes.CLEAR_FOLLOWING,
   follow,
-});
+})
 
-export const fetchFollowers = userId => dispatch => {
-  dispatch(loadingFollows());
-  const params = { follow_type: "followers" };
-  FollowsAPIUtil.getFollows(userId, params).then(follows => {
-    dispatch(receiveFollowers(follows.data));
-    dispatch(loadedFollows());
-  });
-};
+export const fetchFollowers = (userId: number) => (dispatch: Dispatch) => {
+  dispatch(loadingFollows())
+  FollowsAPIUtil.getFollows(userId, FollowType.followers).then(({ data }: { data: Follow[] }) => {
+    dispatch(receiveFollowers(data))
+    dispatch(loadedFollows())
+  })
+}
 
-export const fetchFollowings = userId => dispatch => {
-  dispatch(loadingFollows());
-  const params = { follow_type: "followings" };
-  FollowsAPIUtil.getFollows(userId, params).then(follows => {
-    dispatch(receiveFollowings(follows.data));
-    dispatch(loadedFollows());
-  });
-};
+export const fetchFollowings = (userId: number) => (dispatch: Dispatch) => {
+  dispatch(loadingFollows())
+  FollowsAPIUtil.getFollows(userId, FollowType.followings).then(({ data }: { data: Follow[] }) => {
+    dispatch(receiveFollowings(data))
+    dispatch(loadedFollows())
+  })
+}
 
-export const createFollow = userId => dispatch => {
-  FollowsAPIUtil.postFollow(userId).then(follow => {
-    dispatch(receiveFollower(follow.data));
-  });
-};
+export const createFollow = (userId: number) => (dispatch: Dispatch) => {
+  FollowsAPIUtil.postFollow(userId).then(({ data }: { data: Follow }) => {
+    dispatch(receiveFollower(data))
+  })
+}
 
-export const deleteFollow = userId => dispatch => {
-  FollowsAPIUtil.deleteFollow(userId).then(follow => {
-    dispatch(clearFollower(follow.data));
-  });
-};
+export const deleteFollow = (userId: number) => (dispatch: Dispatch) => {
+  FollowsAPIUtil.deleteFollow(userId).then(({ data }: { data: Follow }) => {
+    dispatch(clearFollower(data))
+  })
+}

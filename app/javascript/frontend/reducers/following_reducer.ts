@@ -1,29 +1,26 @@
-import {
-  RECEIVE_FOLLOWINGS,
-  RECEIVE_FOLLOWING,
-  CLEAR_FOLLOWING,
-} from "../actions/follow_actions";
+import { FollowAction, FollowActionTypes } from '../actions/follow_actions'
+import { Follow } from '../util/types'
 
-const followingReducer = (state = {}, action) => {
-  Object.freeze(state);
+const followingReducer = (state: Record<string, Follow> = {}, action: FollowAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_FOLLOWINGS:
-      const followsOutput = {};
+    case FollowActionTypes.RECEIVE_FOLLOWINGS:
+      const followsOutput: Record<string, Follow> = {}
       action.follows.forEach(follow => {
-        followsOutput[follow.followee] = follow;
-      });
-      return followsOutput;
-    case RECEIVE_FOLLOWING:
+        followsOutput[follow.followee] = follow
+      })
+      return followsOutput
+    case FollowActionTypes.RECEIVE_FOLLOWING:
       return Object.assign({}, state, {
         [action.follow.followee]: action.follow,
-      });
-    case CLEAR_FOLLOWING:
-      const shortenedFollows = Object.assign({}, state);
-      delete shortenedFollows[action.follow.followee];
-      return shortenedFollows;
+      })
+    case FollowActionTypes.CLEAR_FOLLOWING:
+      const shortenedFollows = Object.assign({}, state)
+      delete shortenedFollows[action.follow.followee]
+      return shortenedFollows
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default followingReducer;
+export default followingReducer
