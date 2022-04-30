@@ -14,6 +14,7 @@ export type User = {
 }
 
 export type SessionUser = Pick<User, 'email' | 'username' | 'password' | 'lowercase_username'>
+export type CurrentUser = Required<Pick<User, 'id' | 'slug'>>
 export type UserEntity = Required<Pick<User, 'avatarUrl' | 'bio' | 'id' | 'postCount' | 'slug' | 'username'>>
 export type AutocompleteUser = [string, string]
 
