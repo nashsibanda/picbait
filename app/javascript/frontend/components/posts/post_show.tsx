@@ -23,7 +23,6 @@ class PostShow extends React.Component {
   }
   
   render() {
-    console.log("🚀 ~ file: post_show.tsx ~ line 17 ~ PostShow ~ componentDidMount ~ loadPageData", 'LOOOOK')
     const { posts, postId, loading } = this.props;
     const post = posts[postId];
     return (
