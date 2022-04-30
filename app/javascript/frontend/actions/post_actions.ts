@@ -116,8 +116,11 @@ export const fetchPost = (id: number, shouldFetchPost: boolean) => (dispatch: Di
     dispatch(receiveComments(comments))
     dispatch(loadedComments())
   })
-  fetchUsersAutocomplete()
-  fetchUsers({ post_id: id })
+  // TODO: Need to come back and properly type these Dispatch elements
+  // @ts-expect-error
+  dispatch(fetchUsersAutocomplete())
+  // @ts-expect-error
+  dispatch(fetchUsers({ post_id: id }))
 }
 
 export const createPost = (formPost: FormData, userSlug: string) => (dispatch: Dispatch) => {
