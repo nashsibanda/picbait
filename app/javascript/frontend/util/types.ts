@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export type User = {
   username: string
   password?: string
@@ -23,6 +24,7 @@ export type Follow = {
 }
 
 export type ApiErrors = string[]
+
 export enum FollowType {
   followers = 'followers',
   followings = 'followings',
@@ -51,4 +53,17 @@ export type CommentEntity = {
   likes: Like[]
   parentCommentId: number | null
   timeAgo: string
+}
+
+export type PostEntity = {
+  authorSlug: string
+  authorUsername: string
+  created_at: Date
+  creationNum: number
+  date: string // A string representation of what date this post represents, not necessarily when it was created
+  description: string
+  id: number
+  imageUrl: string
+  likes: Like[]
+  title: string
 }

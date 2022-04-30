@@ -1,21 +1,18 @@
-import {
-  RECEIVE_POST_ERRORS,
-  RECEIVE_POST,
-  CLEAR_POST,
-} from "../actions/post_actions";
+import { PostAction, PostActionTypes } from '../actions/post_actions'
+import { ApiErrors } from '../util/types'
 
-const postErrorsReducer = (state = [], action) => {
-  Object.freeze(state);
+const postErrorsReducer = (state: ApiErrors = [], action: PostAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_POST_ERRORS:
-      return action.errors;
-    case RECEIVE_POST:
-      return [];
-    case CLEAR_POST:
-      return [];
+    case PostActionTypes.RECEIVE_POST_ERRORS:
+      return action.errors
+    case PostActionTypes.RECEIVE_POST:
+      return []
+    case PostActionTypes.CLEAR_POST:
+      return []
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default postErrorsReducer;
+export default postErrorsReducer
