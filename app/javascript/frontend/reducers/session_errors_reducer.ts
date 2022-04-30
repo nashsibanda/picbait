@@ -1,6 +1,7 @@
 import { SessionAction, SessionActionTypes } from '../actions/session_actions'
+import { ApiErrors } from '../util/types'
 
-const sessionErrorsReducer = (state = [], action: SessionAction) => {
+const sessionErrorsReducer = (state: ApiErrors = [], action: SessionAction) => {
   Object.freeze(state)
   switch (action.type) {
     case SessionActionTypes.RECEIVE_SESSION_ERRORS:

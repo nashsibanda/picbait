@@ -1,20 +1,21 @@
 import { ReceiveCurrentUserAction, SessionActionTypes } from '../actions/session_actions'
-import { RECEIVE_USER, RECEIVE_USERS } from '../actions/user_actions'
+import { UserAction, UserActionTypes } from '../actions/user_actions'
+import { UserEntity } from '../util/types'
 
-const usersReducer = (state = {}, action: ReceiveCurrentUserAction) => {
+const usersReducer = (state: Record<string, UserEntity> = {}, action: ReceiveCurrentUserAction | UserAction) => {
   Object.freeze(state)
   switch (action.type) {
     case SessionActionTypes.RECEIVE_CURRENT_USER:
       return Object.assign({}, state, {
         [action.currentUser.slug]: action.currentUser,
       })
-    case RECEIVE_USERS:
-      const usersOutput = {}
+    case UserActionTypes.RECEIVE_USERS:
+      const usersOutput: Record<string, UserEntity> = {}
       action.users.forEach(user => {
         usersOutput[user.slug] = user
       })
       return usersOutput
-    case RECEIVE_USER:
+    case UserActionTypes.RECEIVE_USER:
       return Object.assign({}, state, {
         [action.user.slug]: action.user,
       })

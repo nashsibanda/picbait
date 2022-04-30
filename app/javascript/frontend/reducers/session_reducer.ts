@@ -4,7 +4,14 @@ const _nullSession = {
   currentUser: null,
 }
 
-const sessionReducer = (state = _nullSession, action: SessionAction) => {
+type SessionState = {
+  currentUser: {
+    id: number
+    slug: string
+  } | null
+}
+
+const sessionReducer = (state: SessionState = _nullSession, action: SessionAction) => {
   Object.freeze(state)
   switch (action.type) {
     case SessionActionTypes.RECEIVE_CURRENT_USER:

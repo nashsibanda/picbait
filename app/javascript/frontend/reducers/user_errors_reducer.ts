@@ -1,15 +1,16 @@
-import { RECEIVE_USER_ERRORS, RECEIVE_USER } from "../actions/user_actions";
+import { UserAction, UserActionTypes } from '../actions/user_actions'
+import { ApiErrors } from '../util/types'
 
-const userErrorsReducer = (state = [], action) => {
-  Object.freeze(state);
+const userErrorsReducer = (state: ApiErrors = [], action: UserAction): ApiErrors => {
+  Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_USER_ERRORS:
-      return action.errors;
-    case RECEIVE_USER:
-      return [];
+    case UserActionTypes.RECEIVE_USER_ERRORS:
+      return action.errors
+    case UserActionTypes.RECEIVE_USER:
+      return []
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default userErrorsReducer;
+export default userErrorsReducer
