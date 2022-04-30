@@ -26,3 +26,16 @@ export enum FollowType {
   followers = 'followers',
   followings = 'followings',
 }
+
+export enum LikeableType {
+  comment = 'Api::Comment',
+  post = 'Api::Post',
+}
+
+export type Like = {
+  api_user_id: number
+  id: number
+  likeable_id: number
+  likeable_type: LikeableType
+  likerSlug: string
+}
