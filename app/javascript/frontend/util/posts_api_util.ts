@@ -8,11 +8,9 @@ export const getFeedPosts = (page: number): AxiosPromise<PostEntity[]> =>
   axios.get<PostEntity[]>(`api/posts`, { params: { page } })
 
 export const getUserPosts = (userId: number, page: number): AxiosPromise<PostEntity[]> =>
-  axios.get<PostEntity[]>(`api/users/${userId}/posts`, {
-    params: { page },
-  })
+  axios.get<PostEntity[]>(`api/users/${userId}/posts`, { params: { page } })
 
-export const getPost = (id: number): AxiosPromise<PostEntity> => axios.get<PostEntity>(`api/posts/${id}`, {})
+export const getPost = (id: number): AxiosPromise<PostEntity> => axios.get<PostEntity>(`api/posts/${id}`)
 
 export const postPost = (post: FormData): AxiosPromise<PostEntity> =>
   axios.post<PostEntity>('api/posts', {
@@ -24,8 +22,6 @@ export const postPost = (post: FormData): AxiosPromise<PostEntity> =>
   })
 
 export const patchPost = (id: number, post: FormData): AxiosPromise<PostEntity> =>
-  axios.patch<PostEntity>(`api/posts/${id}`, {
-    data: post,
-  })
+  axios.patch<PostEntity>(`api/posts/${id}`, { data: post })
 
-export const deletePost = (id: number): AxiosPromise<PostEntity> => axios.delete<PostEntity>(`api/posts/${id}`, {})
+export const deletePost = (id: number): AxiosPromise<PostEntity> => axios.delete<PostEntity>(`api/posts/${id}`)

@@ -1,26 +1,12 @@
-import axios from 'axios'
+import axios, { AxiosPromise } from 'axios'
 import { setToken } from './misc_util'
-import { FollowType } from './types'
+import { Follow, FollowType } from './types'
 
 setToken(axios)
 
-export const getFollows = (userId: number, follow_type: FollowType) =>
-  axios({
-    method: 'get',
-    url: `api/users/${userId}/follows`,
-    params: {
-      follow_type: follow_type,
-    },
-  })
+export const getFollows = (userId: number, followType: FollowType): AxiosPromise<Follow> =>
+  axios.get<Follow>(`api/users/${userId}/follows`, { params: { follow_type: followType } })
 
-export const postFollow = (userId: number) =>
-  axios({
-    method: 'post',
-    url: `api/users/${userId}/follow`,
-  })
+export const postFollow = (userId: number): AxiosPromise<Follow> => axios.post<Follow>(`api/users/${userId}/follow`)
 
-export const deleteFollow = (userId: number) =>
-  axios({
-    method: 'delete',
-    url: `api/users/${userId}/follow`,
-  })
+export const deleteFollow = (userId: number): AxiosPromise<Follow> => axios.delete<Follow>(`api/users/${userId}/follow`)
