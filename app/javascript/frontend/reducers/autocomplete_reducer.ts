@@ -1,8 +1,10 @@
-import { combineReducers } from "redux";
-import usersAutocompleteReducer from "./autocomplete/users_autocomplete_reducer";
+import { CombinedState, combineReducers, Reducer } from 'redux'
+import { UsersAutocompleteAction } from '../actions/autocomplete_actions'
+import { AutocompleteState } from '../types/state'
+import usersAutocompleteReducer from './autocomplete/users_autocomplete_reducer'
 
-const autocompleteReducer = combineReducers({
+const autocompleteReducer: Reducer<CombinedState<AutocompleteState>, UsersAutocompleteAction> = combineReducers({
   users: usersAutocompleteReducer,
-});
+})
 
-export default autocompleteReducer;
+export default autocompleteReducer

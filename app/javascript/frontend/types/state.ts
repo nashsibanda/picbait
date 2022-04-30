@@ -1,4 +1,14 @@
-import { AutocompleteUser, CommentEntity, CurrentUser, Follow, Like, PostEntity, UserEntity } from './entities'
+import { RouterState } from 'connected-react-router'
+import {
+  ApiErrors,
+  AutocompleteUser,
+  CommentEntity,
+  CurrentUser,
+  Follow,
+  Like,
+  PostEntity,
+  UserEntity,
+} from './entities'
 
 export type CommentsState = Record<number, CommentEntity>
 export type FollowersState = Record<string, Follow>
@@ -9,3 +19,62 @@ export type SessionState = {
 }
 export type UsersAutocompleteState = Record<string, AutocompleteUser>
 export type UsersState = Record<string, UserEntity>
+
+export type GlobalLikesState = {
+  comments: LikesState
+  posts: LikesState
+}
+
+export type FollowsState = {
+  followers: FollowersState
+  following: FollowersState
+}
+
+export type EntitiesState = {
+  comments: CommentsState
+  follows: FollowsState
+  likes: GlobalLikesState
+  posts: PostsState
+  users: UsersState
+}
+
+export type GlobalErrorsState = {
+  session: ApiErrors
+  user: ApiErrors
+  post: ApiErrors
+}
+
+export type AutocompleteState = {
+  users: UsersAutocompleteState
+}
+
+export type LoadingState = {
+  comments: boolean
+  follows: boolean
+  likes: boolean
+  postPage: boolean
+  posts: boolean
+  session: boolean
+  users: boolean
+  usersAutocomplete: boolean
+}
+
+export type PostingState = {
+  comments: boolean
+  posts: boolean
+  users: boolean
+}
+
+export type UiState = {
+  autocomplete: AutocompleteState
+  loading: LoadingState
+  posting: PostingState
+}
+
+export type GlobalState = {
+  entities: EntitiesState
+  errors: GlobalErrorsState
+  router: RouterState
+  session: SessionState
+  ui: UiState
+}

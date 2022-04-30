@@ -1,10 +1,11 @@
-import { combineReducers } from "redux";
-import postLikesReducer from "./post_likes_reducer";
-import commentLikesReducer from "./comment_likes_reducer";
+import { CombinedState, combineReducers, Reducer } from 'redux'
+import { GlobalLikesState } from '../types/state'
+import commentLikesReducer from './comment_likes_reducer'
+import postLikesReducer from './post_likes_reducer'
 
-const likesReducer = combineReducers({
+const likesReducer: Reducer<CombinedState<GlobalLikesState>> = combineReducers({
   posts: postLikesReducer,
   comments: commentLikesReducer,
-});
+})
 
-export default likesReducer;
+export default likesReducer
