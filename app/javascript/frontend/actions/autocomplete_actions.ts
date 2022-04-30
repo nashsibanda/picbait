@@ -1,20 +1,26 @@
-import { getUsersAutocomplete } from "../util/users_api_util";
-import {
-  loadingUsersAutocomplete,
-  loadedUsersAutocomplete,
-} from "./fetching_actions";
+import { Dispatch } from 'redux'
+import { AutocompleteUser } from '../util/types'
+import { getUsersAutocomplete } from '../util/users_api_util'
+import { loadedUsersAutocomplete, loadingUsersAutocomplete } from './fetching_actions'
 
-export const RECEIVE_USERS_AUTOCOMPLETE = "RECEIVE_USERS_AUTOCOMPLETE";
+export enum UsersAutocompleteActionTypes {
+  RECEIVE_USERS_AUTOCOMPLETE = 'RECEIVE_USERS_AUTOCOMPLETE',
+}
 
-const receiveUsersAutocomplete = users => ({
-  type: RECEIVE_USERS_AUTOCOMPLETE,
+export type UsersAutocompleteAction = {
+  type: UsersAutocompleteActionTypes.RECEIVE_USERS_AUTOCOMPLETE
+  users: AutocompleteUser[]
+}
+
+const receiveUsersAutocomplete = (users: AutocompleteUser[]) => ({
+  type: UsersAutocompleteActionTypes.RECEIVE_USERS_AUTOCOMPLETE,
   users,
-});
+})
 
-export const fetchUsersAutocomplete = () => dispatch => {
-  dispatch(loadingUsersAutocomplete());
-  getUsersAutocomplete().then(users => {
-    dispatch(receiveUsersAutocomplete(users.data));
-    dispatch(loadedUsersAutocomplete());
-  });
-};
+export const fetchUsersAutocomplete = () => (dispatch: Dispatch) => {
+  dispatch(loadingUsersAutocomplete())
+  getUsersAutocomplete().then(({ data }: { data: AutocompleteUser[] }) => {
+    dispatch(receiveUsersAutocomplete(data))
+    dispatch(loadedUsersAutocomplete())
+  })
+}

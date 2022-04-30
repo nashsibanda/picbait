@@ -1,17 +1,18 @@
-import { RECEIVE_USERS_AUTOCOMPLETE } from "../../actions/autocomplete_actions";
+import { UsersAutocompleteAction, UsersAutocompleteActionTypes } from '../../actions/autocomplete_actions'
+import { AutocompleteUser } from '../../util/types'
 
-const usersAutocompleteReducer = (state = {}, action) => {
-  Object.freeze(state);
+const usersAutocompleteReducer = (state: Record<string, AutocompleteUser> = {}, action: UsersAutocompleteAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_USERS_AUTOCOMPLETE:
-      const outputAutocomplete = {};
+    case UsersAutocompleteActionTypes.RECEIVE_USERS_AUTOCOMPLETE:
+      const outputAutocomplete: Record<string, AutocompleteUser> = {}
       action.users.forEach(user => {
-        outputAutocomplete[user[0]] = user;
-      });
-      return outputAutocomplete;
+        outputAutocomplete[user[0]] = user
+      })
+      return outputAutocomplete
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default usersAutocompleteReducer;
+export default usersAutocompleteReducer
