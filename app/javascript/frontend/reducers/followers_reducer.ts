@@ -1,11 +1,11 @@
 import { FollowAction, FollowActionTypes } from '../actions/follow_actions'
-import { Follow } from '../util/types'
+import { FollowersState } from '../types/state'
 
-const followersReducer = (state: Record<string, Follow> = {}, action: FollowAction) => {
+const followersReducer = (state: FollowersState = {}, action: FollowAction) => {
   Object.freeze(state)
   switch (action.type) {
     case FollowActionTypes.RECEIVE_FOLLOWERS:
-      const followsOutput: Record<string, Follow> = {}
+      const followsOutput: FollowersState = {}
       action.follows.forEach(follow => {
         followsOutput[follow.follower] = follow
       })

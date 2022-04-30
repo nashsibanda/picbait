@@ -1,11 +1,11 @@
 import { CommentAction, CommentActionTypes } from '../actions/comment_actions'
-import { CommentEntity } from '../util/types'
+import { CommentsState } from '../types/state'
 
-const commentsReducer = (state: Record<number, CommentEntity> = {}, action: CommentAction) => {
+const commentsReducer = (state: CommentsState = {}, action: CommentAction) => {
   Object.freeze(state)
   switch (action.type) {
     case CommentActionTypes.RECEIVE_COMMENTS:
-      const commentsOutput: Record<number, CommentEntity> = {}
+      const commentsOutput: CommentsState = {}
       action.comments.forEach(cmnt => {
         commentsOutput[cmnt.id] = cmnt
       })

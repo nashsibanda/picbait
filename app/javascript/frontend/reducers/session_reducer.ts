@@ -1,14 +1,8 @@
 import { SessionAction, SessionActionTypes } from '../actions/session_actions'
+import { SessionState } from '../types/state'
 
 const nullSession = {
   currentUser: null,
-}
-
-type SessionState = {
-  currentUser: {
-    id: number
-    slug: string
-  } | null
 }
 
 const sessionReducer = (state: SessionState = nullSession, action: SessionAction) => {

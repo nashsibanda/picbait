@@ -1,18 +1,15 @@
-import {
-  LOADING_USERS_AUTOCOMPLETE,
-  LOADED_USERS_AUTOCOMPLETE,
-} from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const usersAutocompleteLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const usersAutocompleteLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_USERS_AUTOCOMPLETE:
-      return true;
-    case LOADED_USERS_AUTOCOMPLETE:
-      return false;
+    case FetchingActionTypes.LOADING_USERS_AUTOCOMPLETE:
+      return true
+    case FetchingActionTypes.LOADED_USERS_AUTOCOMPLETE:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default usersAutocompleteLoadingReducer;
+export default usersAutocompleteLoadingReducer

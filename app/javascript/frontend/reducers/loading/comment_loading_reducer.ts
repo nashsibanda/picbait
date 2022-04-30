@@ -1,18 +1,15 @@
-import {
-  LOADING_COMMENTS,
-  LOADED_COMMENTS,
-} from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const commentLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const commentLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_COMMENTS:
-      return true;
-    case LOADED_COMMENTS:
-      return false;
+    case FetchingActionTypes.LOADING_COMMENTS:
+      return true
+    case FetchingActionTypes.LOADED_COMMENTS:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default commentLoadingReducer;
+export default commentLoadingReducer

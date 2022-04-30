@@ -1,18 +1,15 @@
-import {
-  POSTING_COMMENTS,
-  POSTED_COMMENTS,
-} from "../../actions/posting_actions";
+import { PostingAction, PostingActionTypes } from '../../actions/posting_actions'
 
-const commentPostingReducer = (state = false, action) => {
-  Object.freeze(state);
+const commentPostingReducer = (state = false, action: PostingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case POSTING_COMMENTS:
-      return true;
-    case POSTED_COMMENTS:
-      return false;
+    case PostingActionTypes.POSTING_COMMENTS:
+      return true
+    case PostingActionTypes.POSTED_COMMENTS:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default commentPostingReducer;
+export default commentPostingReducer

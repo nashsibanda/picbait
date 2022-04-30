@@ -1,16 +1,17 @@
 import { CommentAction, CommentActionTypes } from '../actions/comment_actions'
 import { LikeAction, LikeActionTypes } from '../actions/like_actions'
+import { LikesState } from '../types/state'
 import { Like } from '../util/types'
 
-const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, action: LikeAction | CommentAction) => {
+const commentLikesReducer = (state: LikesState = {}, action: LikeAction | CommentAction) => {
   Object.freeze(state)
   switch (action.type) {
     case CommentActionTypes.RECEIVE_COMMENTS:
-      const likesOutput: Record<number, Record<number, Like>> = {}
+      const likesOutput: LikesState = {}
       action.comments.forEach(cmnt => {
         const commentLikes: Record<number, Like> = {}
-        cmnt.likes.forEach(lk => {
-          commentLikes[lk.api_user_id] = lk
+        cmnt.likes.forEach(like => {
+          commentLikes[like.api_user_id] = like
         })
         likesOutput[cmnt.id] = commentLikes
       })

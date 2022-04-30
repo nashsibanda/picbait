@@ -1,18 +1,15 @@
-import {
-  LOADING_SESSION,
-  LOADED_SESSION,
-} from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const sessionLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const sessionLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_SESSION:
-      return true;
-    case LOADED_SESSION:
-      return false;
+    case FetchingActionTypes.LOADING_SESSION:
+      return true
+    case FetchingActionTypes.LOADED_SESSION:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default sessionLoadingReducer;
+export default sessionLoadingReducer

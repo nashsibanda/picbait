@@ -1,15 +1,15 @@
-import { LOADING_LIKES, LOADED_LIKES } from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const likeLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const likeLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_LIKES:
-      return true;
-    case LOADED_LIKES:
-      return false;
+    case FetchingActionTypes.LOADING_LIKES:
+      return true
+    case FetchingActionTypes.LOADED_LIKES:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default likeLoadingReducer;
+export default likeLoadingReducer

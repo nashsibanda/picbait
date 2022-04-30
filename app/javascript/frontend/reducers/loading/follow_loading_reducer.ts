@@ -1,18 +1,15 @@
-import {
-  LOADING_FOLLOWS,
-  LOADED_FOLLOWS,
-} from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const followLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const followLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_FOLLOWS:
-      return true;
-    case LOADED_FOLLOWS:
-      return false;
+    case FetchingActionTypes.LOADING_FOLLOWS:
+      return true
+    case FetchingActionTypes.LOADED_FOLLOWS:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default followLoadingReducer;
+export default followLoadingReducer

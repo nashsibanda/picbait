@@ -1,11 +1,11 @@
 import { PostAction, PostActionTypes } from '../actions/post_actions'
-import { PostEntity } from '../util/types'
+import { PostsState } from '../types/state'
 
-const postsReducer = (state: Record<number, PostEntity> = {}, action: PostAction) => {
+const postsReducer = (state: PostsState = {}, action: PostAction) => {
   Object.freeze(state)
   switch (action.type) {
     case PostActionTypes.RECEIVE_POSTS:
-      const postsOutput: Record<number, PostEntity> = {}
+      const postsOutput: PostsState = {}
       action.posts.forEach(post => {
         postsOutput[post.id] = post
       })

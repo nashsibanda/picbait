@@ -1,15 +1,15 @@
-import { LOADING_POSTS, LOADED_POSTS } from "../../actions/fetching_actions";
+import { FetchingAction, FetchingActionTypes } from '../../actions/fetching_actions'
 
-const postLoadingReducer = (state = false, action) => {
-  Object.freeze(state);
+const postLoadingReducer = (state = false, action: FetchingAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case LOADING_POSTS:
-      return true;
-    case LOADED_POSTS:
-      return false;
+    case FetchingActionTypes.LOADING_POSTS:
+      return true
+    case FetchingActionTypes.LOADED_POSTS:
+      return false
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default postLoadingReducer;
+export default postLoadingReducer

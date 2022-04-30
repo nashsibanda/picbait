@@ -1,12 +1,13 @@
 import { LikeAction, LikeActionTypes } from '../actions/like_actions'
 import { PostAction, PostActionTypes } from '../actions/post_actions'
+import { LikesState } from '../types/state'
 import { Like } from '../util/types'
 
-const postLikesReducer = (state: Record<number, Record<number, Like>> = {}, action: LikeAction | PostAction) => {
+const postLikesReducer = (state: LikesState = {}, action: LikeAction | PostAction) => {
   Object.freeze(state)
   switch (action.type) {
     case PostActionTypes.RECEIVE_POSTS:
-      const likesOutput: Record<number, Record<number, Like>> = {}
+      const likesOutput: LikesState = {}
       action.posts.forEach(post => {
         const postLikes: Record<number, Like> = {}
         post.likes.forEach(like => {
