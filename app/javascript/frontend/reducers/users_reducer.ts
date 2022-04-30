@@ -6,9 +6,7 @@ const usersReducer = (state: Record<string, UserEntity> = {}, action: ReceiveCur
   Object.freeze(state)
   switch (action.type) {
     case SessionActionTypes.RECEIVE_CURRENT_USER:
-      return Object.assign({}, state, {
-        [action.currentUser.slug]: action.currentUser,
-      })
+      return { ...state, [action.currentUser.slug]: action.currentUser }
     case UserActionTypes.RECEIVE_USERS:
       const usersOutput: Record<string, UserEntity> = {}
       action.users.forEach(user => {
@@ -16,9 +14,7 @@ const usersReducer = (state: Record<string, UserEntity> = {}, action: ReceiveCur
       })
       return usersOutput
     case UserActionTypes.RECEIVE_USER:
-      return Object.assign({}, state, {
-        [action.user.slug]: action.user,
-      })
+      return { ...state, [action.user.slug]: action.user }
     default:
       return state
   }

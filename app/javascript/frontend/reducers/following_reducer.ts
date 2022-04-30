@@ -11,11 +11,9 @@ const followingReducer = (state: Record<string, Follow> = {}, action: FollowActi
       })
       return followsOutput
     case FollowActionTypes.RECEIVE_FOLLOWING:
-      return Object.assign({}, state, {
-        [action.follow.followee]: action.follow,
-      })
+      return { ...state, [action.follow.followee]: action.follow }
     case FollowActionTypes.CLEAR_FOLLOWING:
-      const shortenedFollows = Object.assign({}, state)
+      const shortenedFollows = { ...state }
       delete shortenedFollows[action.follow.followee]
       return shortenedFollows
     default:

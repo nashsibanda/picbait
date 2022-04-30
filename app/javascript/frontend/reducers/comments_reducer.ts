@@ -12,9 +12,9 @@ const commentsReducer = (state: Record<number, CommentEntity> = {}, action: Comm
       return commentsOutput
     case CommentActionTypes.RECEIVE_COMMENT:
       const { comment } = action
-      return Object.assign({}, state, { [comment.id]: comment })
+      return { ...state, [comment.id]: comment }
     case CommentActionTypes.CLEAR_COMMENT:
-      const shortenedCommentsOutput = Object.assign({}, state)
+      const shortenedCommentsOutput = { ...state }
       delete shortenedCommentsOutput[action.comment.id]
       return shortenedCommentsOutput
     default:

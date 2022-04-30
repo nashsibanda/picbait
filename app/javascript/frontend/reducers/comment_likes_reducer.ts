@@ -18,12 +18,12 @@ const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, a
     case CommentActionTypes.RECEIVE_COMMENT:
       const { comment } = action
       const thisCommentLikes: Record<number, Like> = {}
-      comment.likes.forEach(lk => {
-        thisCommentLikes[lk.api_user_id] = like
+      comment.likes.forEach(like => {
+        thisCommentLikes[like.api_user_id] = like
       })
-      return Object.assign({}, state, { [comment.id]: thisCommentLikes })
+      return { ...state, [comment.id]: thisCommentLikes }
     case LikeActionTypes.RECEIVE_COMMENT_LIKE:
-      const stateCommentLikes = Object.assign({}, state)
+      const stateCommentLikes = { ...state }
       const { like } = action
       const likedComment = stateCommentLikes[like.likeable_id]
       likedComment[like.api_user_id] = like
@@ -31,7 +31,7 @@ const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, a
       return stateCommentLikes
     case LikeActionTypes.CLEAR_COMMENT_LIKE:
       const oldLike = action.like
-      const oldCommentLikes = Object.assign({}, state)
+      const oldCommentLikes = { ...state }
       const commentToClear = oldCommentLikes[oldLike.likeable_id]
       delete commentToClear[oldLike.api_user_id]
       oldCommentLikes[oldLike.likeable_id] = commentToClear
