@@ -1,3 +1,5 @@
+import { AxiosError, AxiosResponse } from 'axios'
+
 /* eslint-disable camelcase */
 export type User = {
   username: string
@@ -24,6 +26,14 @@ export type Follow = {
 }
 
 export type ApiErrors = string[]
+
+interface ApiErrorResp extends AxiosResponse {
+  data: ApiErrors
+}
+
+export interface ApiError extends AxiosError {
+  response: ApiErrorResp
+}
 
 export enum FollowType {
   followers = 'followers',

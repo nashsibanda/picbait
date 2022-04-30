@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
-import { ApiErrors, SessionUser, UserEntity } from '../util/types'
-import * as SessionAPIUtil from './../util/session_api_util'
+import * as SessionAPIUtil from '../util/session_api_util'
+import { ApiError, ApiErrors, SessionUser, UserEntity } from '../util/types'
 import { loadedSession, loadingSession } from './fetching_actions'
 
 export enum SessionActionTypes {
@@ -40,12 +40,12 @@ const receiveSessionErrors = (errors: ApiErrors): ReceiveSessionErrorsAction => 
 export const login = (user: SessionUser) => (dispatch: Dispatch) => {
   dispatch(loadingSession())
   SessionAPIUtil.login(user).then(
-    currentUser => {
-      dispatch(receiveCurrentUser(currentUser.data))
+    ({ data: currentUser }) => {
+      dispatch(receiveCurrentUser(currentUser))
       dispatch(loadedSession())
     },
-    errors => {
-      dispatch(receiveSessionErrors(errors.data))
+    (errors: ApiError) => {
+      dispatch(receiveSessionErrors(errors.response.data))
       dispatch(loadedSession())
     }
   )
@@ -55,12 +55,12 @@ export const loginRodrick = () => (dispatch: Dispatch) => {
   dispatch(loadingSession())
   const rodrick = { username: 'rodrick', password: 'rodrick' }
   SessionAPIUtil.login(rodrick).then(
-    ({ data }: { data: UserEntity }) => {
-      dispatch(receiveCurrentUser(data))
+    ({ data: user }) => {
+      dispatch(receiveCurrentUser(user))
       dispatch(loadedSession())
     },
-    ({ responseJSON }: { responseJSON: ApiErrors }) => {
-      dispatch(receiveSessionErrors(responseJSON))
+    (errors: ApiError) => {
+      dispatch(receiveSessionErrors(errors.response.data))
       dispatch(loadedSession())
     }
   )
@@ -75,12 +75,12 @@ export const logout = () => (dispatch: Dispatch) => {
 export const signup = (formUser: SessionUser) => (dispatch: Dispatch) => {
   dispatch(loadingSession())
   SessionAPIUtil.signup(formUser).then(
-    ({ data }: { data: UserEntity }) => {
-      dispatch(receiveCurrentUser(data))
+    ({ data: user }) => {
+      dispatch(receiveCurrentUser(user))
       dispatch(loadedSession())
     },
-    ({ responseJSON }: { responseJSON: ApiErrors }) => {
-      dispatch(receiveSessionErrors(responseJSON))
+    (errors: ApiError) => {
+      dispatch(receiveSessionErrors(errors.response.data))
       dispatch(loadedSession())
     }
   )

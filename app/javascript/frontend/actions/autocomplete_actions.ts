@@ -19,8 +19,8 @@ const receiveUsersAutocomplete = (users: AutocompleteUser[]) => ({
 
 export const fetchUsersAutocomplete = () => (dispatch: Dispatch) => {
   dispatch(loadingUsersAutocomplete())
-  getUsersAutocomplete().then(({ data }: { data: AutocompleteUser[] }) => {
-    dispatch(receiveUsersAutocomplete(data))
+  getUsersAutocomplete().then(({ data: users }) => {
+    dispatch(receiveUsersAutocomplete(users))
     dispatch(loadedUsersAutocomplete())
   })
 }

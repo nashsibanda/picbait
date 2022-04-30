@@ -50,8 +50,8 @@ const receiveCommentErrors = (errors: ApiErrors): CommentErrorsAction => ({
 export const createComment = (formComment: FormData) => (dispatch: Dispatch) => {
   dispatch(postingComments())
   CommentsAPIUtil.postComment(formComment).then(
-    ({ data }: { data: CommentEntity }) => {
-      dispatch(receiveComment(data))
+    ({ data: comment }) => {
+      dispatch(receiveComment(comment))
       dispatch(postedComments())
     },
     ({ data }: { data: ApiErrors }) => {
@@ -64,8 +64,8 @@ export const createComment = (formComment: FormData) => (dispatch: Dispatch) => 
 export const removeComment = (id: number) => (dispatch: Dispatch) => {
   dispatch(postingComments())
   CommentsAPIUtil.deleteComment(id).then(
-    ({ data }: { data: CommentEntity }) => {
-      dispatch(clearComment(data))
+    ({ data: comment }) => {
+      dispatch(clearComment(comment))
       dispatch(postedComments())
     },
     ({ data }: { data: ApiErrors }) => {

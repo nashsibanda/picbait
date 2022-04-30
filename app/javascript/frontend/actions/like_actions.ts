@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import * as LikesAPIUtil from '../util/likes_api_util'
 import { Like } from '../util/types'
-import * as LikesAPIUtil from './../util/likes_api_util'
 
 export enum LikeActionTypes {
   RECEIVE_POST_LIKE = 'RECEIVE_POST_LIKE',
@@ -35,17 +35,17 @@ const clearCommentLike = (like: Like): LikeAction => ({
 })
 
 export const createPostLike = (postId: number) => (dispatch: Dispatch) => {
-  LikesAPIUtil.postPostLike(postId).then(like => dispatch(receivePostLike(like.data)))
+  LikesAPIUtil.postPostLike(postId).then(({ data: like }) => dispatch(receivePostLike(like)))
 }
 
 export const deletePostLike = (id: number) => (dispatch: Dispatch) => {
-  LikesAPIUtil.deleteLike(id).then(like => dispatch(clearPostLike(like.data)))
+  LikesAPIUtil.deleteLike(id).then(({ data: like }) => dispatch(clearPostLike(like)))
 }
 
 export const createCommentLike = (commentId: number) => (dispatch: Dispatch) => {
-  LikesAPIUtil.postCommentLike(commentId).then(like => dispatch(receiveCommentLike(like.data)))
+  LikesAPIUtil.postCommentLike(commentId).then(({ data: like }) => dispatch(receiveCommentLike(like)))
 }
 
 export const deleteCommentLike = (id: number) => (dispatch: Dispatch) => {
-  LikesAPIUtil.deleteLike(id).then(like => dispatch(clearCommentLike(like.data)))
+  LikesAPIUtil.deleteLike(id).then(({ data: like }) => dispatch(clearCommentLike(like)))
 }

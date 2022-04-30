@@ -2,7 +2,7 @@ import { push } from 'connected-react-router'
 import { Dispatch } from 'redux'
 import * as CommentsAPIUtil from '../util/comments_api_util'
 import * as PostsAPIUtil from '../util/posts_api_util'
-import { ApiErrors, PostEntity } from '../util/types'
+import { ApiError, ApiErrors, PostEntity } from '../util/types'
 import { fetchUsersAutocomplete } from './autocomplete_actions'
 import { receiveComments } from './comment_actions'
 import {
@@ -131,8 +131,8 @@ export const createPost = (formPost: FormData, userSlug: string) => (dispatch: D
       dispatch(postedPosts())
       dispatch(push(`/users/${userSlug}`))
     },
-    errors => {
-      dispatch(receivePostErrors(errors.responseJSON))
+    (errors: ApiError) => {
+      dispatch(receivePostErrors(errors.response.data))
       dispatch(postedPosts())
     }
   )
@@ -144,6 +144,6 @@ export const deletePost = (id: number, userSlug: string) => (dispatch: Dispatch)
       dispatch(clearPost(post))
       dispatch(push(`/users/${userSlug}`))
     },
-    errors => dispatch(receivePostErrors(errors.responseJSON))
+    (errors: ApiError) => dispatch(receivePostErrors(errors.response.data))
   )
 }

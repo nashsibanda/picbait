@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
+import * as FollowsAPIUtil from '../util/follows_api'
 import { Follow, FollowType } from '../util/types'
-import * as FollowsAPIUtil from './../util/follows_api'
 import { loadedFollows, loadingFollows } from './fetching_actions'
 
 export enum FollowActionTypes {
@@ -45,45 +45,35 @@ const receiveFollower = (follow: Follow): SingleFollowAction => ({
   follow,
 })
 
-const receiveFollowing = (follow: Follow): SingleFollowAction => ({
-  type: FollowActionTypes.RECEIVE_FOLLOWING,
-  follow,
-})
-
 const clearFollower = (follow: Follow): SingleFollowAction => ({
   type: FollowActionTypes.CLEAR_FOLLOWER,
   follow,
 })
 
-const clearFollowing = (follow: Follow): SingleFollowAction => ({
-  type: FollowActionTypes.CLEAR_FOLLOWING,
-  follow,
-})
-
 export const fetchFollowers = (userId: number) => (dispatch: Dispatch) => {
   dispatch(loadingFollows())
-  FollowsAPIUtil.getFollows(userId, FollowType.followers).then(({ data }: { data: Follow[] }) => {
-    dispatch(receiveFollowers(data))
+  FollowsAPIUtil.getFollows(userId, FollowType.followers).then(({ data: follows }) => {
+    dispatch(receiveFollowers(follows))
     dispatch(loadedFollows())
   })
 }
 
 export const fetchFollowings = (userId: number) => (dispatch: Dispatch) => {
   dispatch(loadingFollows())
-  FollowsAPIUtil.getFollows(userId, FollowType.followings).then(({ data }: { data: Follow[] }) => {
-    dispatch(receiveFollowings(data))
+  FollowsAPIUtil.getFollows(userId, FollowType.followings).then(({ data: follow }) => {
+    dispatch(receiveFollowings(follow))
     dispatch(loadedFollows())
   })
 }
 
 export const createFollow = (userId: number) => (dispatch: Dispatch) => {
-  FollowsAPIUtil.postFollow(userId).then(({ data }: { data: Follow }) => {
-    dispatch(receiveFollower(data))
+  FollowsAPIUtil.postFollow(userId).then(({ data: follow }) => {
+    dispatch(receiveFollower(follow))
   })
 }
 
 export const deleteFollow = (userId: number) => (dispatch: Dispatch) => {
-  FollowsAPIUtil.deleteFollow(userId).then(({ data }: { data: Follow }) => {
-    dispatch(clearFollower(data))
+  FollowsAPIUtil.deleteFollow(userId).then(({ data: follow }) => {
+    dispatch(clearFollower(follow))
   })
 }
