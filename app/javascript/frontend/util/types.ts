@@ -35,8 +35,20 @@ export enum LikeableType {
 
 export type Like = {
   api_user_id: number
+  created_at: Date
   id: number
   likeable_id: number
   likeable_type: LikeableType
   likerSlug: string
+  updated_at: Date
+}
+
+export type CommentEntity = {
+  body: string
+  commenter: string
+  date: string
+  id: number
+  likes: Like[]
+  parentCommentId: number | null
+  timeAgo: string
 }

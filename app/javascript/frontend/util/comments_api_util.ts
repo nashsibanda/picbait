@@ -1,40 +1,40 @@
-import axios from "axios";
-import { setToken } from "./misc_util";
+import axios from 'axios'
+import { setToken } from './misc_util'
 
-setToken(axios);
+setToken(axios)
 
-export const getComments = postId =>
+export const getComments = (postId: number) =>
   axios({
-    method: "get",
+    method: 'get',
     url: `api/posts/${postId}/comments`,
-  });
+  })
 
-export const getComment = id =>
+export const getComment = (id: number) =>
   axios({
-    method: "get",
+    method: 'get',
     url: `api/comments/${id}`,
-  });
+  })
 
-export const postComment = comment =>
+export const postComment = (comment: FormData) =>
   axios({
-    method: "post",
-    url: "api/comments",
+    method: 'post',
+    url: 'api/comments',
     data: comment,
     headers: {
-      "Content-Type": false,
+      'Content-Type': false,
       processData: false,
     },
-  });
+  })
 
-export const patchComment = (id, comment) =>
+export const patchComment = (id: number, comment: FormData) =>
   axios({
-    method: "patch",
+    method: 'patch',
     url: `api/comments/${id}`,
     data: comment,
-  });
+  })
 
-export const deleteComment = id =>
+export const deleteComment = (id: number) =>
   axios({
-    method: "delete",
+    method: 'delete',
     url: `api/comments/${id}`,
-  });
+  })

@@ -1,25 +1,25 @@
-import { RECEIVE_COMMENT, RECEIVE_COMMENTS } from '../actions/comment_actions'
+import { CommentAction, CommentActionTypes } from '../actions/comment_actions'
 import { LikeAction, LikeActionTypes } from '../actions/like_actions'
 import { Like } from '../util/types'
 
-const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, action: LikeAction | any) => {
+const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, action: LikeAction | CommentAction) => {
   Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_COMMENTS:
+    case CommentActionTypes.RECEIVE_COMMENTS:
       const likesOutput: Record<number, Record<number, Like>> = {}
-      action.comments.forEach(comment => {
+      action.comments.forEach(cmnt => {
         const commentLikes: Record<number, Like> = {}
-        comment.likes.forEach(like => {
-          commentLikes[like.api_user_id] = like
+        cmnt.likes.forEach(lk => {
+          commentLikes[lk.api_user_id] = lk
         })
-        likesOutput[comment.id] = commentLikes
+        likesOutput[cmnt.id] = commentLikes
       })
       return likesOutput
-    case RECEIVE_COMMENT:
+    case CommentActionTypes.RECEIVE_COMMENT:
       const { comment } = action
       const thisCommentLikes: Record<number, Like> = {}
-      comment.likes.forEach(like => {
-        thisCommentLikes[like.api_user_id] = like
+      comment.likes.forEach(lk => {
+        thisCommentLikes[lk.api_user_id] = like
       })
       return Object.assign({}, state, { [comment.id]: thisCommentLikes })
     case LikeActionTypes.RECEIVE_COMMENT_LIKE:
@@ -34,7 +34,7 @@ const commentLikesReducer = (state: Record<number, Record<number, Like>> = {}, a
       const oldCommentLikes = Object.assign({}, state)
       const commentToClear = oldCommentLikes[oldLike.likeable_id]
       delete commentToClear[oldLike.api_user_id]
-      oldCommentLikes[oldLike] = commentToClear
+      oldCommentLikes[oldLike.likeable_id] = commentToClear
       return oldCommentLikes
     default:
       return state
