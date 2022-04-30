@@ -5,7 +5,12 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "airbnb",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -22,15 +27,28 @@
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/no-empty-functions": "off",
       "@typescript-eslint/no-empty-interface": "warn",
+      "@typescript-eslint/no-shadow": "error",
       "react/prop-types": "off",
       "react/display-name": "warn",
       "react/no-unescaped-entities": "warn",
       "react/no-deprecated": "warn",
-      "react/no-find-dom-node": "warn"
+      "react/no-find-dom-node": "warn",
+      "import/extensions": "off",
+      "no-shadow": "off",
+      "default-param-last": "off",
+      "no-case-declarations": "off"
+    },
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"]
+      },
+      "import/resolver": {
+        "typescript": {}
+      }
     }
 }
