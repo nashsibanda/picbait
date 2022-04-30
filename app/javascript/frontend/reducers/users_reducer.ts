@@ -1,26 +1,26 @@
-import { RECEIVE_CURRENT_USER } from "../actions/session_actions";
-import { RECEIVE_USERS, RECEIVE_USER } from "../actions/user_actions";
+import { ReceiveCurrentUserAction, SessionActionTypes } from '../actions/session_actions'
+import { RECEIVE_USER, RECEIVE_USERS } from '../actions/user_actions'
 
-const usersReducer = (state = {}, action) => {
-  Object.freeze(state);
+const usersReducer = (state = {}, action: ReceiveCurrentUserAction) => {
+  Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_CURRENT_USER:
+    case SessionActionTypes.RECEIVE_CURRENT_USER:
       return Object.assign({}, state, {
         [action.currentUser.slug]: action.currentUser,
-      });
+      })
     case RECEIVE_USERS:
-      const usersOutput = {};
+      const usersOutput = {}
       action.users.forEach(user => {
-        usersOutput[user.slug] = user;
-      });
-      return usersOutput;
+        usersOutput[user.slug] = user
+      })
+      return usersOutput
     case RECEIVE_USER:
       return Object.assign({}, state, {
         [action.user.slug]: action.user,
-      });
+      })
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default usersReducer;
+export default usersReducer

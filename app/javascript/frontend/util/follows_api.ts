@@ -1,23 +1,28 @@
-import axios from "axios";
-import { setToken } from "./misc_util";
+import axios from 'axios'
+import { setToken } from './misc_util'
 
-setToken(axios);
+setToken(axios)
 
-export const getFollows = (userId, params) =>
+type FollowsParams = {
+  follow_type: 'followers' | 'followings'
+  user_id: number
+}
+
+export const getFollows = (userId: number, params: FollowsParams) =>
   axios({
-    method: "get",
+    method: 'get',
     url: `api/users/${userId}/follows`,
     params,
-  });
+  })
 
-export const postFollow = userId =>
+export const postFollow = (userId: number) =>
   axios({
-    method: "post",
+    method: 'post',
     url: `api/users/${userId}/follow`,
-  });
+  })
 
-export const deleteFollow = userId =>
+export const deleteFollow = (userId: number) =>
   axios({
-    method: "delete",
+    method: 'delete',
     url: `api/users/${userId}/follow`,
-  });
+  })

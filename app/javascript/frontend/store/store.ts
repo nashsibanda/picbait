@@ -1,19 +1,17 @@
-import { createStore, applyMiddleware } from "redux";
-import { createHashHistory } from "history";
 import { composeWithDevTools } from '@redux-devtools/extension'
-import thunk from "redux-thunk";
-import logger from "redux-logger";
-import createRootReducer from "../reducers/root_reducer";
-import { routerMiddleware } from "connected-react-router";
+import { routerMiddleware } from 'connected-react-router'
+import { createHashHistory } from 'history'
+import { applyMiddleware, legacy_createStore as createStore } from 'redux'
+import logger from 'redux-logger'
+import thunk from 'redux-thunk'
+import createRootReducer from '../reducers/root_reducer'
 
-export const history = createHashHistory();
+export const history = createHashHistory()
 
 export default function configureStore(preloadedState = {}) {
   return createStore(
     createRootReducer(history),
     preloadedState,
-    composeWithDevTools(
-      applyMiddleware(routerMiddleware(history), thunk, logger)
-    )
+    composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk, logger))
   )
 }

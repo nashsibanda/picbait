@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { LoadingSpinner } from "../ui/loading_spinner";
 import LoginRodrick from "./login_rodrick";
+import { User } from "../../util/types";
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class SessionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const user = Object.assign({}, this.state, {
+    const {username, password, email } = this.state
+    const user: User = Object.assign({}, {username, password, email}, {
       lowercase_username: this.state.username.toLowerCase(),
     });
     this.props.processForm(user);
