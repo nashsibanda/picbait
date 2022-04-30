@@ -15,7 +15,7 @@ class Feed extends React.Component {
 
   loadPageData() {
     const { page } = this.state;
-    this.props.fetchMoreFeedPosts(page);
+    this.props.fetchFeedPosts(page);
     this.setState({ page: page + 1 });
   }
 
