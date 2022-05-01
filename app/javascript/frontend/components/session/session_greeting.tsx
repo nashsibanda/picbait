@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { UserEntity } from '../../types/entities'
+import { logout } from '../../actions/session_actions'
+import { GlobalDispatch, GlobalState } from '../../types/state'
 
-const SessionGreeting = ({ currentUser, logout }: { currentUser: UserEntity | null; logout: () => void }) => (
+const SessionGreeting = ({ currentUser, logOut }: SessionGreetingProps) => (
   <div className='session-greeting'>
     {currentUser ? (
       <div className='vertical-menu'>
@@ -22,7 +24,7 @@ const SessionGreeting = ({ currentUser, logout }: { currentUser: UserEntity | nu
               <span className='button-text'>New Post</span>
             </button>
           </Link>
-          <button type='button' onClick={logout} className='header-button'>
+          <button type='button' onClick={logOut} className='header-button'>
             <i className='fas fa-sign-out-alt' />
             <span className='button-text'>Log Out</span>
           </button>
@@ -41,4 +43,21 @@ const SessionGreeting = ({ currentUser, logout }: { currentUser: UserEntity | nu
   </div>
 )
 
-export default SessionGreeting
+SessionGreeting.defaultProps = {
+  currentUser: null,
+}
+
+const mapStateToProps = (state: GlobalState) => {
+  const { entities, session } = state
+  return {
+    currentUser: session.currentUser ? entities.users[session.currentUser.slug] : null,
+  }
+}
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  logOut: () => dispatch(logout()),
+})
+
+type SessionGreetingProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>>
+
+export default connect(mapStateToProps, mapDispatchToProps)(SessionGreeting)

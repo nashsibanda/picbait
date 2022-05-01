@@ -83,3 +83,8 @@ export type PostEntity = {
   likes: Like[]
   title: string
 }
+
+export enum SessionFormType {
+  login = 'login',
+  signUp = 'signUp',
+}

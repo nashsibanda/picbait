@@ -1,13 +1,16 @@
 import React, { ChangeEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { ApiErrors, SessionUser, User } from '../../types/entities'
+import { login, signup } from '../../actions/session_actions'
+import { ApiErrors, SessionFormType, SessionUser, User } from '../../types/entities'
+import { GlobalDispatch, GlobalState } from '../../types/state'
 import LoadingSpinner from '../ui/loading_spinner'
 import LoginRodrick from './login_rodrick'
 
 export type SessionFormProps = {
   errors: ApiErrors
-  formType: 'signup' | 'login'
+  formType: SessionFormType
   loading: boolean
   processForm: (user: SessionUser) => void
 }
@@ -64,9 +67,9 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
     const { username, password, email, usernameIndicator, passwordIndicator } = this.state
     const formHeader = () => {
       switch (formType) {
-        case 'signup':
+        case SessionFormType.signUp:
           return 'Sign Up'
-        case 'login':
+        case SessionFormType.login:
           return 'Log In'
         default:
           return ''
@@ -75,9 +78,9 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
 
     const redirectLink = () => {
       switch (formType) {
-        case 'signup':
+        case SessionFormType.signUp:
           return '/login'
-        case 'login':
+        case SessionFormType.login:
           return '/signup'
         default:
           return ''
@@ -86,14 +89,15 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
 
     const redirectLinkTitle = () => {
       switch (formType) {
-        case 'signup':
+        case SessionFormType.signUp:
           return 'Already registered? Click here to log in...'
-        case 'login':
+        case SessionFormType.login:
           return 'Not yet registered? Click here to sign up...'
         default:
           return ''
       }
     }
+
     return (
       <div className='session-form-container'>
         <h2>{formHeader()}</h2>
@@ -101,12 +105,12 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
         <form className={`session-form ${formType}-form`} onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor='session-form-username'>
-              {formType === 'signup' ? 'Username' : 'Username or Email Address'}
+              {formType === SessionFormType.signUp ? 'Username' : 'Username or Email Address'}
             </label>
             <input
               type='text'
               onChange={this.updateProperty('username')}
-              placeholder={formType === 'signup' ? 'Username' : 'Username or Email Address'}
+              placeholder={formType === SessionFormType.signUp ? 'Username' : 'Username or Email Address'}
               id='session-form-username'
               value={username}
               onFocus={this.toggleIndicator('usernameIndicator')}
@@ -114,11 +118,11 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
               maxLength={50}
               required
             />
-            {usernameIndicator && formType === 'signup' && (
+            {usernameIndicator && formType === SessionFormType.signUp && (
               <CircularProgressbar value={username.length} maxValue={50} />
             )}
           </div>
-          {formType === 'signup' && (
+          {formType === SessionFormType.signUp && (
             <div>
               <label htmlFor='session-form-email'>Email Address</label>
               <input
@@ -144,7 +148,7 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
               maxLength={20}
               required
             />
-            {passwordIndicator && formType === 'signup' && (
+            {passwordIndicator && formType === SessionFormType.signUp && (
               <CircularProgressbar value={password.length} maxValue={20} minValue={6} />
             )}
           </div>
@@ -173,4 +177,19 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
   }
 }
 
-export default SessionForm
+const mapStateToProps =
+  (formType: SessionFormType) =>
+  (state: GlobalState): Pick<SessionFormProps, 'errors' | 'formType' | 'loading'> => ({
+    errors: state.errors.session,
+    formType,
+    loading: state.ui.loading.session,
+  })
+
+const mapDispatchToProps =
+  (action: typeof login | typeof signup) =>
+  (dispatch: GlobalDispatch): Pick<SessionFormProps, 'processForm'> => ({
+    processForm: (user: SessionUser) => dispatch(action(user)),
+  })
+
+export const LoginForm = connect(mapStateToProps(SessionFormType.login), mapDispatchToProps(login))(SessionForm)
+export const SignUpForm = connect(mapStateToProps(SessionFormType.signUp), mapDispatchToProps(signup))(SessionForm)

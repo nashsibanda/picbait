@@ -6,9 +6,8 @@ import FeedContainer from './feed/feed_container'
 import NewPostFormContainer from './posts/new_post_form_container'
 import PostShowContainer from './posts/posts_show_container'
 import ProfileShowContainer from './profile/profile_show_container'
-import LoginFormContainer from './session/login_form_container'
-import SessionGreetingContainer from './session/session_greeting_container'
-import SignupFormContainer from './session/signup_form_container'
+import { LoginForm, SignUpForm } from './session/session_form'
+import SessionGreeting from './session/session_greeting'
 import Splash from './splash/splash'
 
 const DebugMenu = () => (
@@ -33,7 +32,7 @@ const App = () => (
         <h1>
           <Link to='/'>picbait</Link>
         </h1>
-        <SessionGreetingContainer />
+        <SessionGreeting />
       </div>
     </header>
     <main>
@@ -42,8 +41,8 @@ const App = () => (
         <ProtectedRoute path='/users/:userSlug' component={ProfileShowContainer} />
         <ProtectedRoute exact path='/posts/:postId' component={PostShowContainer} />
         <ProtectedRoute exact path='/feed' component={FeedContainer} />
-        <AuthRoute path='/signup' component={SignupFormContainer} />
-        <AuthRoute path='/login' component={LoginFormContainer} />
+        <AuthRoute path='/signup' component={SignUpForm} />
+        <AuthRoute path='/login' component={LoginForm} />
         <AuthRoute path='/' component={Splash} />
       </Switch>
     </main>
