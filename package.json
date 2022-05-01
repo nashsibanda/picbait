@@ -34,7 +34,8 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --loader:.ts=tsx",
-    "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "lint": "DEBUG=eslint:cli-engine eslint . && tsc --noemit --diagnostics"
   },
   "version": "0.1.0",
   "devDependencies": {

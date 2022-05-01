@@ -85,8 +85,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
       reader.readAsDataURL(file)
     } else {
       this.setState({
-        // newAvatarUrl: '',
-        // newAvatarFile: null,
         loadingAvatar: false,
       })
     }
