@@ -71,6 +71,9 @@ class CommentsIndexItem extends React.Component<CommentsIndexItemProps, Comments
     const { slug, avatarUrl, username } = commenter
     const { childComments, updateParent, usersAutocomplete, loadingUsersAutocomplete } = this.props
     const { displayChildComments, liked, likesCount } = this.state
+
+    const replyText = childComments.length === 1 ? 'Reply' : 'Replies'
+
     return (
       <div className='comment'>
         <div className='avatar'>
@@ -117,13 +120,13 @@ class CommentsIndexItem extends React.Component<CommentsIndexItemProps, Comments
                   <button type='button' onClick={this.toggleChildComments}>
                     <i className='fas fa-minus' />
                     {`${childComments.length} `}
-                    {childComments.length === 1 ? 'Reply' : 'Replies'}
+                    {replyText}
                   </button>
                 ) : (
                   <button type='button' onClick={this.toggleChildComments}>
                     <i className='fas fa-plus' />
                     {`${childComments.length} `}
-                    {childComments.length === 1 ? 'Reply' : 'Replies'}
+                    {replyText}
                   </button>
                 )}
               </div>
