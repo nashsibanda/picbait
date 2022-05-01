@@ -1,8 +1,8 @@
-import { ApiError, ApiErrors, UserEntity } from '../types/entities.js'
-import { GlobalDispatch } from '../types/state.js'
-import * as UsersAPIUtil from '../util/usersApiUtil.js'
-import { loadedUsers, loadingUsers } from './fetchingActions.js'
-import { postedUsers, postingUsers } from './postingActions.js'
+import { ApiError, ApiErrors, UserEntity } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
+import * as UsersAPIUtil from '../util/usersApiUtil'
+import { loadedUsers, loadingUsers } from './fetchingActions'
+import { postedUsers, postingUsers } from './postingActions'
 
 export enum UserActionTypes {
   RECEIVE_USERS = 'RECEIVE_USERS',
