@@ -58,7 +58,7 @@ class PostInfo extends React.Component<PostInfoProps, PostInfoState> {
     this.setState({ body: e.target.value })
   }
 
-  updateParentComment(id: number | null, commenter: string | null) {
+  updateParentComment(id: number | null, commenter: string | null): any {
     this.setState(
       prevState => ({
         parentCommentId: id,
