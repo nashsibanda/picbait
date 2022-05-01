@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unused-state */
 // TODO: Use loadingAvatar state in render()
+// @ts-expect-error
+import loadImage from 'load-image'
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { connect } from 'react-redux'
@@ -140,7 +142,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
 
   displayAvatar() {
     const { newAvatarUrl, displayAvatarEl } = this.state
-    // @ts-expect-error
     loadImage(
       newAvatarUrl,
       (img: Element) => {

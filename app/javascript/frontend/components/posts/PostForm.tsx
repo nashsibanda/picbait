@@ -1,3 +1,5 @@
+// @ts-expect-error
+import loadImage from 'load-image'
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { connect } from 'react-redux'
@@ -69,7 +71,6 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
 
   displayImage() {
     const { imageUrl, displayImageEl } = this.state
-    // @ts-expect-error
     loadImage(
       imageUrl,
       (img: Element) => {
