@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-export const LoadingSpinner = props => {
-  return (
-    <div className="loading-spinner-container">
-      <i className="fas fa-spinner fa-spin"></i>
-    </div>
-  );
-};
+const LoadingSpinner = () => (
+  <div className='loading-spinner-container'>
+    <i className='fas fa-spinner fa-spin' />
+  </div>
+)
+
+export default LoadingSpinner
