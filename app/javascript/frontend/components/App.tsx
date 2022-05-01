@@ -1,15 +1,14 @@
 import React from 'react'
 import { Switch } from 'react-router'
 import { Link } from 'react-router-dom'
-import { AuthRoute, ProtectedRoute } from '../util/route_util'
-import FeedContainer from './feed/feed_container'
-import NewPostFormContainer from './posts/new_post_form_container'
-import PostShowContainer from './posts/posts_show_container'
-import ProfileShowContainer from './profile/profile_show_container'
-import LoginFormContainer from './session/login_form_container'
-import SessionGreetingContainer from './session/session_greeting_container'
-import SignupFormContainer from './session/signup_form_container'
-import Splash from './splash/splash'
+import { AuthRoute, ProtectedRoute } from '../util/routeUtil'
+import Feed from './feed/Feed'
+import NewPostForm from './posts/PostForm'
+import PostShow from './posts/PostShow'
+import ProfileShow from './profile/ProfileShow'
+import { LoginForm, SignUpForm } from './session/SessionForm'
+import SessionGreeting from './session/SessionGreeting'
+import Splash from './splash/Splash'
 
 const DebugMenu = () => (
   <div className='debug-menu'>
@@ -33,17 +32,17 @@ const App = () => (
         <h1>
           <Link to='/'>picbait</Link>
         </h1>
-        <SessionGreetingContainer />
+        <SessionGreeting />
       </div>
     </header>
     <main>
       <Switch>
-        <ProtectedRoute exact path='/posts/new' component={NewPostFormContainer} />
-        <ProtectedRoute path='/users/:userSlug' component={ProfileShowContainer} />
-        <ProtectedRoute exact path='/posts/:postId' component={PostShowContainer} />
-        <ProtectedRoute exact path='/feed' component={FeedContainer} />
-        <AuthRoute path='/signup' component={SignupFormContainer} />
-        <AuthRoute path='/login' component={LoginFormContainer} />
+        <ProtectedRoute exact path='/posts/new' component={NewPostForm} />
+        <ProtectedRoute path='/users/:userSlug' component={ProfileShow} />
+        <ProtectedRoute exact path='/posts/:postId' component={PostShow} />
+        <ProtectedRoute exact path='/feed' component={Feed} />
+        <AuthRoute path='/signup' component={SignUpForm} />
+        <AuthRoute path='/login' component={LoginForm} />
         <AuthRoute path='/' component={Splash} />
       </Switch>
     </main>

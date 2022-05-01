@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import LoginRodrick from '../session/login_rodrick'
+import LoginRodrick from '../session/LoginRodrick'
 
 const Splash = () => (
   <div className='splash-screen'>

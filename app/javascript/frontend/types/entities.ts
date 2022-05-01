@@ -37,13 +37,13 @@ export interface ApiError extends AxiosError {
 }
 
 export enum FollowType {
-  followers = 'followers',
-  followings = 'followings',
+  followers,
+  followings,
 }
 
 export enum LikeableType {
-  comment = 'Api::Comment',
-  post = 'Api::Post',
+  comment,
+  post,
 }
 
 export type Like = {
@@ -67,8 +67,8 @@ export type CommentEntity = {
 }
 
 export enum PostsIndexType {
-  feed = 'feed',
-  profile = 'profile',
+  feed,
+  profile,
 }
 
 export type PostEntity = {
@@ -82,4 +82,14 @@ export type PostEntity = {
   imageUrl: string
   likes: Like[]
   title: string
+}
+
+export enum SessionFormType {
+  login,
+  signUp,
+}
+
+export enum FormType {
+  new,
+  update,
 }

@@ -4,7 +4,7 @@ import { createHashHistory } from 'history'
 import { applyMiddleware, legacy_createStore as createStore, Store } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
-import createRootReducer from './frontend/reducers/root_reducer'
+import createRootReducer from './frontend/reducers/rootReducer'
 import { GlobalState } from './frontend/types/state'
 
 export const history = createHashHistory()
