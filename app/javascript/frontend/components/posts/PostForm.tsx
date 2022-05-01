@@ -1,7 +1,6 @@
-// @ts-expect-error
-import loadImage from 'load-image'
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { connect } from 'react-redux'
 import { createPost } from '../../actions/postActions'
 import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
@@ -20,8 +19,6 @@ type PostFormState = {
 }
 
 class PostForm extends React.Component<PostFormProps, PostFormState> {
-  preview: HTMLDivElement | null
-
   constructor(props: PostFormProps) {
     super(props)
     this.state = {
@@ -38,8 +35,6 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
     this.updateProperty = this.updateProperty.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.toggleIndicator = this.toggleIndicator.bind(this)
-    this.displayImage = this.displayImage.bind(this)
-    this.preview = null
   }
 
   handleImage(e: SyntheticEvent) {
@@ -47,7 +42,7 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
     const reader = new FileReader()
     const target = e.target as HTMLInputElement
     const file = target.files ? target.files[0] : null
-    reader.onloadend = () => this.setState({ imageUrl: reader.result, imageFile: file }, this.displayImage)
+    reader.onloadend = () => this.setState({ imageUrl: reader.result, imageFile: file })
 
     if (file) {
       reader.readAsDataURL(file)
@@ -69,26 +64,6 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
     processForm(formPost, userSlug)
   }
 
-  displayImage() {
-    const { imageUrl, displayImageEl } = this.state
-    loadImage(
-      imageUrl,
-      (img: Element) => {
-        this.setState({ displayImageEl: img }, () => {
-          this.setState({ loadingImage: false }, () => {
-            if (displayImageEl instanceof Element && this.preview) {
-              this.preview.appendChild(displayImageEl)
-            } else {
-              // eslint-disable-next-line no-alert
-              alert('This is not a valid image file format!')
-            }
-          })
-        })
-      },
-      { orientation: true }
-    )
-  }
-
   updateProperty(property: keyof Pick<PostFormState, 'title' | 'description'>) {
     return (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) =>
       this.setState(prevState => ({ ...prevState, [property]: e.target.value }))
@@ -101,8 +76,7 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
 
   render() {
     const { formType, errors, posting } = this.props
-    const { title, description, imageUrl, titleIndicator, descriptionIndicator, displayImageEl, loadingImage } =
-      this.state
+    const { title, description, imageUrl, titleIndicator, descriptionIndicator } = this.state
     return (
       <div className='post-form-container'>
         <form className={`post-form ${formType}-post-form`} onSubmit={this.handleSubmit}>
@@ -118,15 +92,7 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
               </button>
             </label>
           </div>
-          {loadingImage && <LoadingSpinner />}
-          {displayImageEl && (
-            <div
-              ref={ref => {
-                this.preview = ref
-              }}
-            />
-          )}
-
+          {imageUrl && <LazyLoadImage src={imageUrl as string} placeholder={<LoadingSpinner />} />}
           <div>
             <label htmlFor='post-form-title'>Title</label>
             <input

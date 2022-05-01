@@ -1,9 +1,8 @@
 /* eslint-disable react/no-unused-state */
 // TODO: Use loadingAvatar state in render()
-// @ts-expect-error
-import loadImage from 'load-image'
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { connect } from 'react-redux'
 import { createFollow as createFollowAction, deleteFollow as deleteFollowAction } from '../../actions/followActions'
 import { fetchUsers as fetchUsersAction, updateUser as updateUserAction } from '../../actions/userActions'
@@ -12,6 +11,7 @@ import { GlobalDispatch, GlobalState } from '../../types/state'
 import { sanitizeContent } from '../../util/miscUtil'
 import { GetUsersParams } from '../../util/usersApiUtil'
 import FollowersIndex from '../followers/FollowersIndex'
+import LoadingSpinner from '../ui/LoadingSpinner'
 
 type ProfileUserInfoState = {
   newAvatarUrl: string | ArrayBuffer | null
@@ -20,7 +20,6 @@ type ProfileUserInfoState = {
   followingCount: number
   showFollowers: boolean
   showFollowing: boolean
-  displayAvatarEl: Element | null
   showBioForm: boolean
   formBio: string
   loadingAvatar: boolean
@@ -28,8 +27,6 @@ type ProfileUserInfoState = {
 
 class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserInfoState> {
   avatarInput: HTMLInputElement | null
-
-  avatarPreview: HTMLDivElement | null
 
   constructor(props: ProfileUserInfoProps) {
     super(props)
@@ -40,7 +37,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
       followingCount: Object.keys(props.following).length,
       showFollowers: false,
       showFollowing: false,
-      displayAvatarEl: null,
       showBioForm: false,
       formBio: props.user.bio || '',
       loadingAvatar: true,
@@ -51,13 +47,11 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     this.toggleFollow = this.toggleFollow.bind(this)
     this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this)
     this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this)
-    this.displayAvatar = this.displayAvatar.bind(this)
     this.toggleBioForm = this.toggleBioForm.bind(this)
     this.updateBio = this.updateBio.bind(this)
     this.submitNewBio = this.submitNewBio.bind(this)
     this.cancelBioUpdate = this.cancelBioUpdate.bind(this)
     this.avatarInput = null
-    this.avatarPreview = null
   }
 
   componentDidUpdate(prevProps: ProfileUserInfoProps) {
@@ -81,19 +75,18 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     }
   }
 
-  handleNewAvatar(e: SyntheticEvent) {
-    this.setState({ loadingAvatar: true, displayAvatarEl: null })
+  handleNewAvatar(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({ loadingAvatar: true })
     const reader = new FileReader()
-    const target = e.target as HTMLInputElement
-    const file = target.files ? target.files[0] : null
-    reader.onloadend = () => this.setState({ newAvatarUrl: reader.result, newAvatarFile: file }, this.displayAvatar)
+    const file = e.target.files ? e.target.files[0] : null
+    reader.onloadend = () => this.setState({ newAvatarUrl: reader.result, newAvatarFile: file })
 
     if (file) {
       reader.readAsDataURL(file)
     } else {
       this.setState({
-        newAvatarUrl: '',
-        newAvatarFile: null,
+        // newAvatarUrl: '',
+        // newAvatarFile: null,
         loadingAvatar: false,
       })
     }
@@ -126,7 +119,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     this.setState({
       newAvatarUrl: '',
       newAvatarFile: null,
-      displayAvatarEl: null,
     })
     if (this.avatarInput) {
       this.avatarInput.value = ''
@@ -140,28 +132,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     }))
   }
 
-  displayAvatar() {
-    const { newAvatarUrl, displayAvatarEl } = this.state
-    loadImage(
-      newAvatarUrl,
-      (img: Element) => {
-        this.setState({ displayAvatarEl: img }, () => {
-          if (displayAvatarEl instanceof Element && this.avatarPreview) {
-            this.avatarPreview.appendChild(displayAvatarEl)
-          } else {
-            // eslint-disable-next-line no-alert
-            alert('This is not a valid image file format!')
-          }
-        })
-      },
-      {
-        orientation: true,
-        aspectRatio: 1 / 1,
-        cover: true,
-      }
-    )
-  }
-
   submitNewAvatar(e: FormEvent) {
     e.preventDefault()
     const formUser = new FormData()
@@ -173,7 +143,6 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     this.setState({
       newAvatarUrl: '',
       newAvatarFile: null,
-      displayAvatarEl: null,
     })
   }
 
@@ -201,16 +170,8 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
   render() {
     const { ownProfile, followStatus, user, followers, following, users } = this.props
     const { username, bio, postCount, avatarUrl } = user
-    const {
-      newAvatarUrl,
-      followerCount,
-      followingCount,
-      showFollowers,
-      showFollowing,
-      displayAvatarEl,
-      showBioForm,
-      formBio,
-    } = this.state
+    const { newAvatarUrl, followerCount, followingCount, showFollowers, showFollowing, showBioForm, formBio } =
+      this.state
     return (
       <div className='profile-user-info'>
         <section className='avatar'>
@@ -220,13 +181,8 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
               backgroundImage: `url(${avatarUrl})`,
             }}
           >
-            {displayAvatarEl && (
-              <div
-                className='avatar-preview'
-                ref={ref => {
-                  this.avatarPreview = ref
-                }}
-              />
+            {newAvatarUrl && (
+              <LazyLoadImage className='avatar-preview' src={newAvatarUrl as string} placeholder={<LoadingSpinner />} />
             )}
             {ownProfile && (
               <>
