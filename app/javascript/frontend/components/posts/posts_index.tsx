@@ -1,60 +1,72 @@
-import React from "react";
-import PostsIndexItemContainer from "./posts_index_item_container";
-import PostsModalContainer from "./posts_modal_container";
-import { withRouter } from "react-router-dom";
+import React, { SyntheticEvent } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { LikesState, PostsState } from '../../types/state'
+import PostsIndexItemContainer from './posts_index_item_container'
+import PostsModalContainer from './posts_modal_container'
 
-class PostsIndex extends React.Component {
-  constructor(props) {
-    super(props);
+type PostsIndexProps = RouteComponentProps & {
+  posts: PostsState
+  likes: LikesState
+  type: 'feed' | 'profile'
+}
+
+type PostsIndexState = {
+  modalPost: number | null
+  order: number[]
+}
+
+class PostsIndex extends React.Component<PostsIndexProps, PostsIndexState> {
+  constructor(props: PostsIndexProps) {
+    super(props)
     this.state = {
       modalPost: null,
       order: [],
-    };
-    this.displayModal = this.displayModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.reorder = this.reorder.bind(this);
+    }
+    this.displayModal = this.displayModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.reorder = this.reorder.bind(this)
   }
 
   componentDidMount() {
-    this.reorder();
+    this.reorder()
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.posts != prevProps.posts) {
-      this.reorder();
+  componentDidUpdate(prevProps: PostsIndexProps) {
+    const { posts } = this.props
+    if (posts !== prevProps.posts) {
+      this.reorder()
     }
   }
 
   reorder() {
-    const postsOrder = Object.values(this.props.posts).sort(
-      (a, b) => b.creationNum - a.creationNum
-    );
+    const { posts } = this.props
+    const postsOrder = Object.values(posts).sort((a, b) => b.creationNum - a.creationNum)
     this.setState({
       order: postsOrder.map(post => post.id),
-    });
+    })
   }
 
-  displayModal(postId) {
-    return e => this.setState({ modalPost: parseInt(postId) });
+  displayModal(postId: string) {
+    return () => this.setState({ modalPost: parseInt(postId, 10) })
   }
 
-  closeModal(e) {
-    e.stopPropagation();
-    this.setState({ modalPost: null });
+  closeModal(e: SyntheticEvent) {
+    e.stopPropagation()
+    this.setState({ modalPost: null })
   }
 
   render() {
-    const { posts, likes, type } = this.props;
-    const { modalPost, order } = this.state;
+    const { posts, likes, type } = this.props
+    const { modalPost, order } = this.state
     if (!posts) {
-      return <h1>NO POSTS :(</h1>;
+      return <h1>NO POSTS :(</h1>
     }
 
     return (
-      <div className="posts-index-container">
-        <ul className="posts-index">
+      <div className='posts-index-container'>
+        <ul className='posts-index'>
           {order.map(postId => {
-            const post = posts[postId];
+            const post = posts[postId]
             return (
               post && (
                 <PostsIndexItemContainer
@@ -66,18 +78,13 @@ class PostsIndex extends React.Component {
                   updateModal={this.displayModal}
                 />
               )
-            );
+            )
           })}
         </ul>
-        {modalPost && (
-          <PostsModalContainer
-            postId={modalPost}
-            closeModal={this.closeModal}
-          />
-        )}
+        {modalPost && <PostsModalContainer postId={modalPost} closeModal={this.closeModal} />}
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(PostsIndex);
+export default withRouter(PostsIndex)

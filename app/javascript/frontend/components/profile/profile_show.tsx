@@ -59,7 +59,7 @@ class ProfileShow extends React.Component<ProfileShowProps, ProfileShowState> {
         {profileUser && <ProfileUserInfoContainer user={profileUser} ownProfile={ownProfile} />}
         {posts && likes && profileUser && (
           <>
-            <PostsIndex posts={posts} likes={likes} modalClosed={this.loadPageData} />
+            <PostsIndex posts={posts} likes={likes} type='feed' />
             {loading.postPage && <LoadingSpinner className='inline-padding' />}
             <Waypoint onEnter={this.loadPosts} />
           </>
