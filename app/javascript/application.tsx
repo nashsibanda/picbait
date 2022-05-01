@@ -1,9 +1,7 @@
-// Entry point for the build script in your package.json
 import { dom, library } from '@fortawesome/fontawesome-svg-core'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import '@hotwired/turbo-rails'
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './frontend/components/root'
