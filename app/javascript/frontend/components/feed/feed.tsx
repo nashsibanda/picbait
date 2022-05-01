@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Waypoint } from 'react-waypoint'
-import { clearPosts as clearPostsAction, fetchFeedPosts as fetchFeedPostsAction } from '../../actions/post_actions'
+import { clearPosts as clearPostsAction, fetchFeedPosts as fetchFeedPostsAction } from '../../actions/postActions'
 import { PostsIndexType } from '../../types/entities'
 import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
-import PostsIndex from '../posts/posts_index'
-import LoadingSpinner from '../ui/loading_spinner'
+import PostsIndex from '../posts/PostsIndex'
+import LoadingSpinner from '../ui/LoadingSpinner'
 
 type FeedState = {
   page: number

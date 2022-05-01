@@ -1,14 +1,14 @@
 import React from 'react'
 import { Switch } from 'react-router'
 import { Link } from 'react-router-dom'
-import { AuthRoute, ProtectedRoute } from '../util/route_util'
-import Feed from './feed/feed'
-import NewPostForm from './posts/post_form'
-import PostShow from './posts/post_show'
-import ProfileShow from './profile/profile_show'
-import { LoginForm, SignUpForm } from './session/session_form'
-import SessionGreeting from './session/session_greeting'
-import Splash from './splash/splash'
+import { AuthRoute, ProtectedRoute } from '../util/routeUtil'
+import Feed from './feed/Feed'
+import NewPostForm from './posts/PostForm'
+import PostShow from './posts/PostShow'
+import ProfileShow from './profile/ProfileShow'
+import { LoginForm, SignUpForm } from './session/SessionForm'
+import SessionGreeting from './session/SessionGreeting'
+import Splash from './splash/Splash'
 
 const DebugMenu = () => (
   <div className='debug-menu'>
