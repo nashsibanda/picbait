@@ -1,32 +1,30 @@
-import React from "react";
-import { Route, Redirect, withRouter } from "react-router";
-import { connect } from "react-redux";
+import React from 'react'
+import { connect, ConnectedComponent } from 'react-redux'
+import { Redirect, Route, withRouter } from 'react-router'
+import { compose } from 'redux'
+import { GlobalState } from '../types/state'
 
-const Auth = ({ component: Component, path, loggedIn, exact }) => (
-  <Route
-    path={path}
-    exact={exact}
-    render={props =>
-      !loggedIn ? <Component {...props} /> : <Redirect to="/feed" />
-    }
-  />
-);
+type RouteProps = {
+  component: ConnectedComponent<any, any>
+  path: string
+  loggedIn: boolean
+  exact: boolean
+}
 
-const Protected = ({ component: Component, path, loggedIn, exact }) => (
-  <Route
-    path={path}
-    exact={exact}
-    render={props =>
-      loggedIn ? <Component {...props} /> : <Redirect to="/login" />
-    }
-  />
-);
+const Auth = ({ component: Component, path, loggedIn, exact }: RouteProps): React.ReactElement => (
+  <Route path={path} exact={exact} render={props => (!loggedIn ? <Component {...props} /> : <Redirect to='/feed' />)} />
+)
 
-const mapStateToProps = state => ({
+const Protected = ({ component: Component, path, loggedIn, exact }: RouteProps) => (
+  <Route path={path} exact={exact} render={props => (loggedIn ? <Component {...props} /> : <Redirect to='/login' />)} />
+)
+
+const mapStateToProps = (state: GlobalState) => ({
   loggedIn: Boolean(state.session.currentUser),
-});
+})
 
-export const AuthRoute = withRouter(connect(mapStateToProps, null)(Auth));
-export const ProtectedRoute = withRouter(
-  connect(mapStateToProps, null)(Protected)
-);
+export const AuthRoute = compose(withRouter, connect(mapStateToProps, null))(Auth) as ConnectedComponent<any, any>
+export const ProtectedRoute = compose(withRouter, connect(mapStateToProps, null))(Protected) as ConnectedComponent<
+  any,
+  any
+>

@@ -53,6 +53,12 @@
       }
     ],
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-props-no-spreading": [
+      2,
+      {
+        "custom": "ignore"
+      }
+    ],
     "react/prop-types": "off",
     "react/display-name": "warn",
     "react/no-unescaped-entities": "warn",
