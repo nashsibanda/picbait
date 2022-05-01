@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux'
 import { Follow, FollowType } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
 import * as FollowsAPIUtil from '../util/follows_api'
 import { loadedFollows, loadingFollows } from './fetching_actions'
 
@@ -50,7 +50,7 @@ const clearFollower = (follow: Follow): SingleFollowAction => ({
   follow,
 })
 
-export const fetchFollowers = (userId: number) => (dispatch: Dispatch) => {
+export const fetchFollowers = (userId: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingFollows())
   FollowsAPIUtil.getFollows(userId, FollowType.followers).then(({ data: follows }) => {
     dispatch(receiveFollowers(follows))
@@ -58,7 +58,7 @@ export const fetchFollowers = (userId: number) => (dispatch: Dispatch) => {
   })
 }
 
-export const fetchFollowings = (userId: number) => (dispatch: Dispatch) => {
+export const fetchFollowings = (userId: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingFollows())
   FollowsAPIUtil.getFollows(userId, FollowType.followings).then(({ data: follow }) => {
     dispatch(receiveFollowings(follow))
@@ -66,13 +66,13 @@ export const fetchFollowings = (userId: number) => (dispatch: Dispatch) => {
   })
 }
 
-export const createFollow = (userId: number) => (dispatch: Dispatch) => {
+export const createFollow = (userId: number) => (dispatch: GlobalDispatch) => {
   FollowsAPIUtil.postFollow(userId).then(({ data: follow }) => {
     dispatch(receiveFollower(follow))
   })
 }
 
-export const deleteFollow = (userId: number) => (dispatch: Dispatch) => {
+export const deleteFollow = (userId: number) => (dispatch: GlobalDispatch) => {
   FollowsAPIUtil.deleteFollow(userId).then(({ data: follow }) => {
     dispatch(clearFollower(follow))
   })

@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux'
 import { ApiError, ApiErrors, SessionUser, UserEntity } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
 import * as SessionAPIUtil from '../util/session_api_util'
 import { loadedSession, loadingSession } from './fetching_actions'
 
@@ -37,7 +37,7 @@ const receiveSessionErrors = (errors: ApiErrors): ReceiveSessionErrorsAction => 
   errors,
 })
 
-export const login = (user: SessionUser) => (dispatch: Dispatch) => {
+export const login = (user: SessionUser) => (dispatch: GlobalDispatch) => {
   dispatch(loadingSession())
   SessionAPIUtil.login(user).then(
     ({ data: currentUser }) => {
@@ -51,7 +51,7 @@ export const login = (user: SessionUser) => (dispatch: Dispatch) => {
   )
 }
 
-export const loginRodrick = () => (dispatch: Dispatch) => {
+export const loginRodrick = () => (dispatch: GlobalDispatch) => {
   dispatch(loadingSession())
   const rodrick = { username: 'rodrick', password: 'rodrick' }
   SessionAPIUtil.login(rodrick).then(
@@ -66,13 +66,13 @@ export const loginRodrick = () => (dispatch: Dispatch) => {
   )
 }
 
-export const logout = () => (dispatch: Dispatch) => {
+export const logout = () => (dispatch: GlobalDispatch) => {
   SessionAPIUtil.logout().then(() => {
     dispatch(logoutCurrentUser())
   })
 }
 
-export const signup = (formUser: SessionUser) => (dispatch: Dispatch) => {
+export const signup = (formUser: SessionUser) => (dispatch: GlobalDispatch) => {
   dispatch(loadingSession())
   SessionAPIUtil.signup(formUser).then(
     ({ data: user }) => {

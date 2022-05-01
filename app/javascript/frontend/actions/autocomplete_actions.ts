@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux'
 import { AutocompleteUser } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
 import { getUsersAutocomplete } from '../util/users_api_util'
 import { loadedUsersAutocomplete, loadingUsersAutocomplete } from './fetching_actions'
 
@@ -17,7 +17,7 @@ const receiveUsersAutocomplete = (users: AutocompleteUser[]) => ({
   users,
 })
 
-export const fetchUsersAutocomplete = () => (dispatch: Dispatch) => {
+export const fetchUsersAutocomplete = () => (dispatch: GlobalDispatch) => {
   dispatch(loadingUsersAutocomplete())
   getUsersAutocomplete().then(({ data: users }) => {
     dispatch(receiveUsersAutocomplete(users))

@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux'
 import { ApiErrors, CommentEntity } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
 import * as CommentsAPIUtil from '../util/comments_api_util'
 import { postedComments, postingComments } from './posting_actions'
 
@@ -47,7 +47,7 @@ const receiveCommentErrors = (errors: ApiErrors): CommentErrorsAction => ({
   errors,
 })
 
-export const createComment = (formComment: FormData) => (dispatch: Dispatch) => {
+export const createComment = (formComment: FormData) => (dispatch: GlobalDispatch) => {
   dispatch(postingComments())
   CommentsAPIUtil.postComment(formComment).then(
     ({ data: comment }) => {
@@ -61,7 +61,7 @@ export const createComment = (formComment: FormData) => (dispatch: Dispatch) => 
   )
 }
 
-export const removeComment = (id: number) => (dispatch: Dispatch) => {
+export const removeComment = (id: number) => (dispatch: GlobalDispatch) => {
   dispatch(postingComments())
   CommentsAPIUtil.deleteComment(id).then(
     ({ data: comment }) => {

@@ -1,4 +1,6 @@
 import { RouterState } from 'connected-react-router'
+import { AnyAction } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 import {
   ApiErrors,
   AutocompleteUser,
@@ -78,3 +80,5 @@ export type GlobalState = {
   session: SessionState
   ui: UiState
 }
+
+export type GlobalDispatch = ThunkDispatch<GlobalState, void, AnyAction>

@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux'
 import { ApiError, ApiErrors, User, UserEntity } from '../types/entities.js'
+import { GlobalDispatch } from '../types/state.js'
 import * as UsersAPIUtil from '../util/users_api_util.js'
 import { loadedUsers, loadingUsers } from './fetching_actions.js'
 import { postedUsers, postingUsers } from './posting_actions.js'
@@ -44,7 +44,7 @@ export type UserAction =
   | ReturnType<typeof receiveUserErrors>
   | ReturnType<typeof receiveUsers>
 
-export const fetchUsers = (filters: UsersAPIUtil.GetUsersParams) => (dispatch: Dispatch) => {
+export const fetchUsers = (filters: UsersAPIUtil.GetUsersParams) => (dispatch: GlobalDispatch) => {
   dispatch(loadingUsers())
   UsersAPIUtil.getUsers(filters).then(({ data: users }) => {
     dispatch(receiveUsers(users))
@@ -52,7 +52,7 @@ export const fetchUsers = (filters: UsersAPIUtil.GetUsersParams) => (dispatch: D
   })
 }
 
-export const fetchUser = (userId: number) => (dispatch: Dispatch) => {
+export const fetchUser = (userId: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingUsers())
   UsersAPIUtil.getUser(userId).then(({ data: user }) => {
     dispatch(receiveUser(user))
@@ -60,7 +60,7 @@ export const fetchUser = (userId: number) => (dispatch: Dispatch) => {
   })
 }
 
-export const updateUser = (id: number, formUser: User) => (dispatch: Dispatch) => {
+export const updateUser = (id: number, formUser: User) => (dispatch: GlobalDispatch) => {
   dispatch(postingUsers())
   UsersAPIUtil.patchUser(id, formUser).then(
     user => {

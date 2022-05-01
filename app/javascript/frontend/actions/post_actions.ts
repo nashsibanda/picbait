@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router'
-import { Dispatch } from 'redux'
 import { ApiError, ApiErrors, PostEntity } from '../types/entities'
+import { GlobalDispatch } from '../types/state'
 import * as CommentsAPIUtil from '../util/comments_api_util'
 import * as PostsAPIUtil from '../util/posts_api_util'
 import { fetchUsersAutocomplete } from './autocomplete_actions'
@@ -75,7 +75,7 @@ const receivePostErrors = (errors: ApiErrors): PostErrorAction => ({
   errors,
 })
 
-const dispatchPosts = (page: number, posts: PostEntity[], dispatch: Dispatch) => {
+const dispatchPosts = (page: number, posts: PostEntity[], dispatch: GlobalDispatch) => {
   if (page === 1) {
     dispatch(receivePosts(posts))
   } else {
@@ -84,18 +84,18 @@ const dispatchPosts = (page: number, posts: PostEntity[], dispatch: Dispatch) =>
   dispatch(loadedPostPage())
 }
 
-export const fetchUserPosts = (userId: number, page: number) => (dispatch: Dispatch) => {
+export const fetchUserPosts = (userId: number, page: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingPostPage())
   PostsAPIUtil.getUserPosts(userId, page).then(({ data: posts }) => dispatchPosts(page, posts, dispatch))
 }
 
-export const fetchFeedPosts = (page: number) => (dispatch: Dispatch) => {
+export const fetchFeedPosts = (page: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingPostPage())
 
   PostsAPIUtil.getFeedPosts(page).then(({ data: posts }) => dispatchPosts(page, posts, dispatch))
 }
 
-export const fetchMoreFeedPosts = (page: number) => (dispatch: Dispatch) => {
+export const fetchMoreFeedPosts = (page: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingPostPage())
   PostsAPIUtil.getFeedPosts(page).then(({ data: posts }) => {
     dispatch(receiveMorePosts(posts))
@@ -103,7 +103,7 @@ export const fetchMoreFeedPosts = (page: number) => (dispatch: Dispatch) => {
   })
 }
 
-export const fetchPost = (id: number, shouldFetchPost: boolean) => (dispatch: Dispatch) => {
+export const fetchPost = (id: number, shouldFetchPost: boolean) => (dispatch: GlobalDispatch) => {
   dispatch(loadingComments())
   if (shouldFetchPost) {
     dispatch(loadingPosts())
@@ -116,14 +116,11 @@ export const fetchPost = (id: number, shouldFetchPost: boolean) => (dispatch: Di
     dispatch(receiveComments(comments))
     dispatch(loadedComments())
   })
-  // TODO: Need to come back and properly type these Dispatch elements
-  // @ts-expect-error
   dispatch(fetchUsersAutocomplete())
-  // @ts-expect-error
   dispatch(fetchUsers({ post_id: id }))
 }
 
-export const createPost = (formPost: FormData, userSlug: string) => (dispatch: Dispatch) => {
+export const createPost = (formPost: FormData, userSlug: string) => (dispatch: GlobalDispatch) => {
   dispatch(postingPosts())
   PostsAPIUtil.postPost(formPost).then(
     ({ data: post }) => {
@@ -138,7 +135,7 @@ export const createPost = (formPost: FormData, userSlug: string) => (dispatch: D
   )
 }
 
-export const deletePost = (id: number, userSlug: string) => (dispatch: Dispatch) => {
+export const deletePost = (id: number, userSlug: string) => (dispatch: GlobalDispatch) => {
   PostsAPIUtil.deletePost(id).then(
     ({ data: post }) => {
       dispatch(clearPost(post))
