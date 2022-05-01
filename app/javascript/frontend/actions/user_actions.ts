@@ -1,4 +1,4 @@
-import { ApiError, ApiErrors, User, UserEntity } from '../types/entities.js'
+import { ApiError, ApiErrors, UserEntity } from '../types/entities.js'
 import { GlobalDispatch } from '../types/state.js'
 import * as UsersAPIUtil from '../util/users_api_util.js'
 import { loadedUsers, loadingUsers } from './fetching_actions.js'
@@ -52,7 +52,7 @@ export const fetchUsers = (filters: UsersAPIUtil.GetUsersParams) => (dispatch: G
   })
 }
 
-export const fetchUser = (userId: number) => (dispatch: GlobalDispatch) => {
+export const fetchUser = (userId: string) => (dispatch: GlobalDispatch) => {
   dispatch(loadingUsers())
   UsersAPIUtil.getUser(userId).then(({ data: user }) => {
     dispatch(receiveUser(user))
@@ -60,7 +60,7 @@ export const fetchUser = (userId: number) => (dispatch: GlobalDispatch) => {
   })
 }
 
-export const updateUser = (id: number, formUser: User) => (dispatch: GlobalDispatch) => {
+export const updateUser = (id: string, formUser: FormData) => (dispatch: GlobalDispatch) => {
   dispatch(postingUsers())
   UsersAPIUtil.patchUser(id, formUser).then(
     user => {
