@@ -2,6 +2,7 @@
 // TODO: Use loadingAvatar state in render()
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { FollowType } from '../../types/entities'
 import { sanitizeContent } from '../../util/misc_util'
 import FollowersIndexContainer from '../followers/followers_index_container'
 import { ProfileUserInfoProps } from './profile_user_info_container'
@@ -306,7 +307,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
             <div className='follows-modal' onClick={this.toggleFollowersIndex}>
               <FollowersIndexContainer
                 user={user}
-                list='Followers'
+                list={FollowType.followers}
                 users={users}
                 follows={followers}
                 close={this.toggleFollowersIndex}
@@ -317,7 +318,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
             <div className='follows-modal' onClick={this.toggleFollowingIndex}>
               <FollowersIndexContainer
                 user={user}
-                list='Following'
+                list={FollowType.followings}
                 users={users}
                 follows={following}
                 close={this.toggleFollowingIndex}

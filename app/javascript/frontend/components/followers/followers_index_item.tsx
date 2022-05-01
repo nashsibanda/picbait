@@ -1,30 +1,36 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { makeShortString } from "../../util/misc_util";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { UserEntity } from '../../types/entities'
+import { makeShortString } from '../../util/misc_util'
 
-export const FollowersIndexItem = props => {
-  const { id, slug, avatarUrl, username, bio } = props.user;
+type FollowersIndexItemProps = {
+  user: UserEntity
+}
+
+const FollowersIndexItem = ({ user }: FollowersIndexItemProps) => {
+  const { slug, avatarUrl, username, bio } = user
   return (
-    <li className="followers-index-item">
-      <div className="avatar">
+    <li className='followers-index-item'>
+      <div className='avatar'>
         <Link to={`/users/${slug}`}>
           <button
-            type="button"
-            className="container"
+            type='button'
+            className='container'
             style={{
               backgroundImage: `url(${avatarUrl})`,
             }}
-          ></button>
+            aria-label={`Go to ${username}'s profile`}
+          />
         </Link>
       </div>
-      <div className="details">
-        <div className="username">
+      <div className='details'>
+        <div className='username'>
           <Link to={`/users/${slug}`}>{username}</Link>
         </div>
-        <div className="mini-bio">
-          {bio ? <span>{makeShortString(bio, 40)}</span> : <span></span>}
-        </div>
+        <div className='mini-bio'>{bio ? <span>{makeShortString(bio, 40)}</span> : <span />}</div>
       </div>
     </li>
-  );
-};
+  )
+}
+
+export default FollowersIndexItem
