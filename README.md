@@ -103,6 +103,10 @@ Version numbers reflect heroku versioning.
 
 ### v22 - Next
 
+- Migration to Typescript
+- Fix a11y compliance
+### v23 - Future
+
 - Time for direct messaging!
 - Sanitize user input before saving to database.
 - Fix avatar preview in user profile.
