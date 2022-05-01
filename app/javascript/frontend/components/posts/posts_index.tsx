@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, SyntheticEvent } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { PostType } from '../../types/entities'
+import { PostsIndexType } from '../../types/entities'
 import { LikesState, PostsState } from '../../types/state'
 import PostsIndexItemContainer from './posts_index_item_container'
 import PostsModalContainer from './posts_modal_container'
@@ -8,7 +8,7 @@ import PostsModalContainer from './posts_modal_container'
 type PostsIndexProps = RouteComponentProps & {
   posts: PostsState
   likes: LikesState
-  type: PostType
+  type: PostsIndexType
 }
 
 type PostsIndexState = {
@@ -75,7 +75,7 @@ class PostsIndex extends React.Component<PostsIndexProps, PostsIndexState> {
                   postId={postId}
                   key={postId}
                   likes={likes}
-                  type={type}
+                  postsIndexType={type}
                   updateModal={this.displayModal}
                 />
               )

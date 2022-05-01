@@ -1,4 +1,5 @@
 import React, { SyntheticEvent } from 'react'
+import { PostsIndexType } from '../../types/entities'
 import { makeShortTitle } from '../../util/misc_util'
 import { PostsIndexItemProps } from './posts_index_item_container'
 
@@ -51,7 +52,7 @@ class PostsIndexItem extends React.Component<PostsIndexItemProps, PostsIndexItem
   }
 
   render() {
-    const { post, postId, type, updateModal } = this.props
+    const { post, postId, postsIndexType, updateModal } = this.props
     const { liked, likesCount } = this.state
     const { title, imageUrl, date, authorUsername } = post
     return (
@@ -62,7 +63,7 @@ class PostsIndexItem extends React.Component<PostsIndexItemProps, PostsIndexItem
               <div className='title'>
                 <span>{makeShortTitle(title)}</span>
               </div>
-              {type === 'feed' ? (
+              {postsIndexType === PostsIndexType.feed ? (
                 <div className='author'>
                   <span>@{authorUsername}</span>
                 </div>

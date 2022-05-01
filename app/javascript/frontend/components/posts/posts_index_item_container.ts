@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import { connect } from 'react-redux'
 import { createPostLike, deletePostLike } from '../../actions/like_actions'
-import { PostEntity, PostType } from '../../types/entities'
+import { PostEntity, PostsIndexType } from '../../types/entities'
 import { AuthenticatedGlobalState, GlobalDispatch, LikesState } from '../../types/state'
 import PostsIndexItem from './posts_index_item'
 
@@ -19,7 +19,7 @@ export type PostsIndexItemProps = ReturnType<typeof mapStateToProps> &
     post: PostEntity
     postId: number
     likes: LikesState
-    type: PostType
+    postsIndexType: PostsIndexType
     updateModal: (postId: number) => MouseEventHandler
   }
 

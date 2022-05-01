@@ -66,7 +66,10 @@ export type CommentEntity = {
   timeAgo: string
 }
 
-export type PostType = 'feed' | 'profile'
+export enum PostsIndexType {
+  feed = 'feed',
+  profile = 'profile',
+}
 
 export type PostEntity = {
   authorSlug: string

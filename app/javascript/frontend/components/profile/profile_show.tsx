@@ -1,5 +1,6 @@
 import React from 'react'
 import { Waypoint } from 'react-waypoint'
+import { PostsIndexType } from '../../types/entities'
 import PostsIndex from '../posts/posts_index'
 import LoadingSpinner from '../ui/loading_spinner'
 import { ProfileShowProps } from './profile_show_container'
@@ -59,7 +60,7 @@ class ProfileShow extends React.Component<ProfileShowProps, ProfileShowState> {
         {profileUser && <ProfileUserInfoContainer user={profileUser} ownProfile={ownProfile} />}
         {posts && likes && profileUser && (
           <>
-            <PostsIndex posts={posts} likes={likes} type='feed' />
+            <PostsIndex posts={posts} likes={likes} type={PostsIndexType.profile} />
             {loading.postPage && <LoadingSpinner className='inline-padding' />}
             <Waypoint onEnter={this.loadPosts} />
           </>
