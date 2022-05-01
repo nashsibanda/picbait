@@ -50,17 +50,17 @@ const clearFollower = (follow: Follow): SingleFollowAction => ({
   follow,
 })
 
-export const fetchFollowers = (userId: number) => (dispatch: GlobalDispatch) => {
+export const fetchFollowers = (userSlug: string) => (dispatch: GlobalDispatch) => {
   dispatch(loadingFollows())
-  FollowsAPIUtil.getFollows(userId, FollowType.followers).then(({ data: follows }) => {
+  FollowsAPIUtil.getFollows(userSlug, FollowType.followers).then(({ data: follows }) => {
     dispatch(receiveFollowers(follows))
     dispatch(loadedFollows())
   })
 }
 
-export const fetchFollowings = (userId: number) => (dispatch: GlobalDispatch) => {
+export const fetchFollowings = (userSlug: string) => (dispatch: GlobalDispatch) => {
   dispatch(loadingFollows())
-  FollowsAPIUtil.getFollows(userId, FollowType.followings).then(({ data: follow }) => {
+  FollowsAPIUtil.getFollows(userSlug, FollowType.followings).then(({ data: follow }) => {
     dispatch(receiveFollowings(follow))
     dispatch(loadedFollows())
   })

@@ -1,182 +1,202 @@
-import React from "react";
-import FollowersIndexContainer from "./../followers/followers_index_container";
-import { sanitizeContent } from "../../util/misc_util";
-import { CircularProgressbar } from "react-circular-progressbar";
+/* eslint-disable react/no-unused-state */
+// TODO: Use loadingAvatar state in render()
+import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
+import { CircularProgressbar } from 'react-circular-progressbar'
+import { sanitizeContent } from '../../util/misc_util'
+import FollowersIndexContainer from '../followers/followers_index_container'
+import { ProfileUserInfoProps } from './profile_user_info_container'
 
-class ProfileUserInfo extends React.Component {
-  constructor(props) {
-    super(props);
+type ProfileUserInfoState = {
+  newAvatarUrl: string | ArrayBuffer | null
+  newAvatarFile: File | null
+  followerCount: number
+  followingCount: number
+  showFollowers: boolean
+  showFollowing: boolean
+  displayAvatarEl: Element | null
+  showBioForm: boolean
+  formBio: string
+  loadingAvatar: boolean
+}
+
+class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserInfoState> {
+  avatarInput: HTMLInputElement | null
+
+  avatarPreview: HTMLDivElement | null
+
+  constructor(props: ProfileUserInfoProps) {
+    super(props)
     this.state = {
-      newAvatarUrl: "",
+      newAvatarUrl: '',
       newAvatarFile: null,
-      followerCount: Object.keys(this.props.followers).length,
-      followingCount: Object.keys(this.props.following).length,
+      followerCount: Object.keys(props.followers).length,
+      followingCount: Object.keys(props.following).length,
       showFollowers: false,
       showFollowing: false,
       displayAvatarEl: null,
-      loadingAvatar: false,
       showBioForm: false,
-      formBio: this.props.user.bio || "",
-    };
-    this.handleNewAvatar = this.handleNewAvatar.bind(this);
-    this.submitNewAvatar = this.submitNewAvatar.bind(this);
-    this.clearNewAvatar = this.clearNewAvatar.bind(this);
-    this.toggleFollow = this.toggleFollow.bind(this);
-    this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this);
-    this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this);
-    this.displayAvatar = this.displayAvatar.bind(this);
-    this.toggleBioForm = this.toggleBioForm.bind(this);
-    this.updateBio = this.updateBio.bind(this);
-    this.submitNewBio = this.submitNewBio.bind(this);
-    this.cancelBioUpdate = this.cancelBioUpdate.bind(this);
-  }
-
-  toggleFollowersIndex(e) {
-    this.setState({
-      showFollowers: !this.state.showFollowers,
-      showFollowing: false,
-    });
-  }
-
-  toggleFollowingIndex(e) {
-    this.setState({
-      showFollowing: !this.state.showFollowing,
-      showFollowers: false,
-    });
-  }
-
-  toggleBioForm(e) {
-    this.setState({ showBioForm: !this.state.showBioForm });
-  }
-
-  updateBio(e) {
-    e.preventDefault();
-    this.setState({ formBio: e.target.value });
-  }
-
-  cancelBioUpdate(e) {
-    e.preventDefault();
-    this.setState({ formBio: this.props.user.bio || "", showBioForm: false });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.followers != prevProps.followers) {
-      this.setState({
-        followerCount: Object.keys(this.props.followers).length,
-      });
+      formBio: props.user.bio || '',
+      loadingAvatar: true,
     }
-    if (this.props.following != prevProps.following) {
+    this.handleNewAvatar = this.handleNewAvatar.bind(this)
+    this.submitNewAvatar = this.submitNewAvatar.bind(this)
+    this.clearNewAvatar = this.clearNewAvatar.bind(this)
+    this.toggleFollow = this.toggleFollow.bind(this)
+    this.toggleFollowingIndex = this.toggleFollowingIndex.bind(this)
+    this.toggleFollowersIndex = this.toggleFollowersIndex.bind(this)
+    this.displayAvatar = this.displayAvatar.bind(this)
+    this.toggleBioForm = this.toggleBioForm.bind(this)
+    this.updateBio = this.updateBio.bind(this)
+    this.submitNewBio = this.submitNewBio.bind(this)
+    this.cancelBioUpdate = this.cancelBioUpdate.bind(this)
+    this.avatarInput = null
+    this.avatarPreview = null
+  }
+
+  componentDidUpdate(prevProps: ProfileUserInfoProps) {
+    const { followers, following, user } = this.props
+    if (followers !== prevProps.followers) {
       this.setState({
-        followingCount: Object.keys(this.props.following).length,
-      });
+        followerCount: Object.keys(followers).length,
+      })
     }
-    if (this.props.user != prevProps.user) {
+    if (following !== prevProps.following) {
+      this.setState({
+        followingCount: Object.keys(following).length,
+      })
+    }
+    if (user !== prevProps.user) {
       this.setState({
         showFollowing: false,
         showFollowers: false,
         showBioForm: false,
-      });
+      })
     }
   }
 
-  clearNewAvatar(e) {
-    e.preventDefault();
-    this.setState({
-      newAvatarUrl: "",
-      newAvatarFile: null,
-      displayAvatarEl: null,
-      loadingAvatar: false,
-    });
-    this.avatarInput.value = "";
-  }
-
-  handleNewAvatar(e) {
-    this.setState({ loadingAvatar: true, displayAvatarEl: null });
-    const reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onloadend = () =>
-      this.setState(
-        { newAvatarUrl: reader.result, newAvatarFile: file },
-        this.displayAvatar
-      );
+  handleNewAvatar(e: SyntheticEvent) {
+    this.setState({ loadingAvatar: true, displayAvatarEl: null })
+    const reader = new FileReader()
+    const target = e.target as HTMLInputElement
+    const file = target.files ? target.files[0] : null
+    reader.onloadend = () => this.setState({ newAvatarUrl: reader.result, newAvatarFile: file }, this.displayAvatar)
 
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     } else {
       this.setState({
-        newAvatarUrl: "",
+        newAvatarUrl: '',
         newAvatarFile: null,
         loadingAvatar: false,
-      });
+      })
     }
+  }
+
+  toggleFollowingIndex() {
+    this.setState(prevState => ({
+      showFollowing: !prevState.showFollowing,
+      showFollowers: false,
+    }))
+  }
+
+  toggleBioForm() {
+    this.setState(prevState => ({ showBioForm: !prevState.showBioForm }))
+  }
+
+  updateBio(e: ChangeEvent<HTMLTextAreaElement>) {
+    e.preventDefault()
+    this.setState({ formBio: e.target.value })
+  }
+
+  cancelBioUpdate(e: SyntheticEvent) {
+    e.preventDefault()
+    const { user } = this.props
+    this.setState({ formBio: user.bio || '', showBioForm: false })
+  }
+
+  clearNewAvatar(e: SyntheticEvent) {
+    e.preventDefault()
+    this.setState({
+      newAvatarUrl: '',
+      newAvatarFile: null,
+      displayAvatarEl: null,
+    })
+    if (this.avatarInput) {
+      this.avatarInput.value = ''
+    }
+  }
+
+  toggleFollowersIndex() {
+    this.setState(prevState => ({
+      showFollowers: !prevState.showFollowers,
+      showFollowing: false,
+    }))
   }
 
   displayAvatar() {
+    const { newAvatarUrl, displayAvatarEl } = this.state
+    // @ts-expect-error
     loadImage(
-      this.state.newAvatarUrl,
-      img => {
+      newAvatarUrl,
+      (img: Element) => {
         this.setState({ displayAvatarEl: img }, () => {
-          this.setState({ loadingAvatar: false }, () => {
-            if (this.state.displayAvatarEl instanceof Element) {
-              this.avatarPreview.appendChild(this.state.displayAvatarEl);
-            } else {
-              alert("This is not a valid image file format!");
-            }
-          });
-        });
+          if (displayAvatarEl instanceof Element) {
+            // @ts-expect-error
+            this.avatarPreview.appendChild(displayAvatarEl)
+          } else {
+            // eslint-disable-next-line no-alert
+            alert('This is not a valid image file format!')
+          }
+        })
       },
       {
         orientation: true,
         aspectRatio: 1 / 1,
         cover: true,
       }
-    );
+    )
   }
 
-  submitNewAvatar(e) {
-    e.preventDefault();
-    const formUser = new FormData();
-    const { newAvatarFile } = this.state;
-    const { slug } = this.props.user;
-    formUser.append("user[avatar]", newAvatarFile);
-    this.props.updateUser(slug, formUser);
+  submitNewAvatar(e: FormEvent) {
+    e.preventDefault()
+    const formUser = new FormData()
+    const { newAvatarFile } = this.state
+    const { user, updateUser } = this.props
+    const { slug } = user
+    const file = newAvatarFile as File
+    formUser.append('user[avatar]', file)
+    updateUser(slug, formUser)
     this.setState({
-      newAvatarUrl: "",
+      newAvatarUrl: '',
       newAvatarFile: null,
-      displayAvatarEl: false,
-    });
+      displayAvatarEl: null,
+    })
   }
 
-  submitNewBio(e) {
-    e.preventDefault();
-    const formUser = new FormData();
-    const { formBio } = this.state;
-    const { slug } = this.props.user;
-    formUser.append("user[bio]", sanitizeContent(formBio));
-    this.props.updateUser(slug, formUser);
-    this.setState({ showBioForm: false });
+  submitNewBio(e: FormEvent) {
+    e.preventDefault()
+    const formUser = new FormData()
+    const { formBio } = this.state
+    const { user, updateUser } = this.props
+    const { slug } = user
+    formUser.append('user[bio]', sanitizeContent(formBio))
+    updateUser(slug, formUser)
+    this.setState({ showBioForm: false })
   }
 
-  toggleFollow(e) {
-    const { followStatus, createFollow, deleteFollow, user } = this.props;
-    const { id } = user;
+  toggleFollow() {
+    const { followStatus, createFollow, deleteFollow, user } = this.props
+    const { id } = user
     if (followStatus) {
-      deleteFollow(id);
+      deleteFollow(id)
     } else {
-      createFollow(id);
+      createFollow(id)
     }
   }
 
   render() {
-    const {
-      ownProfile,
-      followStatus,
-      user,
-      followers,
-      following,
-      users,
-    } = this.props;
-    const { username, bio, postCount, avatarUrl } = this.props.user;
+    const { ownProfile, followStatus, user, followers, following, users } = this.props
+    const { username, bio, postCount, avatarUrl } = user
     const {
       newAvatarUrl,
       followerCount,
@@ -186,47 +206,44 @@ class ProfileUserInfo extends React.Component {
       displayAvatarEl,
       showBioForm,
       formBio,
-    } = this.state;
+    } = this.state
     return (
-      <div className="profile-user-info">
-        <section className="avatar">
+      <div className='profile-user-info'>
+        <section className='avatar'>
           <div
-            className="container"
+            className='container'
             style={{
               backgroundImage: `url(${avatarUrl})`,
             }}
           >
             {displayAvatarEl && (
               <div
-                className="avatar-preview"
-                ref={ref => (this.avatarPreview = ref)}
-              ></div>
+                className='avatar-preview'
+                ref={ref => {
+                  this.avatarPreview = ref
+                }}
+              />
             )}
             {ownProfile && (
               <>
                 <input
-                  type="file"
+                  type='file'
                   onChange={this.handleNewAvatar}
-                  id="edit-avatar-input"
-                  ref={el => (this.avatarInput = el)}
-                ></input>
-                <label className="edit-avatar-icon" htmlFor="edit-avatar-input">
-                  <i className="fas fa-camera"></i>
+                  id='edit-avatar-input'
+                  ref={el => {
+                    this.avatarInput = el
+                  }}
+                />
+                <label className='edit-avatar-icon' htmlFor='edit-avatar-input'>
+                  <i className='fas fa-camera' />
                 </label>
                 {newAvatarUrl && (
-                  <form
-                    onSubmit={this.submitNewAvatar}
-                    className="edit-avatar-form"
-                  >
-                    <button type="submit" className="submit-button">
-                      <i className="fas fa-save"></i> Save
+                  <form onSubmit={this.submitNewAvatar} className='edit-avatar-form'>
+                    <button type='submit' className='submit-button'>
+                      <i className='fas fa-save' /> Save
                     </button>
-                    <button
-                      type="button"
-                      className="close-button"
-                      onClick={this.clearNewAvatar}
-                    >
-                      <i className="fas fa-times"></i>
+                    <button type='button' className='close-button' onClick={this.clearNewAvatar}>
+                      <i className='fas fa-times' />
                     </button>
                   </form>
                 )}
@@ -234,88 +251,64 @@ class ProfileUserInfo extends React.Component {
             )}
           </div>
         </section>
-        <section className="details">
-          <div className="title">
-            <span className="username">{username}</span>
-            <span className="follow">
+        <section className='details'>
+          <div className='title'>
+            <span className='username'>{username}</span>
+            <span className='follow'>
               {!ownProfile && (
                 <button
-                  type="button"
-                  className={`follow-button ${
-                    followStatus ? "following" : "not-following"
-                  }`}
+                  type='button'
+                  className={`follow-button ${followStatus ? 'following' : 'not-following'}`}
                   onClick={this.toggleFollow}
                 >
-                  {followStatus ? "Following" : "Follow"}
+                  {followStatus ? 'Following' : 'Follow'}
                 </button>
               )}
             </span>
           </div>
-          <div className="stats">
-            <span className="post-count">
+          <div className='stats'>
+            <span className='post-count'>
               <strong>{postCount}</strong> posts
             </span>
           </div>
           {showBioForm ? (
-            <form onSubmit={this.submitNewBio} className="bio">
+            <form onSubmit={this.submitNewBio} className='bio'>
               <div>
-                <textarea
-                  placeholder="Add a short bio..."
-                  value={formBio}
-                  onChange={this.updateBio}
-                  maxLength="200"
-                ></textarea>
+                <textarea placeholder='Add a short bio...' value={formBio} onChange={this.updateBio} maxLength={200} />
                 <CircularProgressbar value={formBio.length} maxValue={200} />
               </div>
-              <div className="submit-buttons">
-                <button type="submit" className="bio-button">
-                  <i className="fas fa-save"></i>{" "}
-                  <span className="button-text">Save</span>
+              <div className='submit-buttons'>
+                <button type='submit' className='bio-button'>
+                  <i className='fas fa-save' /> <span className='button-text'>Save</span>
                 </button>
-                <button
-                  type="button"
-                  className="bio-button"
-                  onClick={this.cancelBioUpdate}
-                >
-                  <i className="fas fa-times"></i>{" "}
-                  <span className="button-text">Cancel</span>
+                <button type='button' className='bio-button' onClick={this.cancelBioUpdate}>
+                  <i className='fas fa-times' /> <span className='button-text'>Cancel</span>
                 </button>
               </div>
             </form>
           ) : (
-            <div className="bio">
+            <div className='bio'>
               <p>{bio}</p>
               {ownProfile && (
-                <button
-                  type="button"
-                  className="bio-button"
-                  onClick={this.toggleBioForm}
-                >
-                  <i className="fas fa-edit"></i>{" "}
-                  <span className="button-text">Edit bio...</span>
+                <button type='button' className='bio-button' onClick={this.toggleBioForm}>
+                  <i className='fas fa-edit' /> <span className='button-text'>Edit bio...</span>
                 </button>
               )}
             </div>
           )}
-          <div className="follows-buttons">
-            <button
-              className="follower-users"
-              onClick={this.toggleFollowersIndex}
-            >
+          <div className='follows-buttons'>
+            <button type='button' className='follower-users' onClick={this.toggleFollowersIndex}>
               {followerCount} Followers
             </button>
-            <button
-              className="following-users"
-              onClick={this.toggleFollowingIndex}
-            >
+            <button type='button' className='following-users' onClick={this.toggleFollowingIndex}>
               Following {followingCount}
             </button>
           </div>
           {showFollowers && users && followers && (
-            <div className="follows-modal" onClick={this.toggleFollowersIndex}>
+            <div className='follows-modal' onClick={this.toggleFollowersIndex}>
               <FollowersIndexContainer
                 user={user}
-                list={"Followers"}
+                list='Followers'
                 users={users}
                 follows={followers}
                 close={this.toggleFollowersIndex}
@@ -323,10 +316,10 @@ class ProfileUserInfo extends React.Component {
             </div>
           )}
           {showFollowing && users && following && (
-            <div className="follows-modal" onClick={this.toggleFollowingIndex}>
+            <div className='follows-modal' onClick={this.toggleFollowingIndex}>
               <FollowersIndexContainer
                 user={user}
-                list={"Following"}
+                list='Following'
                 users={users}
                 follows={following}
                 close={this.toggleFollowingIndex}
@@ -335,8 +328,8 @@ class ProfileUserInfo extends React.Component {
           )}
         </section>
       </div>
-    );
+    )
   }
 }
 
-export default ProfileUserInfo;
+export default ProfileUserInfo

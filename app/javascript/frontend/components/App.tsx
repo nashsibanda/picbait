@@ -39,7 +39,7 @@ const App = () => (
     <main>
       <Switch>
         <ProtectedRoute exact path='/posts/new' component={NewPostFormContainer} />
-        <ProtectedRoute path='/users/:userId' component={ProfileShowContainer} />
+        <ProtectedRoute path='/users/:userSlug' component={ProfileShowContainer} />
         <ProtectedRoute exact path='/posts/:postId' component={PostShowContainer} />
         <ProtectedRoute exact path='/feed' component={FeedContainer} />
         <AuthRoute path='/signup' component={SignupFormContainer} />

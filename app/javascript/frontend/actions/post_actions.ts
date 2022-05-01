@@ -84,7 +84,7 @@ const dispatchPosts = (page: number, posts: PostEntity[], dispatch: GlobalDispat
   dispatch(loadedPostPage())
 }
 
-export const fetchUserPosts = (userId: number, page: number) => (dispatch: GlobalDispatch) => {
+export const fetchUserPosts = (userId: string, page: number) => (dispatch: GlobalDispatch) => {
   dispatch(loadingPostPage())
   PostsAPIUtil.getUserPosts(userId, page).then(({ data: posts }) => dispatchPosts(page, posts, dispatch))
 }

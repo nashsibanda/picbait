@@ -4,8 +4,8 @@ import { setToken } from './misc_util'
 
 setToken(axios)
 
-export const getFollows = (userId: number, followType: FollowType): AxiosPromise<Follow[]> =>
-  axios.get<Follow[]>(`api/users/${userId}/follows`, { params: { follow_type: followType } })
+export const getFollows = (userSlug: string, followType: FollowType): AxiosPromise<Follow[]> =>
+  axios.get<Follow[]>(`api/users/${userSlug}/follows`, { params: { follow_type: followType } })
 
 export const postFollow = (userId: number): AxiosPromise<Follow> => axios.post<Follow>(`api/users/${userId}/follow`)
 

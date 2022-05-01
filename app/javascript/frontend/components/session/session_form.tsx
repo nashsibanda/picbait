@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react'
+import React, { ChangeEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { Link } from 'react-router-dom'
 import { ApiErrors, SessionUser, User } from '../../types/entities'
@@ -54,9 +54,8 @@ class SessionForm extends React.Component<SessionFormProps, SessionFormState> {
   }
 
   updateProperty(property: keyof Pick<SessionFormState, 'email' | 'password' | 'username'>) {
-    return (e: SyntheticEvent) => {
-      const target = e.target as HTMLInputElement
-      this.setState(prevState => ({ ...prevState, [property]: target.value }))
+    return (e: ChangeEvent<HTMLInputElement>) => {
+      this.setState(prevState => ({ ...prevState, [property]: e.target.value }))
     }
   }
 

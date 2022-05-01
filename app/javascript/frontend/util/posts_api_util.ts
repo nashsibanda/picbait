@@ -7,7 +7,7 @@ setToken(axios)
 export const getFeedPosts = (page: number): AxiosPromise<PostEntity[]> =>
   axios.get<PostEntity[]>(`api/posts`, { params: { page } })
 
-export const getUserPosts = (userId: number, page: number): AxiosPromise<PostEntity[]> =>
+export const getUserPosts = (userId: string, page: number): AxiosPromise<PostEntity[]> =>
   axios.get<PostEntity[]>(`api/users/${userId}/posts`, { params: { page } })
 
 export const getPost = (id: number): AxiosPromise<PostEntity> => axios.get<PostEntity>(`api/posts/${id}`)

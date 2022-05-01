@@ -1,89 +1,72 @@
-import React from "react";
-import ProfileUserInfoContainer from "./profile_user_info_container";
-import PostsIndex from "../posts/posts_index";
-import { Waypoint } from "react-waypoint";
-import { LoadingSpinner } from "../ui/loading_spinner";
+import React from 'react'
+import { Waypoint } from 'react-waypoint'
+import PostsIndex from '../posts/posts_index'
+import LoadingSpinner from '../ui/loading_spinner'
+import { ProfileShowProps } from './profile_show_container'
+import ProfileUserInfoContainer from './profile_user_info_container'
 
-class ProfileShow extends React.Component {
-  constructor(props) {
-    super(props);
+type ProfileShowState = {
+  page: number
+}
+
+class ProfileShow extends React.Component<ProfileShowProps, ProfileShowState> {
+  constructor(props: ProfileShowProps) {
+    super(props)
     this.state = {
       page: 1,
-    };
-    this.loadPageData = this.loadPageData.bind(this);
-    this.loadPosts = this.loadPosts.bind(this);
-  }
-
-  loadPosts() {
-    const { userId } = this.props;
-    const { page } = this.state;
-    this.props.fetchUserPosts(userId, page);
-    this.setState({ page: page + 1 });
-  }
-
-  loadPageData() {
-    const {
-      fetchUsers,
-      userId,
-      fetchUserPosts,
-      fetchFollowers,
-      fetchFollowings,
-    } = this.props;
-    fetchUsers({ user_id: userId });
-    this.loadPosts();
-    fetchFollowings(userId);
-    fetchFollowers(userId);
+    }
+    this.loadPageData = this.loadPageData.bind(this)
+    this.loadPosts = this.loadPosts.bind(this)
   }
 
   componentDidMount() {
-    this.loadPageData();
+    this.loadPageData()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.userId != prevProps.userId) {
-      this.props.clearPosts();
-      this.setState({ page: 1 }, this.loadPageData);
+  componentDidUpdate(prevProps: ProfileShowProps) {
+    const { userSlug, clearPosts } = this.props
+    if (userSlug !== prevProps.userSlug) {
+      clearPosts()
+      this.setState({ page: 1 }, this.loadPageData)
     }
   }
 
   componentWillUnmount() {
-    this.props.clearPosts();
+    const { clearPosts } = this.props
+    clearPosts()
+  }
+
+  loadPosts() {
+    const { userSlug, fetchUserPosts } = this.props
+    const { page } = this.state
+    fetchUserPosts(userSlug, page)
+    this.setState({ page: page + 1 })
+  }
+
+  loadPageData() {
+    const { fetchUsers, userSlug, fetchFollowers, fetchFollowings } = this.props
+    fetchUsers({ user_id: userSlug })
+    this.loadPosts()
+    fetchFollowings(userSlug)
+    fetchFollowers(userSlug)
   }
 
   render() {
-    const {
-      users,
-      userId,
-      posts,
-      ownProfile,
-      likes,
-      followers,
-      following,
-      loading,
-    } = this.props;
-    const profileUser = users[userId];
+    const { users, userSlug, posts, ownProfile, likes, loading } = this.props
+    const profileUser = users[userSlug]
     return (
-      <div className="profile-show-container">
-        {profileUser && (
-          <ProfileUserInfoContainer
-            user={profileUser}
-            ownProfile={ownProfile}
-          />
-        )}
+      <div className='profile-show-container'>
+        {profileUser && <ProfileUserInfoContainer user={profileUser} ownProfile={ownProfile} />}
         {posts && likes && profileUser && (
           <>
-            <PostsIndex
-              posts={posts}
-              likes={likes}
-              modalClosed={this.loadPageData}
-            />
-            {loading.postPage && <LoadingSpinner className="inline-padding" />}
+            <PostsIndex posts={posts} likes={likes} modalClosed={this.loadPageData} />
+            {loading.postPage && <LoadingSpinner className='inline-padding' />}
             <Waypoint onEnter={this.loadPosts} />
           </>
         )}
       </div>
-    );
+    )
   }
 }
 
-export default ProfileShow;
+export default ProfileShow
