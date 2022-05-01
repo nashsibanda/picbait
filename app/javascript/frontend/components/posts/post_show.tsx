@@ -1,5 +1,5 @@
 import React from 'react'
-import { PostShowProps } from './posts_show_container'
+import type { PostShowProps } from './posts_show_container'
 import PostInfoContainer from './post_info_container'
 
 class PostShow extends React.Component<PostShowProps> {

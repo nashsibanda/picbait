@@ -1,7 +1,7 @@
 import React from 'react'
 import { CommentEntity } from '../../types/entities'
 import { UsersState } from '../../types/state'
-import { CommentsIndexProps } from './comments_index_container'
+import type { CommentsIndexProps } from './comments_index_container'
 import CommentsIndexItemContainer from './comments_index_item_container'
 
 class CommentsIndex extends React.Component<CommentsIndexProps> {

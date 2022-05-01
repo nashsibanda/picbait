@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react'
 import LoadingSpinner from '../ui/loading_spinner'
-import { PostModalProps } from './posts_modal_container'
+import type { PostModalProps } from './posts_modal_container'
 import PostInfoContainer from './post_info_container'
 
 class PostModal extends React.Component<PostModalProps> {

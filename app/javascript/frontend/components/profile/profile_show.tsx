@@ -3,7 +3,7 @@ import { Waypoint } from 'react-waypoint'
 import { PostsIndexType } from '../../types/entities'
 import PostsIndex from '../posts/posts_index'
 import LoadingSpinner from '../ui/loading_spinner'
-import { ProfileShowProps } from './profile_show_container'
+import type { ProfileShowProps } from './profile_show_container'
 import ProfileUserInfoContainer from './profile_user_info_container'
 
 type ProfileShowState = {

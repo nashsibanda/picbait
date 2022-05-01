@@ -5,7 +5,7 @@ import { CircularProgressbar } from 'react-circular-progressbar'
 import { FollowType } from '../../types/entities'
 import { sanitizeContent } from '../../util/misc_util'
 import FollowersIndexContainer from '../followers/followers_index_container'
-import { ProfileUserInfoProps } from './profile_user_info_container'
+import type { ProfileUserInfoProps } from './profile_user_info_container'
 
 type ProfileUserInfoState = {
   newAvatarUrl: string | ArrayBuffer | null

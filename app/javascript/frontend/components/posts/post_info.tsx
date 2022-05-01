@@ -4,7 +4,7 @@ import { replaceParentCommenter, sanitizeContent } from '../../util/misc_util'
 import CommentsIndexContainer from '../comments/comments_index_container'
 import LoadingSpinner from '../ui/loading_spinner'
 import PostAuthor from './post_author'
-import { PostInfoProps } from './post_info_container'
+import type { PostInfoProps } from './post_info_container'
 
 type PostInfoState = {
   fillImage: boolean

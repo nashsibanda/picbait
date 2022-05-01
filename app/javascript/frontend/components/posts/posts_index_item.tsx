@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 import { PostsIndexType } from '../../types/entities'
 import { makeShortTitle } from '../../util/misc_util'
-import { PostsIndexItemProps } from './posts_index_item_container'
+import type { PostsIndexItemProps } from './posts_index_item_container'
 
 type PostsIndexItemState = {
   likesCount: number

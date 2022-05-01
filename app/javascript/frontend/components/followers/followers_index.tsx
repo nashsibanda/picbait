@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react'
-import { FollowersIndexProps } from './followers_index_container'
+import type { FollowersIndexProps } from './followers_index_container'
 import FollowersIndexItem from './followers_index_item'
 
 const FollowersIndex = ({ follows, users, list, close }: FollowersIndexProps) => (

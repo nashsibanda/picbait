@@ -4,7 +4,7 @@ import React, { SyntheticEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { makeCommentLinks } from '../../util/misc_util'
 import CommentsIndexContainer from './comments_index_container'
-import { CommentsIndexItemProps } from './comments_index_item_container'
+import type { CommentsIndexItemProps } from './comments_index_item_container'
 
 type CommentsIndexItemState = {
   displayChildComments: boolean

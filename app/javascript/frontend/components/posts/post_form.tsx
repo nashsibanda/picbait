@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { capitalize, sanitizeContent } from '../../util/misc_util'
 import LoadingSpinner from '../ui/loading_spinner'
-import { PostFormProps } from './new_post_form_container'
+import type { PostFormProps } from './new_post_form_container'
 
 type PostFormState = {
   title: string

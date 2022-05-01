@@ -3,7 +3,7 @@ import { Waypoint } from 'react-waypoint'
 import { PostsIndexType } from '../../types/entities'
 import PostsIndex from '../posts/posts_index'
 import LoadingSpinner from '../ui/loading_spinner'
-import { FeedProps } from './feed_container'
+import type { FeedProps } from './feed_container'
 
 type FeedState = {
   page: number
