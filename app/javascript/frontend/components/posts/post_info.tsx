@@ -9,7 +9,7 @@ import {
 import { PostEntity } from '../../types/entities'
 import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
 import { replaceParentCommenter, sanitizeContent } from '../../util/misc_util'
-import CommentsIndexContainer from '../comments/comments_index_container'
+import CommentsIndex from '../comments/comments_index'
 import LoadingSpinner from '../ui/loading_spinner'
 import PostAuthor from './post_author'
 
@@ -146,12 +146,7 @@ class PostInfo extends React.Component<PostInfoProps, PostInfoState> {
             {loading.comments ? (
               <LoadingSpinner />
             ) : (
-              <CommentsIndexContainer
-                comments={comments}
-                nested={false}
-                parentId={null}
-                updateParent={this.updateParentComment}
-              />
+              <CommentsIndex comments={comments} nested={false} updateParent={this.updateParentComment} />
             )}
           </div>
           <div className='interactions'>

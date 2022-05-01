@@ -11,6 +11,7 @@ import { CommentEntity, UserEntity } from '../../types/entities'
 import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
 import { makeCommentLinks } from '../../util/misc_util'
 import { getUsersAutocomplete } from '../../util/users_api_util'
+// eslint-disable-next-line import/no-cycle
 import CommentsIndex from './comments_index'
 
 type CommentsIndexItemState = {

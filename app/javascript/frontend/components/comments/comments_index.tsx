@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { CommentEntity } from '../../types/entities'
 import { CommentsState, GlobalState, UsersState } from '../../types/state'
+// eslint-disable-next-line import/no-cycle
 import CommentsIndexItem from './comments_index_item'
 
 class CommentsIndex extends React.Component<CommentsIndexProps> {
