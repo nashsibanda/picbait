@@ -1,7 +1,12 @@
-import React, { SyntheticEvent } from 'react'
-import { PostsIndexType } from '../../types/entities'
+import React, { MouseEventHandler, SyntheticEvent } from 'react'
+import { connect } from 'react-redux'
+import {
+  createPostLike as createPostLikeAction,
+  deletePostLike as deletePostLikeAction,
+} from '../../actions/like_actions'
+import { PostEntity, PostsIndexType } from '../../types/entities'
+import { AuthenticatedGlobalState, GlobalDispatch, LikesState } from '../../types/state'
 import { makeShortTitle } from '../../util/misc_util'
-import type { PostsIndexItemProps } from './posts_index_item_container'
 
 type PostsIndexItemState = {
   likesCount: number
@@ -90,4 +95,23 @@ class PostsIndexItem extends React.Component<PostsIndexItemProps, PostsIndexItem
   }
 }
 
-export default PostsIndexItem
+const mapStateToProps = (state: AuthenticatedGlobalState) => ({
+  currentUser: state.session.currentUser,
+})
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  createPostLike: (postId: number) => dispatch(createPostLikeAction(postId)),
+  deletePostLike: (id: number) => dispatch(deletePostLikeAction(id)),
+})
+
+export type PostsIndexItemProps = Required<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> & {
+  post: PostEntity
+  postId: number
+  likes: LikesState
+  postsIndexType: PostsIndexType
+  updateModal: (postId: number) => MouseEventHandler
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsIndexItem)

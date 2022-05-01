@@ -1,8 +1,10 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { connect } from 'react-redux'
+import { createPost } from '../../actions/post_actions'
+import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
 import { capitalize, sanitizeContent } from '../../util/misc_util'
 import LoadingSpinner from '../ui/loading_spinner'
-import type { PostFormProps } from './new_post_form_container'
 
 type PostFormState = {
   title: string
@@ -174,4 +176,17 @@ class PostForm extends React.Component<PostFormProps, PostFormState> {
   }
 }
 
-export default PostForm
+const mapStateToProps = (state: AuthenticatedGlobalState) => ({
+  currentUser: state.session.currentUser,
+  formType: 'new',
+  errors: state.errors.post,
+  posting: state.ui.posting,
+})
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  processForm: (formPost: FormData, userSlug: string) => dispatch(createPost(formPost, userSlug)),
+})
+
+export type PostFormProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>>
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm)

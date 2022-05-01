@@ -1,8 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { CommentEntity } from '../../types/entities'
-import { UsersState } from '../../types/state'
-import type { CommentsIndexProps } from './comments_index_container'
-import CommentsIndexItemContainer from './comments_index_item_container'
+import { CommentsState, GlobalState, UsersState } from '../../types/state'
+import CommentsIndexItem from './comments_index_item'
 
 class CommentsIndex extends React.Component<CommentsIndexProps> {
   constructor(props: CommentsIndexProps) {
@@ -43,7 +43,7 @@ class CommentsIndex extends React.Component<CommentsIndexProps> {
           comment =>
             stateUsers[comment.commenter] &&
             comment && (
-              <CommentsIndexItemContainer
+              <CommentsIndexItem
                 comment={comment}
                 key={comment.id}
                 commenter={stateUsers[comment.commenter]}
@@ -57,4 +57,14 @@ class CommentsIndex extends React.Component<CommentsIndexProps> {
   }
 }
 
-export default CommentsIndex
+const mapStateToProps = (state: GlobalState) => ({
+  users: state.entities.users,
+})
+
+export type CommentsIndexProps = Partial<ReturnType<typeof mapStateToProps>> & {
+  comments: CommentsState | CommentEntity[]
+  nested: boolean
+  updateParent: (parentId: number, commenter: string) => any
+}
+
+export default connect(mapStateToProps, null)(CommentsIndex)

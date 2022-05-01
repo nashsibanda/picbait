@@ -1,7 +1,9 @@
-import React, { SyntheticEvent } from 'react'
+import React, { MouseEventHandler, SyntheticEvent } from 'react'
+import { connect } from 'react-redux'
+import { fetchPost as fetchPostAction } from '../../actions/post_actions'
+import { GlobalDispatch, GlobalState } from '../../types/state'
 import LoadingSpinner from '../ui/loading_spinner'
-import type { PostModalProps } from './posts_modal_container'
-import PostInfoContainer from './post_info_container'
+import PostInfo from './post_info'
 
 class PostModal extends React.Component<PostModalProps> {
   constructor(props: PostModalProps) {
@@ -32,7 +34,7 @@ class PostModal extends React.Component<PostModalProps> {
     return (
       <div className='post-display-modal' onClick={closeModal}>
         <div className='post-modal-container' onClick={(e: SyntheticEvent) => e.stopPropagation()} role='presentation'>
-          {post ? <PostInfoContainer post={post} /> : <LoadingSpinner />}
+          {post ? <PostInfo post={post} /> : <LoadingSpinner />}
           <button type='button' onClick={closeModal} className='post-modal-close'>
             <i className='fas fa-times-circle' />
           </button>
@@ -42,4 +44,17 @@ class PostModal extends React.Component<PostModalProps> {
   }
 }
 
-export default PostModal
+const mapStateToProps = (state: GlobalState) => ({
+  posts: state.entities.posts,
+})
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  fetchPost: (id: number, shouldFetchPost: boolean) => dispatch(fetchPostAction(id, shouldFetchPost)),
+})
+
+export type PostModalProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>> & {
+  postId: number
+  closeModal: MouseEventHandler
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostModal)

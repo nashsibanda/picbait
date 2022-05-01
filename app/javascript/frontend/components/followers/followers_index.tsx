@@ -1,5 +1,9 @@
-import React, { SyntheticEvent } from 'react'
-import type { FollowersIndexProps } from './followers_index_container'
+import React, { MouseEventHandler, SyntheticEvent } from 'react'
+import { connect } from 'react-redux'
+import { fetchUsers } from '../../actions/user_actions'
+import { FollowType } from '../../types/entities'
+import { FollowersState, GlobalDispatch, UsersState } from '../../types/state'
+import { GetUsersParams } from '../../util/users_api_util'
 import FollowersIndexItem from './followers_index_item'
 
 const FollowersIndex = ({ follows, users, list, close }: FollowersIndexProps) => (
@@ -16,4 +20,15 @@ const FollowersIndex = ({ follows, users, list, close }: FollowersIndexProps) =>
   </ul>
 )
 
-export default FollowersIndex
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  fetchUsers: (filters: GetUsersParams) => dispatch(fetchUsers(filters)),
+})
+
+export type FollowersIndexProps = Required<ReturnType<typeof mapDispatchToProps>> & {
+  list: FollowType
+  users: UsersState
+  follows: FollowersState
+  close: MouseEventHandler
+}
+
+export default connect(null, mapDispatchToProps)(FollowersIndex)

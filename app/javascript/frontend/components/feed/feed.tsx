@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Waypoint } from 'react-waypoint'
+import { clearPosts as clearPostsAction, fetchFeedPosts as fetchFeedPostsAction } from '../../actions/post_actions'
 import { PostsIndexType } from '../../types/entities'
+import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
 import PostsIndex from '../posts/posts_index'
 import LoadingSpinner from '../ui/loading_spinner'
-import type { FeedProps } from './feed_container'
 
 type FeedState = {
   page: number
@@ -65,4 +67,22 @@ class Feed extends React.Component<FeedProps, FeedState> {
   }
 }
 
-export default Feed
+const mapStateToProps = (state: AuthenticatedGlobalState) => {
+  const userId = state.session.currentUser.slug
+  return {
+    users: state.entities.users,
+    posts: state.entities.posts,
+    userId,
+    likes: state.entities.likes.posts,
+    loading: state.ui.loading,
+  }
+}
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  fetchFeedPosts: (page: number) => dispatch(fetchFeedPostsAction(page)),
+  clearPosts: () => dispatch(clearPostsAction()),
+})
+
+export type FeedProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>>
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)

@@ -1,10 +1,17 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import { connect } from 'react-redux'
+import { createComment as createCommentAction } from '../../actions/comment_actions'
+import {
+  createPostLike as createPostLikeAction,
+  deletePostLike as deletePostLikeAction,
+} from '../../actions/like_actions'
+import { PostEntity } from '../../types/entities'
+import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
 import { replaceParentCommenter, sanitizeContent } from '../../util/misc_util'
 import CommentsIndexContainer from '../comments/comments_index_container'
 import LoadingSpinner from '../ui/loading_spinner'
 import PostAuthor from './post_author'
-import type { PostInfoProps } from './post_info_container'
 
 type PostInfoState = {
   fillImage: boolean
@@ -208,4 +215,30 @@ class PostInfo extends React.Component<PostInfoProps, PostInfoState> {
   }
 }
 
-export default PostInfo
+const mapStateToProps = (state: AuthenticatedGlobalState, ownProps: OwnProps) => {
+  const { id } = ownProps.post
+  return {
+    author: state.entities.users[ownProps.post.authorSlug],
+    comments: state.entities.comments,
+    likes: state.entities.likes.posts[id],
+    currentUser: state.session.currentUser,
+    postId: id,
+    loading: state.ui.loading,
+    posting: state.ui.posting,
+  }
+}
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  createPostLike: (postId: number) => dispatch(createPostLikeAction(postId)),
+  deletePostLike: (id: number) => dispatch(deletePostLikeAction(id)),
+  createComment: (formComment: FormData) => dispatch(createCommentAction(formComment)),
+})
+
+type OwnProps = {
+  post: PostEntity
+}
+
+export type PostInfoProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>> &
+  OwnProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostInfo)

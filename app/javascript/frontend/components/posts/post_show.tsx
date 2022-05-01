@@ -1,6 +1,9 @@
 import React from 'react'
-import type { PostShowProps } from './posts_show_container'
-import PostInfoContainer from './post_info_container'
+import { connect } from 'react-redux'
+import { match } from 'react-router'
+import { fetchPost as fetchPostAction } from '../../actions/post_actions'
+import { GlobalDispatch, GlobalState } from '../../types/state'
+import PostInfo from './post_info'
 
 class PostShow extends React.Component<PostShowProps> {
   constructor(props: PostShowProps) {
@@ -27,8 +30,23 @@ class PostShow extends React.Component<PostShowProps> {
   render() {
     const { posts, postId } = this.props
     const post = posts[postId]
-    return <div className='post-show-container'>{post && <PostInfoContainer post={post} />}</div>
+    return <div className='post-show-container'>{post && <PostInfo post={post} />}</div>
   }
 }
 
-export default PostShow
+const mapStateToProps = (state: GlobalState, { match: matchOpbject }: { match: match<{ postId: string }> }) => {
+  const postId = parseInt(matchOpbject.params.postId, 10)
+  return {
+    postId,
+    posts: state.entities.posts,
+    loading: state.ui.loading,
+  }
+}
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  fetchPost: (id: number) => dispatch(fetchPostAction(id, true)),
+})
+
+export type PostShowProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>>
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostShow)

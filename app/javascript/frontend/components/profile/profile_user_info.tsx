@@ -2,10 +2,14 @@
 // TODO: Use loadingAvatar state in render()
 import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar'
-import { FollowType } from '../../types/entities'
+import { connect } from 'react-redux'
+import { createFollow as createFollowAction, deleteFollow as deleteFollowAction } from '../../actions/follow_actions'
+import { fetchUsers as fetchUsersAction, updateUser as updateUserAction } from '../../actions/user_actions'
+import { FollowType, UserEntity } from '../../types/entities'
+import { GlobalDispatch, GlobalState } from '../../types/state'
 import { sanitizeContent } from '../../util/misc_util'
-import FollowersIndexContainer from '../followers/followers_index_container'
-import type { ProfileUserInfoProps } from './profile_user_info_container'
+import { GetUsersParams } from '../../util/users_api_util'
+import FollowersIndex from '../followers/followers_index'
 
 type ProfileUserInfoState = {
   newAvatarUrl: string | ArrayBuffer | null
@@ -305,8 +309,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
           </div>
           {showFollowers && users && followers && (
             <div className='follows-modal' onClick={this.toggleFollowersIndex}>
-              <FollowersIndexContainer
-                user={user}
+              <FollowersIndex
                 list={FollowType.followers}
                 users={users}
                 follows={followers}
@@ -316,8 +319,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
           )}
           {showFollowing && users && following && (
             <div className='follows-modal' onClick={this.toggleFollowingIndex}>
-              <FollowersIndexContainer
-                user={user}
+              <FollowersIndex
                 list={FollowType.followings}
                 users={users}
                 follows={following}
@@ -331,4 +333,24 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
   }
 }
 
-export default ProfileUserInfo
+const mapStateToProps = (state: GlobalState) => ({
+  currentUser: state.session.currentUser,
+  followers: state.entities.follows.followers,
+  following: state.entities.follows.following,
+  // @ts-expect-error : This is a protected route
+  followStatus: !!state.entities.follows.followers[state.session.currentUser.slug],
+  users: state.entities.users,
+})
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  updateUser: (id: string, formUser: FormData) => dispatch(updateUserAction(id, formUser)),
+  createFollow: (userId: number) => dispatch(createFollowAction(userId)),
+  deleteFollow: (userId: number) => dispatch(deleteFollowAction(userId)),
+  fetchUsers: (filters: GetUsersParams) => dispatch(fetchUsersAction(filters)),
+})
+
+export type ProfileUserInfoProps = Required<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> & { user: UserEntity; ownProfile: boolean }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileUserInfo)

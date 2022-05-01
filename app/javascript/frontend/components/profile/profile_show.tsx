@@ -1,10 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { match } from 'react-router'
 import { Waypoint } from 'react-waypoint'
+import {
+  fetchFollowers as fetchFollowersAction,
+  fetchFollowings as fetchFollowingsAction,
+} from '../../actions/follow_actions'
+import { clearPosts as clearPostsAction, fetchUserPosts as fetchUserPostsAction } from '../../actions/post_actions'
+import { fetchUsers as fetchUsersAction } from '../../actions/user_actions'
 import { PostsIndexType } from '../../types/entities'
+import { GlobalDispatch, GlobalState } from '../../types/state'
+import { GetUsersParams } from '../../util/users_api_util'
 import PostsIndex from '../posts/posts_index'
 import LoadingSpinner from '../ui/loading_spinner'
-import type { ProfileShowProps } from './profile_show_container'
-import ProfileUserInfoContainer from './profile_user_info_container'
+import ProfileUserInfo from './profile_user_info'
 
 type ProfileShowState = {
   page: number
@@ -57,7 +66,7 @@ class ProfileShow extends React.Component<ProfileShowProps, ProfileShowState> {
     const profileUser = users[userSlug]
     return (
       <div className='profile-show-container'>
-        {profileUser && <ProfileUserInfoContainer user={profileUser} ownProfile={ownProfile} />}
+        {profileUser && <ProfileUserInfo user={profileUser} ownProfile={ownProfile} />}
         {posts && likes && profileUser && (
           <>
             <PostsIndex posts={posts} likes={likes} type={PostsIndexType.profile} />
@@ -70,4 +79,28 @@ class ProfileShow extends React.Component<ProfileShowProps, ProfileShowState> {
   }
 }
 
-export default ProfileShow
+const mapStateToProps = (state: GlobalState, { match: matchObject }: { match: match<{ userSlug: string }> }) => {
+  const { userSlug } = matchObject.params
+  return {
+    users: state.entities.users,
+    posts: state.entities.posts,
+    userSlug,
+    ownProfile: userSlug === state.session.currentUser?.slug,
+    likes: state.entities.likes.posts,
+    followers: state.entities.follows.followers,
+    following: state.entities.follows.following,
+    loading: state.ui.loading,
+  }
+}
+
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  fetchUserPosts: (userId: string, page: number) => dispatch(fetchUserPostsAction(userId, page)),
+  fetchUsers: (filters: GetUsersParams) => dispatch(fetchUsersAction(filters)),
+  fetchFollowers: (userSlug: string) => dispatch(fetchFollowersAction(userSlug)),
+  fetchFollowings: (userSlug: string) => dispatch(fetchFollowingsAction(userSlug)),
+  clearPosts: () => dispatch(clearPostsAction()),
+})
+
+export type ProfileShowProps = Required<ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>>
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileShow)
