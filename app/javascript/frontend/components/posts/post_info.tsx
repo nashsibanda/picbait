@@ -1,146 +1,141 @@
-import React from "react";
-import { PostAuthor } from "./post_author";
-import CommentsIndexContainer from "./../comments/comments_index_container";
-import { CircularProgressbar } from "react-circular-progressbar";
-import { replaceParentCommenter, sanitizeContent } from "../../util/misc_util";
-import { LoadingSpinner } from "../ui/loading_spinner";
+import React, { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
+import { CircularProgressbar } from 'react-circular-progressbar'
+import { replaceParentCommenter, sanitizeContent } from '../../util/misc_util'
+import CommentsIndexContainer from '../comments/comments_index_container'
+import LoadingSpinner from '../ui/loading_spinner'
+import PostAuthor from './post_author'
+import { PostInfoProps } from './post_info_container'
 
-class PostInfo extends React.Component {
-  constructor(props) {
-    super(props);
+type PostInfoState = {
+  fillImage: boolean
+  liked: boolean
+  likesCount: number
+  body: string
+  parentCommentId: number | null
+  parentCommenter: string | null
+  commentIndicator: boolean
+  imageLoaded: boolean
+}
+class PostInfo extends React.Component<PostInfoProps, PostInfoState> {
+  commentInput: HTMLTextAreaElement | null
+
+  constructor(props: PostInfoProps) {
+    super(props)
+    const { currentUser, likes } = props
     this.state = {
       fillImage: true,
-      liked: this.props.likes[this.props.currentUser.id] ? true : false,
-      likesCount: Object.keys(this.props.likes).length,
-      body: "",
+      liked: !!likes[currentUser.id],
+      likesCount: Object.keys(likes).length,
+      body: '',
       parentCommentId: null,
       parentCommenter: null,
       commentIndicator: false,
       imageLoaded: false,
-    };
-    this.toggleFillImage = this.toggleFillImage.bind(this);
-    this.toggleLiked = this.toggleLiked.bind(this);
-    this.updateBody = this.updateBody.bind(this);
-    this.updateParentComment = this.updateParentComment.bind(this);
-    this.submitComment = this.submitComment.bind(this);
-    this.setCommentInputFocus = this.setCommentInputFocus.bind(this);
-    this.toggleCommentIndicator = this.toggleCommentIndicator.bind(this);
-    this.closeReplyingBanner = this.closeReplyingBanner.bind(this);
-    this.handleImageLoaded = this.handleImageLoaded.bind(this);
-  }
-
-  updateBody(e) {
-    e.stopPropagation();
-    this.setState({ body: e.target.value });
-  }
-
-  updateParentComment(id, commenter) {
-    this.setState(
-      {
-        parentCommentId: id,
-        parentCommenter: commenter,
-        body: replaceParentCommenter(commenter, this.state.body),
-      },
-      () => this.commentInput.focus()
-    );
-  }
-
-  toggleCommentIndicator(e) {
-    this.setState({ commentIndicator: !this.state.commentIndicator });
-  }
-
-  submitComment(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    const formComment = new FormData();
-    const { body, parentCommentId } = this.state;
-    const { postId, currentUser, createComment } = this.props;
-    formComment.append("comment[body]", sanitizeContent(body));
-    if (parentCommentId) {
-      formComment.append("comment[parent_comment_id]", parentCommentId);
     }
-    formComment.append("comment[api_post_id]", postId);
-    formComment.append("comment[api_user_id]", currentUser.id);
-    createComment(formComment);
-    this.setState({ body: "", parentCommentId: null, parentCommenter: null });
-  }
-
-  toggleFillImage(e) {
-    e.stopPropagation();
-    this.setState({ fillImage: !this.state.fillImage });
-  }
-
-  toggleLiked(e) {
-    e.stopPropagation();
-    const { liked, likesCount } = this.state;
-    const {
-      createPostLike,
-      deletePostLike,
-      likes,
-      currentUser,
-      postId,
-    } = this.props;
-    if (liked) {
-      const likeId = likes[currentUser.id].id;
-      deletePostLike(likeId);
-      this.setState({ liked: false, likesCount: likesCount - 1 });
-    } else {
-      createPostLike(postId);
-      this.setState({ liked: true, likesCount: likesCount + 1 });
-    }
-  }
-
-  closeReplyingBanner(e) {
-    e.stopPropagation();
-    this.updateParentComment(null, null);
-  }
-
-  setCommentInputFocus(e) {
-    e.stopPropagation();
-    this.commentInput.focus();
+    this.toggleFillImage = this.toggleFillImage.bind(this)
+    this.toggleLiked = this.toggleLiked.bind(this)
+    this.updateBody = this.updateBody.bind(this)
+    this.updateParentComment = this.updateParentComment.bind(this)
+    this.submitComment = this.submitComment.bind(this)
+    this.setCommentInputFocus = this.setCommentInputFocus.bind(this)
+    this.toggleCommentIndicator = this.toggleCommentIndicator.bind(this)
+    this.closeReplyingBanner = this.closeReplyingBanner.bind(this)
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
+    this.commentInput = null
   }
 
   handleImageLoaded() {
-    this.setState({imageLoaded: true})
+    this.setState({ imageLoaded: true })
+  }
+
+  setCommentInputFocus(e: SyntheticEvent) {
+    e.stopPropagation()
+    this.commentInput?.focus()
+  }
+
+  updateBody(e: ChangeEvent<HTMLTextAreaElement>) {
+    e.stopPropagation()
+    this.setState({ body: e.target.value })
+  }
+
+  updateParentComment(id: number | null, commenter: string | null) {
+    this.setState(
+      prevState => ({
+        parentCommentId: id,
+        parentCommenter: commenter,
+        body: replaceParentCommenter(commenter, prevState.body),
+      }),
+      () => this.commentInput?.focus()
+    )
+  }
+
+  toggleCommentIndicator() {
+    this.setState(prevState => ({ commentIndicator: !prevState.commentIndicator }))
+  }
+
+  submitComment(e: FormEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    const formComment = new FormData()
+    const { body, parentCommentId } = this.state
+    const { postId, currentUser, createComment } = this.props
+    formComment.append('comment[body]', sanitizeContent(body))
+    if (parentCommentId) {
+      formComment.append('comment[parent_comment_id]', parentCommentId.toString())
+    }
+    formComment.append('comment[api_post_id]', postId.toString())
+    formComment.append('comment[api_user_id]', currentUser.id.toString())
+    createComment(formComment)
+    this.setState({ body: '', parentCommentId: null, parentCommenter: null })
+  }
+
+  toggleFillImage(e: SyntheticEvent) {
+    e.stopPropagation()
+    this.setState(prevState => ({ fillImage: !prevState.fillImage }))
+  }
+
+  toggleLiked(e: SyntheticEvent) {
+    e.stopPropagation()
+    const { liked, likesCount } = this.state
+    const { createPostLike, deletePostLike, likes, currentUser, postId } = this.props
+    if (liked) {
+      const likeId = likes[currentUser.id].id
+      deletePostLike(likeId)
+      this.setState({ liked: false, likesCount: likesCount - 1 })
+    } else {
+      createPostLike(postId)
+      this.setState({ liked: true, likesCount: likesCount + 1 })
+    }
+  }
+
+  closeReplyingBanner(e: SyntheticEvent) {
+    e.stopPropagation()
+    this.updateParentComment(null, null)
   }
 
   render() {
-    const { post, comments, loading, posting } = this.props;
-    const {
-      fillImage,
-      liked,
-      likesCount,
-      body,
-      parentCommenter,
-      commentIndicator,
-      imageLoaded
-    } = this.state;
-    const author = this.props.author;
-    const { id, title, description, date, imageUrl } = post;
+    const { post, comments, loading, posting, author } = this.props
+    const { fillImage, liked, likesCount, body, parentCommenter, commentIndicator, imageLoaded } = this.state
+    const { id, title, imageUrl, authorUsername } = post
     return (
-      <div className="post-info">
-        <section className="image">
-          {!imageLoaded && <div className="image-placeholder"></div>}
+      <div className='post-info'>
+        <section className='image'>
+          {!imageLoaded && <div className='image-placeholder' />}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <img
             src={imageUrl}
-            className={fillImage ? "fill-image" : "fit-image"}
+            className={fillImage ? 'fill-image' : 'fit-image'}
             onClick={this.toggleFillImage}
             onLoad={this.handleImageLoaded}
-          ></img>
-          <div className="expand">
-            <i
-              className={`fas ${
-                fillImage ? "fa-compress-alt" : "fa-expand-alt"
-              }`}
-              onClick={this.toggleFillImage}
-            ></i>
-          </div>
+            alt={`${title} - by ${authorUsername}`}
+          />
+          <button className='expand' onClick={this.toggleFillImage} type='button'>
+            <i className={`fas ${fillImage ? 'fa-compress-alt' : 'fa-expand-alt'}`} />
+          </button>
         </section>
-        <section className="details">
-          <div className="author-details">
-            {author ? <PostAuthor author={author} /> : <LoadingSpinner />}
-          </div>
-          <div className="comments">
+        <section className='details'>
+          <div className='author-details'>{author ? <PostAuthor author={author} /> : <LoadingSpinner />}</div>
+          <div className='comments'>
             {loading.comments ? (
               <LoadingSpinner />
             ) : (
@@ -152,91 +147,65 @@ class PostInfo extends React.Component {
               />
             )}
           </div>
-          <div className="interactions">
-            <div className="interaction-buttons">
-              <button
-                type="button"
-                onClick={this.setCommentInputFocus}
-                className="likes-button index"
-              >
-                <i className="fas fa-comment-alt"></i>
-                <span className="interaction-number">
-                  {`${
-                    Object.keys(comments).length > 0
-                      ? Object.keys(comments).length
-                      : "0"
-                  }`}
+          <div className='interactions'>
+            <div className='interaction-buttons'>
+              <button type='button' onClick={this.setCommentInputFocus} className='likes-button index'>
+                <i className='fas fa-comment-alt' />
+                <span className='interaction-number'>
+                  {`${Object.keys(comments).length > 0 ? Object.keys(comments).length : '0'}`}
                 </span>
-                <span className="interaction-desc button-text">
-                  {`${
-                    Object.keys(comments).length == 1 ? "comment" : "comments"
-                  }`}
+                <span className='interaction-desc button-text'>
+                  {`${Object.keys(comments).length === 1 ? 'comment' : 'comments'}`}
                 </span>
               </button>
               <button
-                type="button"
+                type='button'
                 onClick={this.toggleLiked}
-                className={`likes-button index ${liked ? "liked" : "unliked"}`}
+                className={`likes-button index ${liked ? 'liked' : 'unliked'}`}
               >
-                <i className={`fas fa-heart`}></i>
-                <span className="interaction-desc button-text">
-                  {"liked by "}
-                </span>
-                <span className="interaction-num">
-                  {likesCount > 0 ? likesCount : "0"}
-                </span>
-                <span className="interaction-desc button-text">
-                  {likesCount == 1 ? " user" : " users"}
-                </span>
+                <i className='fas fa-heart' />
+                <span className='interaction-desc button-text'>{'liked by '}</span>
+                <span className='interaction-num'>{likesCount > 0 ? likesCount : '0'}</span>
+                <span className='interaction-desc button-text'>{likesCount === 1 ? ' user' : ' users'}</span>
               </button>
             </div>
-            <a href={`#/posts/${id}`} className="permalink">
+            <a href={`#/posts/${id}`} className='permalink'>
               permalink
             </a>
           </div>
-          <form className="comment-form" onSubmit={this.submitComment}>
-            <div
-              className={`replying-banner ${parentCommenter ? "" : "hidden"}`}
-            >
+          <form className='comment-form' onSubmit={this.submitComment}>
+            <div className={`replying-banner ${parentCommenter ? '' : 'hidden'}`}>
               <span>replying to {parentCommenter}</span>
-              <button
-                className="close-reply-banner"
-                onClick={this.closeReplyingBanner}
-                type="button"
-              >
-                <i className="fas fa-times"></i>
+              <button className='close-reply-banner' onClick={this.closeReplyingBanner} type='button'>
+                <i className='fas fa-times' />
               </button>
             </div>
             <textarea
-              placeholder="Add a comment..."
+              placeholder='Add a comment...'
               value={body}
               onChange={this.updateBody}
               ref={input => {
-                this.commentInput = input;
+                this.commentInput = input
               }}
-              maxLength="200"
+              maxLength={200}
               onFocus={this.toggleCommentIndicator}
               onBlur={this.toggleCommentIndicator}
-            ></textarea>
+            />
             {posting.comments ? (
               <LoadingSpinner />
             ) : (
-              <button type="submit" className="submit-button">
+              <button type='submit' className='submit-button'>
                 Post
               </button>
             )}
             {commentIndicator && (
-              <CircularProgressbar
-                value={body.length}
-                maxValue={200}
-                className="comment-indicator"
-              />
+              <CircularProgressbar value={body.length} maxValue={200} className='comment-indicator' />
             )}
           </form>
         </section>
       </div>
-    );
+    )
   }
 }
 
-export default PostInfo;
+export default PostInfo

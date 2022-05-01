@@ -19,6 +19,9 @@ export type PostsState = Record<string, PostEntity>
 export type SessionState = {
   currentUser: CurrentUser | null
 }
+export type AuthenticatedSesstionState = {
+  currentUser: NonNullable<SessionState['currentUser']>
+}
 export type UsersAutocompleteState = Record<string, AutocompleteUser>
 export type UsersState = Record<string, UserEntity>
 
@@ -73,12 +76,19 @@ export type UiState = {
   posting: PostingState
 }
 
-export type GlobalState = {
+interface BaseState {
   entities: EntitiesState
   errors: GlobalErrorsState
   router: RouterState
-  session: SessionState
   ui: UiState
 }
 
-export type GlobalDispatch = ThunkDispatch<GlobalState, void, AnyAction>
+export interface GlobalState extends BaseState {
+  session: SessionState
+}
+
+export interface AuthenticatedGlobalState extends BaseState {
+  session: AuthenticatedSesstionState
+}
+
+export type GlobalDispatch = ThunkDispatch<GlobalState | AuthenticatedGlobalState, void, AnyAction>

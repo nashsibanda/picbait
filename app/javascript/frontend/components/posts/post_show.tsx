@@ -1,36 +1,34 @@
-import React from "react";
-import PostInfoContainer from "./post_info_container";
+import React from 'react'
+import { PostShowProps } from './posts_show_container'
+import PostInfoContainer from './post_info_container'
 
-class PostShow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.loadPageData = this.loadPageData.bind(this);
-  }
-
-  loadPageData() {
-    const { fetchPost, postId } = this.props;
-    fetchPost(postId);
+class PostShow extends React.Component<PostShowProps> {
+  constructor(props: PostShowProps) {
+    super(props)
+    this.loadPageData = this.loadPageData.bind(this)
   }
 
   componentDidMount() {
-    this.loadPageData();
+    this.loadPageData()
   }
-  
-  componentDidUpdate(prevProps) {
-    if (this.props.postId != prevProps.postId) {
-      this.loadPageData();
+
+  componentDidUpdate(prevProps: PostShowProps) {
+    const { postId } = this.props
+    if (postId !== prevProps.postId) {
+      this.loadPageData()
     }
   }
-  
+
+  loadPageData() {
+    const { fetchPost, postId } = this.props
+    fetchPost(postId)
+  }
+
   render() {
-    const { posts, postId, loading } = this.props;
-    const post = posts[postId];
-    return (
-      <div className="post-show-container">
-        {post && <PostInfoContainer post={post} />}
-      </div>
-    );
+    const { posts, postId } = this.props
+    const post = posts[postId]
+    return <div className='post-show-container'>{post && <PostInfoContainer post={post} />}</div>
   }
 }
 
-export default PostShow;
+export default PostShow

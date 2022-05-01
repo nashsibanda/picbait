@@ -1,10 +1,12 @@
-import { connect } from "react-redux";
-import PostInfo from "./post_info";
-import { createPostLike, deletePostLike } from "../../actions/like_actions";
-import { createComment } from "../../actions/comment_actions";
+import { connect } from 'react-redux'
+import { createComment } from '../../actions/comment_actions'
+import { createPostLike, deletePostLike } from '../../actions/like_actions'
+import { PostEntity } from '../../types/entities'
+import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
+import PostInfo from './post_info'
 
-const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.post;
+const mapStateToProps = (state: AuthenticatedGlobalState, ownProps: OwnProps) => {
+  const { id } = ownProps.post
   return {
     author: state.entities.users[ownProps.post.authorSlug],
     comments: state.entities.comments,
@@ -12,14 +14,20 @@ const mapStateToProps = (state, ownProps) => {
     currentUser: state.session.currentUser,
     postId: id,
     loading: state.ui.loading,
-    posting: state.posting,
-  };
-};
+    posting: state.ui.posting,
+  }
+}
 
-const mapDispatchToProps = dispatch => ({
-  createPostLike: postId => dispatch(createPostLike(postId)),
-  deletePostLike: id => dispatch(deletePostLike(id)),
-  createComment: formComment => dispatch(createComment(formComment)),
-});
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  createPostLike: (postId: number) => dispatch(createPostLike(postId)),
+  deletePostLike: (id: number) => dispatch(deletePostLike(id)),
+  createComment: (formComment: FormData) => dispatch(createComment(formComment)),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostInfo);
+type OwnProps = {
+  post: PostEntity
+}
+
+export type PostInfoProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & OwnProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostInfo)

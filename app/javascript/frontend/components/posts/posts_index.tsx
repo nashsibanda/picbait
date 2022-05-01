@@ -1,5 +1,6 @@
-import React, { SyntheticEvent } from 'react'
+import React, { MouseEventHandler, SyntheticEvent } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { PostType } from '../../types/entities'
 import { LikesState, PostsState } from '../../types/state'
 import PostsIndexItemContainer from './posts_index_item_container'
 import PostsModalContainer from './posts_modal_container'
@@ -7,7 +8,7 @@ import PostsModalContainer from './posts_modal_container'
 type PostsIndexProps = RouteComponentProps & {
   posts: PostsState
   likes: LikesState
-  type: 'feed' | 'profile'
+  type: PostType
 }
 
 type PostsIndexState = {
@@ -46,8 +47,8 @@ class PostsIndex extends React.Component<PostsIndexProps, PostsIndexState> {
     })
   }
 
-  displayModal(postId: string) {
-    return () => this.setState({ modalPost: parseInt(postId, 10) })
+  displayModal(postId: number): MouseEventHandler {
+    return () => this.setState({ modalPost: postId })
   }
 
   closeModal(e: SyntheticEvent) {

@@ -1,16 +1,19 @@
-import { createPost } from "../../actions/post_actions";
-import { connect } from "react-redux";
-import PostForm from "./post_form";
+import { connect } from 'react-redux'
+import { createPost } from '../../actions/post_actions'
+import { AuthenticatedGlobalState, GlobalDispatch } from '../../types/state'
+import PostForm from './post_form'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AuthenticatedGlobalState) => ({
   currentUser: state.session.currentUser,
-  formType: "new",
+  formType: 'new',
   errors: state.errors.post,
-  posting: state.posting,
-});
+  posting: state.ui.posting,
+})
 
-const mapDispatchToProps = dispatch => ({
-  processForm: (formPost, userSlug) => dispatch(createPost(formPost, userSlug)),
-});
+const mapDispatchToProps = (dispatch: GlobalDispatch) => ({
+  processForm: (formPost: FormData, userSlug: string) => dispatch(createPost(formPost, userSlug)),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
+export type PostFormProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm)

@@ -140,8 +140,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
       newAvatarUrl,
       (img: Element) => {
         this.setState({ displayAvatarEl: img }, () => {
-          if (displayAvatarEl instanceof Element) {
-            // @ts-expect-error
+          if (displayAvatarEl instanceof Element && this.avatarPreview) {
             this.avatarPreview.appendChild(displayAvatarEl)
           } else {
             // eslint-disable-next-line no-alert
@@ -163,8 +162,7 @@ class ProfileUserInfo extends React.Component<ProfileUserInfoProps, ProfileUserI
     const { newAvatarFile } = this.state
     const { user, updateUser } = this.props
     const { slug } = user
-    const file = newAvatarFile as File
-    formUser.append('user[avatar]', file)
+    formUser.append('user[avatar]', newAvatarFile as File)
     updateUser(slug, formUser)
     this.setState({
       newAvatarUrl: '',

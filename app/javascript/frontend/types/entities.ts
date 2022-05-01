@@ -66,6 +66,8 @@ export type CommentEntity = {
   timeAgo: string
 }
 
+export type PostType = 'feed' | 'profile'
+
 export type PostEntity = {
   authorSlug: string
   authorUsername: string

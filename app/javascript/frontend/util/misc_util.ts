@@ -55,7 +55,7 @@ export const makeCommentLinks = (commentBody: string, autocomplete: UsersAutocom
   return cleanBody.replace(tagRegExp, replacer)
 }
 
-export const replaceParentCommenter = (commenter: string, body: string) => {
+export const replaceParentCommenter = (commenter: string | null, body: string) => {
   const tagRegExp = /^([@])[\w.-]+(?!\s)[\w-]/
   const parentTag = body.match(tagRegExp)
   if (!commenter) {
